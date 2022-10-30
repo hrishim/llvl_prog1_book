@@ -1,0 +1,423 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Condition Flags - Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html" class="active"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="condition-flags"><a class="header" href="#condition-flags">Condition Flags</a></h1>
+<p>Objective:</p>
+<ul>
+<li>What are condition flags</li>
+<li>Explain each flag individually</li>
+<li>Examples of how each flag is set/reset</li>
+<li>The types of conditional branches and what flags they use</li>
+</ul>
+<hr />
+<p>In <a href="#Arm-Registers-and-Execution-State">Arm Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like b.gt that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
+<p>Condition flags are a set of bits that store state information about a previous operation. There are four condition flags:</p>
+<table><thead><tr><th>Flag</th><th>Name</th><th>Description</th></tr></thead><tbody>
+<tr><td>N</td><td>Negative flag</td><td>Set to 1 if the result of the last flag-setting instruction was negative</td></tr>
+<tr><td>Z</td><td>Zero flag</td><td>Set to 1 if the result of the last flag-setting instruction was zero, and to 0 otherwise</td></tr>
+<tr><td>C</td><td>Carry flag</td><td>Set to 1 if the last flag-setting instruction resulted in a carry condition, for example an unsigned overflow on an addition</td></tr>
+<tr><td>V</td><td>oVerflow flag</td><td>Set to 1 if the last flag-setting instruction resulted in an overflow condition, for example a signed overflow on an addition</td></tr>
+</tbody></table>
+<p>Each flag is a 1-bit value, so that there can only be two valid values:  0 (clear) or 1 (set). These flags indicate simple properties such as whether or not the result was negative, and can also be used in various combinations to identify conditions such as &quot;less than or equal to&quot;.</p>
+<p>The N flag represents the sign of the result of the previous operation. If say the operation was an addition (or subtraction, mutiplication, division etc) and the result was a negative number then this flag is set. If the result was a positive number then this flag is cleared.</p>
+<p>The Z flag, when set, indicates that the output of the previous instruction was zero. </p>
+<p>The C flag is called the carry flag. This flag is set if an arithmetic operation results in an arithmetic <em>carry</em> or <em>borrow</em>. For example an unsigned overflow on an addition and can be used to perform unsigned arithmetic operations.</p>
+<p>The V flag indicates that the previous operation resulted in an arithmetic <em>overflow</em>. For example a signed overflow on an addition. The C flag is set if the result of an unsigned operation overflows the result register. The V flag operates in the same way as the C flag, but for signed operations. For example, 0x7fffffff is the largest positive two's complement integer that can be represented in 32 bits, so 0x7fffffff + 0x7fffffff triggers a signed overflow, but not an unsigned overflow (or carry): the result, 0xfffffffe, is correct if interpreted as an unsigned quantity, but represents a negative value (-2) if interpreted as a signed quantity.</p>
+<p><strong>Flag setting instructions</strong>:</p>
+<p>The condition flags are set by dedicated comparison instruction like CMP, CMN and TST. These comparison instructions only modify the flags and have no other effect. There are also certain Arithmetic and Logical instructions with S suffix (indicating that the instruction sets flags) that can modify the condition flags. For example: ADDS, SUBS, ADCS, SBCS, ANDS, and BICS.</p>
+<p>Integer instructions like ADDS, SUBS, ADCS, SBCS, CMP, CMN can affect all the four condition flags whereas logical instructions like ANDS, BICS and TST can set only N and Z flags.</p>
+<p>Let us now look in more detail on how the condition flag bits for each operation.</p>
+<p><strong>Addition operation</strong>:</p>
+<p>For addition operation instructions like ADDS, ADCS:</p>
+<ul>
+<li>N bit is set when MSB of result is 1</li>
+<li>Z bit is set when result is 0</li>
+<li>C bit is set when addition results in carry</li>
+<li>V bit is set when:
+<ul>
+<li>Positive + Positive = Negative</li>
+<li>Negative + Negative = Positive</li>
+</ul>
+</li>
+</ul>
+<p><strong>Subtraction operation</strong>:</p>
+<p>For subtraction operation instructions like SUBS, SBCS:</p>
+<ul>
+<li>N bit is set when MSB of result is 1</li>
+<li>Z bit is set when result is 0</li>
+<li>C bit is set when subtraction results in borrow</li>
+<li>V bit is set when:
+<ul>
+<li>Negative - Positive = Positive</li>
+<li>Positive - Negative = Negative</li>
+</ul>
+</li>
+</ul>
+<p><strong>Logical operation</strong>:</p>
+<p>For logical operation instructions like ANDS, BICS:</p>
+<ul>
+<li>N bit is set when MSB of result is 1</li>
+<li>Z bit is set when result is 0</li>
+<li>C bit is always cleared to 0 </li>
+<li>V bit is always cleared to 0 </li>
+</ul>
+<p>Let us now go through some examples to determine the NZCV values after a flag setting instruction is executed: </p>
+<p>Example 1:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>ADDS</td><td>0x50000000</td><td>0x50000000</td><td>0xA0000000</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 1, Z = 0, C = 0, V = 1
+</code></pre>
+</details>
+<p>Example 2:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Addition</td><td>0x80000000</td><td>0x80000000</td><td>0x00000000</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 0, Z = 1, C = 1, V = 1
+</code></pre>
+</details>
+<p>Example 3:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Addition</td><td>0x80000000</td><td>0x90000000</td><td>0x10000000</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 0, Z = 0, C = 1, V = 1
+</code></pre>
+</details>
+<p>Example 4:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Subtraction</td><td>0x00001678</td><td>0x00001000</td><td>0x00000678</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 0, Z = 0, C = 1, V = 0
+</code></pre>
+</details>
+<p>Example 5:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Subtraction</td><td>0x00000006</td><td>0x00000007</td><td>0xFFFFFFFF</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 1, Z = 0, C = 0, V = 0
+</code></pre>
+</details>
+<p>Example 6:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Subtraction</td><td>0xFFFFFFFF</td><td>0xFFFFFFFB</td><td>0x00000004</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 0, Z = 0, C = 1, V = 0
+</code></pre>
+</details>
+<p>Example 7:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Subtraction</td><td>0xD0000004</td><td>0xD0000003</td><td>0x00000001</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 0, Z = 0, C = 1, V = 0
+</code></pre>
+</details>
+<p>Example 8:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Subtraction</td><td>0x70000000</td><td>0xF0000000</td><td>0x80000000</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 1, Z = 0, C = 0, V = 1
+</code></pre>
+</details>
+<p>Example 9:</p>
+<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
+<tr><td>Subtraction</td><td>0xB0000000</td><td>0xB0000000</td><td>0x00000000</td></tr>
+</tbody></table>
+<details>
+  <summary>Click to see the solution after you solve the problem</summary>
+<pre><code> N = 0, Z = 1, C = 1, V = 0
+</code></pre>
+</details>
+<p>We have worked out how the condition flags are set. Let us now see how does that enable conditional execution of code by introducing instructions that read the condition flags.</p>
+<p><strong>Program flow control instructions</strong></p>
+<p>Program flow instructions gives the ability to make decisions on what code to execute next. The instruction set enables conditional execution of program flow control branch instructions. The branch instructions can be broadly categorized to two types:</p>
+<ul>
+<li>Unconditional branches: Unconditional branches do not consider the NZCV flags and they can branch backward or forward up to 128MB from the current program counter location.</li>
+<li>Conditional branches: Conditional branches use the NZCV condition flags to decide whether branch operation should be performed or not. Most conditional branches have a range of +/-1MB.</li>
+</ul>
+<p>The instruction set provides a number of different kinds of branch instructions. Majority of the branch instructions use relative addressing. That is, they branch to an offset from the current address and are called relative branches. An example is B.cond instruction, where 'cond' is one of the fourteen possible condition suffixes. In effect, attaching one of the condition codes to the B instruction causes it to branch to specified offset if the condition(cond) is true. Otherwise, it does nothing, and is essentially a nop. The following table lists the available condition codes, their meanings, and the flags that are tested:</p>
+<table><thead><tr><th>Mnemonic</th><th>Meaning (integer)</th><th>Condition Flags</th></tr></thead><tbody>
+<tr><td>eq</td><td>Equal</td><td>Z == 1</td></tr>
+<tr><td>ne</td><td>Not Equal</td><td>Z == 0</td></tr>
+<tr><td>cs or hs</td><td>Carry Set</td><td>C == 1</td></tr>
+<tr><td>cc or lo</td><td>Carry clear</td><td>C == 0</td></tr>
+<tr><td>mi</td><td>Minus, negative</td><td>N == 1</td></tr>
+<tr><td>pl</td><td>Plus, positive or zero</td><td>N == 0</td></tr>
+<tr><td>vs</td><td>Overflow</td><td>V == 1</td></tr>
+<tr><td>vc</td><td>No Overflow</td><td>V == 0</td></tr>
+<tr><td>hi</td><td>Unsigned higher</td><td>C == 1 &amp;&amp; Z == 0</td></tr>
+<tr><td>ls</td><td>Unsigned lower or same</td><td>!(C == 1 &amp;&amp; Z == 0)</td></tr>
+<tr><td>ge</td><td>Signed greater than or equal</td><td>N == V</td></tr>
+<tr><td>lt</td><td>Signed less than</td><td>N != V</td></tr>
+<tr><td>gt</td><td>Signed greater than</td><td>Z == 0 &amp;&amp; N == V</td></tr>
+<tr><td>le</td><td>Signed lessthan or equal</td><td>!(Z == 0 &amp;&amp; N == V)</td></tr>
+</tbody></table>
+<p>The first few  condition codes would be quite obvious as they test individual flags, but the others rely on specific combinations of flags. However, the understanding of exact flags that would be used for each condition code will be rarely required.</p>
+<p>In addition to the above PC-relative instructions, the instruction set includes absolute branches. The BR Xn instruction performs an absolute branch to the address in Xn.</p>
+<p>The instruction set includes some special conditional branches so that explicit comparison instructions are not needed.</p>
+<ul>
+<li>CBZ Rt, label  : Compare and branch if zero</li>
+<li>CBNZ Rt, label : Compare and branch if not zero
+These instructions compare the source register, either 32-bit or 64-bit, with zero and then conditionally perform a branch. The branch offset has a range of +/- 1MB. These instructions do not read or write the condition code flags (NZCV).</li>
+</ul>
+<p>There are two similar test and branch instructions </p>
+<ul>
+<li>TBZ Rt, bit, label  : Test and branch if Rt<bit> zero</li>
+<li>TBNZ Rt, bit, label : Test and branch if Rt<bit> is not zero
+These instructions test the bit in the source register at the bit position specified by the immediate and conditionally branch depending on whether the bit is set or clear. The branch offset has a range of +/- 32kB. As with CBZ/CBNZ, these instructions do not read or write the condition code flags (NZCV).</li>
+</ul>
+<p>The table below summarizes the supported branch instructions along with brief explanation of the operation:</p>
+<table><thead><tr><th>Instruction</th><th>Description</th></tr></thead><tbody>
+<tr><td>B (offset)</td><td>Program relative branch forward or back 128MB. A conditional version, for example B.EQ, has a 1MB range.</td></tr>
+<tr><td>BR Xn</td><td>Absolute branch to address in Xn</td></tr>
+<tr><td>CBZ Rt, label</td><td>Compare and branch if zero. If Rt is zero, branch forward or back up to 1MB.</td></tr>
+<tr><td>CBNZ Rt, label</td><td>Compare and branch if non-zero. If Rt is not zero, branch forward or back up to 1MB.</td></tr>
+<tr><td>TBNZ Rt, bit, label</td><td>Test and branch if zero. Branch forward or back up to 32kB.</td></tr>
+<tr><td>TBNZ Rt, bit, label</td><td>Test and branch if non-zero. Branch forward or back up to 32kB.</td></tr>
+</tbody></table>
+<p><strong>Conditional select</strong></p>
+<p>The instruction set also provides instructions to perforn conditional select with optional increment, negate, or invert. These can be used to conditionally select between one source register and a second incremented, negated, inverted, or unmodified source register. </p>
+<p>The table below summarizes the conditional select instructions:</p>
+<table><thead><tr><th>Instruction</th><th>Description</th></tr></thead><tbody>
+<tr><td>CSEL</td><td>Select between two registers based on a condition.</td></tr>
+<tr><td>CSINC</td><td>Select between two registers based on a condition. Result would be value of the first source register or the second source register incremented by one.</td></tr>
+<tr><td>CSINV</td><td>Select between two registers based on a condition. Result would be value of the first source register or the inverted second source register.</td></tr>
+<tr><td>CSNEG</td><td>Select between two registers based on a condition. Result would be value of the first source register or the negated second source register.</td></tr>
+</tbody></table>
+<p>One typical use of these instructions is conditional counting. For example:
+CSINC X0, X1, X0, NE 
+The above instruction sets the return register X0 to X1 if Zero flag clear, otherwise it increments X0.</p>
+<p>This class of instructions can also be used to avoid the use of branches. </p>
+<p>NOTE: The following example can be later moved to C programming section</p>
+<p>For example, consider the simple C code:</p>
+<pre><code>if (i == 0) x = x + 5; else x = x - 2;
+
+</code></pre>
+<p>This might be written in assembly using following code:</p>
+<pre><code>CMP w0, #0 // if (i == 0)
+SUB w2, w1, #2 // x = x - 2
+ADD w1, w1, #5 // x = x + 5
+CSEL w1, w1, w2, EQ // select between the two results
+</code></pre>
+<p>The instruction set also provides following additional instructions that use condition codes:</p>
+<ul>
+<li>Condition Set (CSET/CSETM) : Conditionally select between 0 and 1 (CSET) or 0 and -1 (CSETM). Used, for example, to set the condition flags as a boolean value or mask in a general register.</li>
+<li>Conditional compare (CCMP/CCMN):  Sets the condition flags to the result of a comparison if the original condition is true. If not true, the conditional flags are set to a specified condition flag state. The conditional compare instruction is very useful for expressing nested or compound comparisons</li>
+</ul>
+<p><strong>Add/Subtract with Carry</strong>
+In addition to conditional instructions described above, the Carry bit of the condition code can also be used to extend add and subtract operations. These instructions are unconditionally executed but use the condition flags as an extra input to the instruction. For example: ADC(add with carry), SBC(Subtract with carry). </p>
+<p>The operations ADC and SBC perform additions and subtractions that also use the carry condition flag as an input as shown below.</p>
+<pre><code>ADC{S}: Rd = Rn + Rm + C
+SBC{S}: Rd = Rn - Rm - 1 + C
+</code></pre>
+<p>These instructions can be used for performing multi-precision arithmetic and checksums.</p>
+<h2 id="what-we-learned-this-chapter"><a class="header" href="#what-we-learned-this-chapter">What we learned this chapter</a></h2>
+<ul>
+<li>Condition flags and their meaning</li>
+<li>Instructions that set condition code - CMP, TST, ADDS, SUBS, ADCS, SBCS, ANDS, BICS</li>
+<li>Program flow control instructions</li>
+<li>Instructions that make use of conditional flags </li>
+</ul>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="integer_inst.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="stack.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="integer_inst.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="stack.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

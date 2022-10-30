@@ -1,0 +1,628 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>C Language Syntax - Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html" class="active"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="c-language-syntax"><a class="header" href="#c-language-syntax">C Language Syntax</a></h1>
+<h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
+<p>In the C programming language large programs can be organized into smaller, reusable blocks of code called functions. The one C function all programs <strong>must</strong> have is the <em>main</em> function. This is where every program starts execution. </p>
+<p>The syntax of a function is <code>return_type function_name( parameters ) { /* Code inside function */ }</code>. The return type must be a standard C data type or a struct or enum (we will cover them later). If the function returns no value then the return type must be specified as <em>void</em>. In the event no return type is specified then the compiler assumes it to be <em>int</em>. The code inside a function is contained within curly braces.</p>
+<p>Examples of functions:</p>
+<pre><code class="language-c">// These are examples of functions not a full working program. 
+// That is why there is no main().
+
+void function1() {
+  int x = 2;
+  char y = 'i';
+  uart_puts(&quot;Value of x is: &quot;);
+  uart_print_num(x);
+  uart_puts(&quot;Value of y is: &quot;);
+  uart_puts(y);
+}
+
+// A function that takes an integer parameter, increments it by 1 and
+// returns the result as an integer
+
+int addOneToThis(int x) {
+  return x + 1;
+}
+
+void example_fn() {
+  int d = 2;
+  int f = addOneToThis(d);
+  uart_puts(&quot;Value of f is: &quot;);
+  uart_print_num(f);
+}
+</code></pre>
+<p>All functions have a name that is used to call the function. Functions can optionally take parameters. In the example above <em>function1</em> does not take parameters. The return type of the function is <em>void</em> meaning that it does not return any value.  This is a simple function that takes no value and returns no value. It merely prints an integer and a character by making calls to appropriate print functions. Note that we use <strong>two different functions</strong> to print strings and integers. </p>
+<p>The function <em>addOneToThis</em> takes one integer parameter (also called <em>argument</em>) and returns an integer value. This function can be called from any other function by passing an integer value as the argument. The third function <em>example_fn</em> also takes no parameters and does not return any value. It calls <code>addOneTothis(int)</code>.</p>
+<p>The variables that are defined inside a function are local to that function and available only inside the function. This includes any parameters that are passed to the function. In the code above the <em>integer</em> variable <em>x</em> in <em>function1</em> is local to the function and cannot be accessed by any other function including <em>main</em>. When <em>uart_print_num</em> is called a <strong>copy</strong> of the contents of <em>x</em> are passed to it as a parameter.</p>
+<p>Similarly, in the case of <em>example_fn</em> the variable <em>d</em> and <em>f</em> are visible only inside the function. They are not accessible from any other function including <em>addOneToThis</em>. We pass a copy of <em>d</em> to <em>addOneToThis</em> through its parameter named <em>x</em>. When <em>x</em> is changed inside <em>addOneToThis</em> it does not alter the value of <em>d</em> in <em>example_fn</em>. The local copy of <em>d</em>, passed as a parameter, is the one that is modified. The modified value of <em>x</em> is returned by <em>addOneToThis</em>. A copy of the returned value is saved in <em>f</em> in <em>example_fn</em>. Furthermore, any variable that is defined inside <code>{ }</code> is local to the code within the braces.</p>
+<h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
+<p>The C programming language has the following operators:</p>
+<table><thead><tr><th>Arithmetic</th><th></th><th>Relational and Logical</th><th></th></tr></thead><tbody>
+<tr><td><strong>Operator</strong></td><td><strong>Operation</strong></td><td><strong>Operator</strong></td><td><strong>Operation</strong></td></tr>
+<tr><td>+</td><td>addition</td><td>&gt;</td><td>greater than</td></tr>
+<tr><td>-</td><td>subtraction</td><td>&gt;=</td><td>greater than or equal to</td></tr>
+<tr><td>*</td><td>multiplication</td><td>&lt;</td><td>less than</td></tr>
+<tr><td>/</td><td>division</td><td>&lt;=</td><td>less than or equal to</td></tr>
+<tr><td>%</td><td>modulus</td><td>==</td><td>is equal to</td></tr>
+<tr><td>++</td><td>increment</td><td>!=</td><td>is not equal to</td></tr>
+<tr><td>--</td><td>decrement</td><td></td><td></td></tr>
+</tbody></table>
+<p>We have already used the <em>add</em> operator in the example above. That operator takes two <em>integers</em> (or <em>floats</em>) and the expression returns a value of the same type. All arithmetic operators other than <em>increment</em> and <em>decrement</em> work the same way as <em>add</em>.</p>
+<p>The <em>increment</em> and <em>decrement</em> operators need only one input. They increase or decrease the value of that variable by 1.</p>
+<pre><code class="language-c">// A version with increment operator
+int addOneToThis(int x) {
+  return x++;
+}
+</code></pre>
+<p>The <em>increment</em> and <em>decrement</em> operators can be used as pre-fix or post-fix operators. The example below shows the difference:</p>
+<pre><code class="language-c">
+void preFixPostFixExample() {
+  int x = 2;
+
+  //pre-fix increment
+  int y = ++x; // increment the value of x then store in y
+
+  uart_puts(&quot;Value of y is: &quot;);
+  uart_print_num(y); // y = 3
+  uart_puts(&quot;Value of x is: &quot;);
+  uart_print_num(x); // x = 3
+
+  // post-fix decrement
+  y = x--;
+  uart_puts(&quot;Value of y is: &quot;);
+  uart_print_num(y); // y = 3
+  uart_puts(&quot;Value of x is: &quot;);
+  uart_print_num(x); // x = 2
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/prefix_postfix_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make prefix_postfix_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT : 
+Value of y is:
+3
+Value of x is:
+3
+Value of y is:
+3
+Value of x is:
+2
+</code></pre>
+<h2 id="expressions-and-statements"><a class="header" href="#expressions-and-statements">Expressions and statements</a></h2>
+<p>In the C programming language an <em>expression</em> is a combination of operands and operators. Expressions typically return a value. Here are examples of expressions:</p>
+<pre><code class="language-c">x + 1
+
+y &lt; 5
+
+a == b
+
+3 + f * 2
+
+g = 0  //This is an assignment expression and it returns the value assigned to g
+
+</code></pre>
+<p>An <em>expression</em> becomes a <em>statement</em> when it is terminated by a semi-colon. Examples:</p>
+<pre><code class="language-c">x + 1;
+
+y &lt; 5;
+
+a == b;
+
+3 + f * 2;
+
+g = 0;
+</code></pre>
+<p>Of course variables have to be declared before use in <em>expressions</em> or <em>statements</em>. For example:</p>
+<pre><code class="language-c">int x;
+int j;
+</code></pre>
+<p>Curly braces (i.e. { }) are used to group declarations (i.e. int x;) and statements together into a <em>block</em>. Blocks do not have to be terminated by a semi-colon. Variables can be declared inside any block and their <em>scope</em> will be limited to the corresponding block. We will discuss scope of variables later in this section.</p>
+<h2 id="control-flow"><a class="header" href="#control-flow">Control flow</a></h2>
+<p>Control flow syntax can be used to selectively execute code or execute a certain section of code multiple times.</p>
+<h2 id="if-else"><a class="header" href="#if-else">If-else</a></h2>
+<p><em>if-else</em> expressions are used to selectively execute code if specific conditions are met. In an <em>if-else</em> pair only the <em>if-block</em> or the <em>else-block</em> will be executed. For example:</p>
+<pre><code class="language-c">// function returns the lower of two integers
+int find_lower_int(int x, int y) {
+  if (x &lt;= y) {
+    // if the value of x is less than or equal to y
+    // execute the code in this block
+    return x;
+  } else {
+    // if the condition above is false
+    // execute code in this block
+    return y;
+  }
+}
+
+int main()
+{
+    int lower_int_val = find_lower_int(2, 6);
+    uart_print_num(lower_int_val);
+}
+
+</code></pre>
+<p>This code is available in file exercises/c_functions/if_else_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make if_else_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT : 2
+</code></pre>
+<p>The condition being evaluated by the if block can be a variable or a expression. The <em>if-block</em> is executed if the variable is non-zero (of the expression evaluates to a non-zero value). Note that the <em>else-block</em> is completely optional. If the block is not present nothing is executed if the expression is 0. The program just moves on to the next line of code.</p>
+<h3 id="loops"><a class="header" href="#loops">Loops</a></h3>
+<p>There are three types of loops in the C language:</p>
+<ul>
+<li>for loop</li>
+<li>while loop</li>
+<li>do while loop</li>
+</ul>
+<p>The general form of the <em>for</em> loop is shown below:</p>
+<pre><code>for (expr1; expr2; expr3) {
+  /* loop code */
+}
+</code></pre>
+<p>The loop syntax has three <em>expressions</em> - <em>expr1</em> is the initial expression that is executed just once. The expression <em>expr2</em> is a loop termination condition and is executed at the beginning of every iteration of the loop. The final <em>expr3</em> typically changes variables that count the current iteration of the loop. Below is a specific example:</p>
+<pre><code class="language-c">void main() {
+  int i;
+  for(i = 0; i &lt; 5; i++) {
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+  }
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/for_loop_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make for_loop_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT : 
+Value of i:
+0
+Value of i:
+1
+Value of i:
+2
+Value of i:
+3
+Value of i:
+4
+After the loop i is:
+5
+</code></pre>
+<p>In this loop the loop control variable <em>i</em> is first set to 0 - this is the first expression in the <em>for</em> statement. The value of this variable determines when the loop will end. The second expression in the statement is <em>i &lt; 5</em>. As long as this expression evaluates to a non-zero value (true) the loop will execute another iteration. The third expression - <em>i++</em> - is code that will be executed as part of the loop.</p>
+<p>At the start of the loop <em>i = 0</em> is executed <strong>once</strong> and the value of the loop control variable (<em>i</em>) is set to 0. This expression is not executed after the first time (i.e. in any iteration of the loop).</p>
+<p>The second expression - <em>i &lt; 5</em> - is executed at the beginning of every iteration of the loop. If the expression evaluates to <em>true</em> then the loop contents are executed. If not, control flow jumps to the code after the loop. The last expression - <em>i++</em> - increments the control variable and is executed as though it is part of the loop code. The <em>for</em> loop code will print:</p>
+<pre><code>Value of i:
+0
+Value of i:
+1
+Value of i:
+2
+Value of i:
+3
+Value of i:
+4
+After the loop i is:
+5
+</code></pre>
+<p>In the first 5 iterations the value of <em>i</em> will be incremented by 1 during every iteration. So it will go from 0 till 4. As part of the code executing in the 5th iteration the value of <em>i</em> will be incremented to 5. At the beginning of the 6th iteration the comparison <em>i &lt; 5</em> will evaluate to 0 (false). So the loop contents are skipped and the remaining statements of code are executed.</p>
+<p>Another type of loop is the <em>while</em> loop. The general form of the while loop is:</p>
+<pre><code class="language-c">while (expr1) {
+  /*loop code*/
+}
+</code></pre>
+<p>This loop is executed as long as the expression expr1 evaluates to a non-zero value (i.e. true). The expression can be any legal expression in the C programming language. Usually it will involve a relational/logical operator. This while-loop example gives the same result as the for-loop example above:</p>
+<pre><code class="language-c">void main() {
+  int i= 0;
+
+  while(i &lt; 5) {
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+    i++;
+  }
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/while_loop_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make while_loop_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT:
+Value of i:
+0
+Value of i:
+1
+Value of i:
+2
+Value of i:
+3
+Value of i:
+4
+After the loop i is:
+5
+</code></pre>
+<p>In both the above loop constructs the loop termination condition is checked at the start of the loop. This means if the condition is not satisfied when the first iteration of the loop is encountered then the loop may be skipped. For example, in the while-loop code above if we initialize the value of <em>i</em> to be 5 or greater then the loop contents will not get executed.</p>
+<p>In the do-while loop the termination condition is checked at the end of the loop. Here is an example:</p>
+<pre><code class="language-c">void main() {
+  int i= 0;
+
+  do {
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+    i++;
+  } while(i &lt; 5);
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/do_while_loop_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make do_while_loop_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT :
+Value of i:
+0
+Value of i:
+1
+Value of i:
+2
+Value of i:
+3
+Value of i:
+4
+After the loop i is:
+5
+</code></pre>
+<p>The above code also prints the same output as the previous loops. However, this loop will get executed at least once. So even if we set the initial value of <em>i</em> to something greater than 5 the loop will still be executed once - because the condition is checked at the end of the loop.</p>
+<h3 id="break-and-continue"><a class="header" href="#break-and-continue">break and continue</a></h3>
+<p>Sometimes we may want to end a loop earlier than the control expression allows us to. This can be done using the <strong>break</strong> statement. Here is a modified version of the <em>do-while</em> example:</p>
+<pre><code class="language-c">void main() {
+  int i= 0;
+
+  do {
+    if (i &gt; 4)
+      break;
+
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+    i++;
+  } while(i &lt; 5);
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/break_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make break_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT :
+Value of i:
+0
+Value of i:
+1
+Value of i:
+2
+Value of i:
+3
+Value of i:
+4
+After the loop i is:
+5
+</code></pre>
+<p>The above code gives the same output at the previous loops. However, unlike in the previous <em>do-while</em> loop, if the initial value of <em>i</em> is set greater than 4 it will enter the loop and exit it at the <em>break</em> statement without executing the remaining iterations. Couple of things to note in the code above -</p>
+<ol>
+<li>We can use an if-statement without an else. If the condition is satisfied the contents of the if-block are executed. If the condition is not satisfied those contents are skipped over.</li>
+<li>There are no curly braces enclosing the contents of the if-statement. In the event we have only one statement to put inside an if-statement we can skip the braces. Same holds for for- and while-statements.</li>
+</ol>
+<p>Sometimes we may want to skip an iteration of the loop based on a condition and not exit the loop completely. In the example below we print only even numbers:</p>
+<pre><code class="language-c">void main() {
+  int i;
+  for(i = 0; i &lt; 10; i++) {
+    if (i % 2 != 0)
+      continue;
+
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+  }
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/continue_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make continue_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT:
+Value of i:
+0
+Value of i:
+2
+Value of i:
+4
+Value of i:
+6
+Value of i:
+8
+After the loop i is:
+10
+</code></pre>
+<p>The first code statement inside the loop checks to see if <em>i</em> is perfectly divisible by 2. All even numbers, as you know, can be divided by 2 leaving no remainder. The mod operator (%) divides the first number by the second and returns the remainder. We check if that value <strong>does not equal 0</strong>. If the condition is true that means <em>i</em> is a odd number and we use <em>continue</em> to go back to the start of the loop and execute the next iteration.</p>
+<p>While using loops programmers should be careful to ensure that the loop termination condition will be met eventually. If that condition is not met then the loop will never exit and the program will run for ever. It is pretty easy to get into trouble like that when copy-pasting code :-). For example, here is the code to print even numbers. But it has a bug that makes the loop an infinite loop. Can you find the error and how to fix it?</p>
+<pre><code class="language-c">void main() {
+  int i= 0;
+
+  while(i &lt; 10) {
+
+    //This works for the for-loop so let me paste it here.
+    if (i % 2 != 0)
+      continue;
+
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+    i++;
+  }
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+<details>
+  <summary>Try solving it your self  first and then click here to see answer.</summary>
+<pre><code class="language-c">void main() {
+  int i= 0;
+
+  while(i &lt; 10) {
+    if (i % 2 != 0) {
+      i++;
+      continue;
+    }
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+    i++;
+  }
+
+  uart_puts(&quot;After the loop i is:&quot;);
+  uart_print_num(i);
+}
+</code></pre>
+</details>
+<h3 id="switch"><a class="header" href="#switch">Switch</a></h3>
+<p>The <em>switch</em> statement is another way in which a decision can be made on which code section will be executed. The general form of the <em>switch</em> statement is:</p>
+<pre><code class="language-c">switch (expression) {
+  case constant-expression1: code
+  case constant-expression2: code
+  default: code
+}
+</code></pre>
+<p>The way <em>swtich</em> works is that if <em>expression</em> matches any of the expressions in a case statement then the code corresponding to the  matching case statements are executed.</p>
+<p>Here is an example of using the <em>switch</em> statement:</p>
+<pre><code class="language-c">void main() {
+  int x = 25;
+
+  switch x {
+    case 5:
+      uart_puts(&quot;X is 5&quot;);
+      break;
+    case 10:
+    case 15:
+      uart_puts(&quot;X is 10 or 15&quot;);
+      break;
+    case 25:
+      uart_puts(&quot;X is 25&quot;);
+      break;
+    default:
+      uart_puts(&quot;I dont know what X is...&quot;);
+      break;
+  }
+}
+</code></pre>
+<p>This code is available in file exercises/c_functions/switch_example.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make switch_example.elf
+RUN_COMMAND: make run
+EXPECTED_OUTPUT : X is 25
+</code></pre>
+<p>Some things to be aware of regarding <em>switch</em>:</p>
+<ul>
+<li>If we want the same code to execute for two different cases then place them right next to each other like <em>case 10</em> and <em>case 15</em> above.</li>
+<li>The code fragments of each case has to end with a <em>break</em> statement to exit the <em>switch</em>. If not, matching with other <em>case</em> statements will continue.</li>
+<li><em>default</em> will match if no other <em>case</em> matches. However, it is optional. If omitted and the given expression does not match any <em>case</em> then none of the code statements inside the <em>switch</em> will be executed.</li>
+</ul>
+<p>Note that almost everything that can be done with <em>switch</em> statement can also be accomplished using <em>if-else</em>. But there may be times when one form is preferable over the other for conciseness or readability. fff</p>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
+<p>We covered a lot of C programming language syntax in this section. While we have not covered all of the language this should be sufficient for the reader to tackle the programming exercises in the next section. We will cover additional bits of the language as and when we need to use them.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="c_variables.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="c_exercises.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="c_variables.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="c_exercises.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
