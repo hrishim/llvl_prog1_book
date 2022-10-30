@@ -73,4 +73,4 @@ As most readers probably know, computers store and process data as *bits*. A sin
 
 ## Summary
 
-In this book - i.e. part 1 - will learn how to write programs that run on the Arm Cores. In the process we will learn the Arm A-class processor architecture, Arm assembly, and some low level C programming.
+In this book - i.e. part 1 - you will learn how to write programs that run on the Arm Cores. In the process we will learn the Arm A-class processor architecture, Arm assembly, and some C programming.
