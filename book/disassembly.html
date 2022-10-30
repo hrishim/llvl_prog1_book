@@ -1,0 +1,684 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Disassembly examples - Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html" class="active"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="disassembly-examples"><a class="header" href="#disassembly-examples">Disassembly examples</a></h1>
+<p>In this chapter we will examine the disassembly of some common C language syntax.</p>
+<h2 id="disassembly-of-control-flow-syntax"><a class="header" href="#disassembly-of-control-flow-syntax">Disassembly of control-flow syntax</a></h2>
+<p>Let us now look at disassembly of examples we had introduced in the <strong>Control flow</strong> subsection from <strong>C Language Syntax</strong>.</p>
+<h3 id="if-else"><a class="header" href="#if-else">If-Else</a></h3>
+<p>Here is the code for <em>if-else</em> statement example from C language syntax section: </p>
+<pre><code class="language-c">#include &quot;uart.h&quot;
+
+
+int main()
+{
+    int lower_int_val = find_lower_int(2, 6);
+    uart_print_num(lower_int_val);
+}
+
+// function returns the lower of two integers
+int find_lower_int(int x, int y) {
+  if (x &lt;= y) {
+    // if the value of x is less than or equal to y
+    // execute the code in this block
+    return x;
+  } else {
+    // if the condition above is false
+    // execute code in this block
+    return y;
+  }
+}
+
+</code></pre>
+<p>Path of example:</p>
+<pre><code>exercises/c_functions/if_else_example.c
+</code></pre>
+<p>The command for compiling if_else_example.c file is:</p>
+<pre><code>aarch64-none-elf-gcc -O0 -ffreestanding -nostdinc -nostdlib -nostartfiles -I../include/ \
+-c if_else_example.c -o if_else_example.o
+</code></pre>
+<p>The <strong>-O0</strong> option in the above command tells compiler not to optimize the code. The compiler optimization tries to improve the generated assembly code by making it consume fewer resources (compile time, memory space etc) so that it will result in faster-running machine code. We disable optimization here to make it easier to relate the C statements with the disassembly. Compiler supports different levels for optimization from <strong>-O0</strong> to <strong>-O3</strong>. <strong>-O0</strong> completly disables optimization and <strong>-O3</strong> performs maximum amount of optimization.</p>
+<p>The linker command to produce final executable for this example is:</p>
+<pre><code>aarch64-none-elf-ld -nostdlib -nostartfiles start.o if_else_example.o ../common/uart.o -T link.ld -o if_else_example.elf
+</code></pre>
+<p>For generating disassembly for examples in this chapter we will an add option <strong>--source</strong> to <strong>objdump</strong> command. Turning on this switch tells it to interleave source code with disassembly. This would help in associating C lines with assembly. Here is the full command to produce the disassembly output for this example:</p>
+<pre><code>aarch64-none-elf-objdump --source -d if_else_example.o &gt; if_else_example.disass
+</code></pre>
+<p>Let us now look at the output in more detail in small logical blocks. We will start with the <em>main</em> function. </p>
+<p>First registers x29 and x30 iare stored on the stack and SP is moved to x29.</p>
+<pre><code>0000000000080088 &lt;main&gt;:
+
+int main()
+{
+   80088:       a9be7bfd        stp     x29, x30, [sp, #-32]!
+   8008c:       910003fd        mov     x29, sp
+</code></pre>
+<p>Then arguments are prepared for calling the function <strong>find_lower_int</strong>. Before calling the function, values 2 and 6 are moved to registers <strong>w0</strong> and <strong>w1</strong>. If you recall from <strong>Chapter 9: Functions</strong>, registers <strong>w0</strong> through <strong>w7</strong> are used to pass arguments to functions and <strong>w0</strong> is used to return a value from the function. </p>
+<pre><code>    int lower_int_val = find_lower_int(2, 6);
+   80090:       528000c1        mov     w1, #0x6                        // #6
+   80094:       52800040        mov     w0, #0x2                        // #2
+</code></pre>
+<p>The function <strong>find_lower_int</strong> is called using <strong>bl</strong> instruction. Finally the return value from the function which is placed in GPR <strong>x0</strong> is stored to stack at offset 0x28.</p>
+<pre><code>   80098:       97fffff0        bl      80058 &lt;find_lower_int&gt;
+   8009c:       b9001fe0        str     w0, [sp, #28]
+</code></pre>
+<p>This code loads back the value from stack to GPR <strong>x0</strong> and calls the <strong>uart_print_num</strong> function to print the value in UART.</p>
+<pre><code>    uart_print_num(lower_int_val);
+   800a0:       b9801fe0        ldrsw   x0, [sp, #28]
+   800a4:       940000db        bl      80410 &lt;uart_print_num&gt;
+}
+</code></pre>
+<p>The above code loads back the value from stack to GPR <strong>x0</strong> and calls the <strong>uart_print_num</strong> function to print the value in UART.</p>
+<pre><code>   800a8:       d503201f        nop
+   800ac:       a8c27bfd        ldp     x29, x30, [sp], #32
+   800b0:       d65f03c0        ret
+</code></pre>
+<p>Now let us us now look at the function <strong>find_lower_int</strong> that returns the lower of two integers. The <strong>sub</strong> instruction creates space for stack and following <strong>str</strong> instructions save <strong>w0</strong> and <strong>w1</strong> in stack at offset #12 and #8.</p>
+<pre><code>// function returns 
+int find_lower_int(int x, int y) {
+   80058:       d10043ff        sub     sp, sp, #0x10
+   8005c:       b9000fe0        str     w0, [sp, #12]
+   80060:       b9000be1        str     w1, [sp, #8]
+</code></pre>
+<p>This code loads back <strong>w1</strong> and <strong>w0</strong> from stack from offsets <strong>12</strong> and #8, effectively swapping the original value of <strong>w0</strong> with <strong>w1</strong>. It then compares the value of <strong>w1</strong> with <strong>w0</strong> and branches to location 0x8007c if value in <strong>w1</strong> is greater than <strong>w0</strong> value.</p>
+<pre><code>  if (x &lt;= y) {
+   80064:       b9400fe1        ldr     w1, [sp, #12]
+   80068:       b9400be0        ldr     w0, [sp, #8]
+   8006c:       6b00003f        cmp     w1, w0
+   80070:       5400006c        b.gt    8007c &lt;find_lower_int+0x24&gt;
+</code></pre>
+<p>This stores the value in <strong>w0</strong> to stack at offset #12. It then unconditionally branches to location 0x80080.</p>
+<pre><code>    // if the value of x is less than or equal to y
+    // execute the code in this block
+    return x;
+   80074:       b9400fe0        ldr     w0, [sp, #12]
+   80078:       14000002        b       80080 &lt;find_lower_int+0x28&gt;
+</code></pre>
+<p>This loads register <strong>w0</strong> from stack at offset #8.</p>
+<pre><code>  } else {
+    // if the condition above is false
+    // execute code in this block
+    return y;
+   8007c:       b9400be0        ldr     w0, [sp, #8]
+  }
+}
+</code></pre>
+<p>It finally adjusts the stack by 0x10 to remove the space it had allocated for itself at the start of the function.</p>
+<pre><code>   80080:       910043ff        add     sp, sp, #0x10
+   80084:       d65f03c0        ret
+</code></pre>
+<p>You would have noticed, with <strong>-O0</strong> option that we had used to <strong>disable optimizations</strong> makes the generated code very verbose. It forces the generated assembly code to make use of many unnecessary stack operations to save and restore intermediate results. At the same time, using a higher optimization level like <strong>-O3</strong> would make it hard to relate the C statements with generated disassembly. For example, here is the if-else example from above compiled with <strong>-O1</strong>.</p>
+<p>Use the command line below to to compile:</p>
+<pre><code>aarch64-none-elf-gcc -O1 -ffreestanding -nostdinc -nostdlib -nostartfiles -I../include/ \
+-c if_else_example.c -o if_else_example.o
+</code></pre>
+<p>Let us first look at the disassembly output of the <strong>main</strong> function:</p>
+<pre><code>0000000000000000 &lt;main&gt;:
+
+int main()
+{
+   0:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+
+    int lower_int_val = find_lower_int(2, 6);
+    uart_print_num(lower_int_val);
+   4:	d2800040 	mov	x0, #0x2                   	// #2
+   8:	910003fd 	mov	x29, sp
+    uart_print_num(lower_int_val);
+   c:	94000000 	bl	0 &lt;uart_print_num&gt;
+  10:	a8c17bfd 	ldp	x29, x30, [sp], #16
+  14:	d65f03c0 	ret
+</code></pre>
+<p>Compilers are capable of performing fairly advanced optimizations. 
+Here, the compiler appears to have intelligently figured out that <strong>0x2</strong> is lower that <strong>0x6</strong> and moves value <strong>0x2</strong> to register <strong>x0</strong>, thereby completely avoiding the need to perform call to <strong>find_lower_int</strong> function!! It was able to do this because we passed 2 and 6 as literal values. So the compiler figured out that in this instance the output of <code>find_lower_int()</code> will always be 2.</p>
+<p>Let us now see the code for <strong>find_lower_int</strong> function:</p>
+<pre><code>0000000000000000 &lt;find_lower_int&gt;:
+  } else {
+    // if the condition above is false
+    // execute code in this block
+    return y;
+  }
+}
+   0:	6b01001f 	cmp	w0, w1
+   4:	1a81d000 	csel	w0, w0, w1, le
+   8:	d65f03c0 	ret
+</code></pre>
+<p>Although, the <strong>main</strong> function completely avoided call to <strong>find_lower_int</strong> function, the compiler has still generates code for the <strong>find_lower_int</strong> function so that it can honour calls from any other function that could not be optimized. It chooses to perform the entire functionality by using the <strong>csel</strong> instruction and returns the result in <strong>x0</strong> to its caller.</p>
+<p>As an exercise, you can try generating just the disassenbly output without interleaving source code for this example.</p>
+<p>At <strong>-O0</strong> the compiler generates very verbose code with a lot of unnecessary loads and stores. At higher optimization levels it could completely remove C code. This is a good thing in the real world but not useful when we want to show readers examples of what C code looks like when compiled. Therefore, for the remaining examples, we will use an optimization level that helps illustrate the point we want to convey.</p>
+<h3 id="switch-statement-example"><a class="header" href="#switch-statement-example">Switch statement example</a></h3>
+<p>Let us now look at the <strong>switch</strong> statement from the C language syntax section: </p>
+<pre><code class="language-c">#include &quot;uart.h&quot;
+int SAMPLE_VALUE = 25;
+
+void main() {
+  int x = SAMPLE_VALUE;
+
+  switch (x) {
+    case 5:
+      uart_puts(&quot;X is 5&quot;);
+      break;
+    case 10:
+    case 15:
+      uart_puts(&quot;X is 10 or 15&quot;);
+      break;
+    case 25:
+      uart_puts(&quot;X is 25&quot;);
+      break;
+    default:
+      uart_puts(&quot;I dont know what X is...&quot;);
+      break;
+  }
+}
+</code></pre>
+<p>Path of example:</p>
+<pre><code>exercises/c_functions/switch_example.c
+</code></pre>
+<p>Compiler/Linker commands:</p>
+<pre><code>aarch64-none-elf-gcc -O1 -g -ffreestanding -nostdinc -nostdlib -nostartfiles -I../include/ \
+-c switch_example.c -o switch_example.o
+aarch64-none-elf-ld -nostdlib -nostartfiles start.o switch_example.o ../common/uart.o \
+-T link.ld -o switch_example.elf
+</code></pre>
+<p>Disassembly command:</p>
+<pre><code>aarch64-none-elf-objdump --source -d switch_example.elf &gt; switch_example.disass
+</code></pre>
+<p>Disassembly output:</p>
+<pre><code>#include &quot;uart.h&quot;
+int SAMPLE_VALUE = 25;
+
+void main() {
+   80058:	a9bf7bfd 	stp	x29, x30, [sp, #-16]!
+   8005c:	910003fd 	mov	x29, sp
+  int x = SAMPLE_VALUE;
+   80060:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   80064:	b945bc00 	ldr	w0, [x0, #1468]
+
+  switch (x) {
+   80068:	71003c1f 	cmp	w0, #0xf
+   8006c:	540000c0 	b.eq	80084 &lt;main+0x2c&gt;  // b.none
+   80070:	5400012c 	b.gt	80094 &lt;main+0x3c&gt;
+   80074:	7100141f 	cmp	w0, #0x5
+   80078:	540001a0 	b.eq	800ac &lt;main+0x54&gt;  // b.none
+   8007c:	7100281f 	cmp	w0, #0xa
+   80080:	54000201 	b.ne	800c0 &lt;main+0x68&gt;  // b.any
+    case 5:
+      uart_puts(&quot;X is 5&quot;);
+      break;
+    case 10:
+    case 15:
+      uart_puts(&quot;X is 10 or 15&quot;);
+   80084:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   80088:	91162000 	add	x0, x0, #0x588
+   8008c:	94000062 	bl	80214 &lt;uart_puts&gt;
+      break;
+   80090:	1400000a 	b	800b8 &lt;main+0x60&gt;
+  switch (x) {
+   80094:	7100641f 	cmp	w0, #0x19
+   80098:	54000141 	b.ne	800c0 &lt;main+0x68&gt;  // b.any
+    case 25:
+      uart_puts(&quot;X is 25&quot;);
+   8009c:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   800a0:	91166000 	add	x0, x0, #0x598
+   800a4:	9400005c 	bl	80214 &lt;uart_puts&gt;
+      break;
+   800a8:	14000004 	b	800b8 &lt;main+0x60&gt;
+      uart_puts(&quot;X is 5&quot;);
+   800ac:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   800b0:	91160000 	add	x0, x0, #0x580
+   800b4:	94000058 	bl	80214 &lt;uart_puts&gt;
+      break;
+   800b8:	a8c17bfd 	ldp	x29, x30, [sp], #16
+   800bc:	d65f03c0 	ret
+    default:
+      uart_puts(&quot;I dont know what X is...&quot;);
+      break;
+   800c0:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   800c4:	91168000 	add	x0, x0, #0x5a0
+   800c8:	94000053 	bl	80214 &lt;uart_puts&gt;
+}
+   800cc:	17fffffb 	b	800b8 &lt;main+0x60&gt;
+
+</code></pre>
+<p>Let us now look at the output in more detail on how the compiler has transformed the switch and case statements: </p>
+<p>It has converted the <strong>switch</strong> statement to a series of <strong>compare</strong> and <strong>conditional branch</strong> instructions. It compares the input argument against the values used in <strong>case</strong> statement and branches to the appropriate section of code generated for the corresponding <strong>case</strong> statement as shown below:</p>
+<pre><code>  switch (x) {
+   80068:	71003c1f 	cmp	w0, #0xf
+   8006c:	540000c0 	b.eq	80084 &lt;main+0x2c&gt;  // b.none
+   80070:	5400012c 	b.gt	80094 &lt;main+0x3c&gt;
+   80074:	7100141f 	cmp	w0, #0x5
+   80078:	540001a0 	b.eq	800ac &lt;main+0x54&gt;  // b.none
+   8007c:	7100281f 	cmp	w0, #0xa
+   80080:	54000201 	b.ne	800c0 &lt;main+0x68&gt;  // b.any
+</code></pre>
+<p>The code for each <strong>case</strong> statement gets the address of string literal to be printed using <strong>adrp</strong> instruction and performs a call to <strong>uart_puts</strong> function to print the string:</p>
+<pre><code>      uart_puts(&quot;X is 5&quot;);
+   800ac:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   800b0:	91160000 	add	x0, x0, #0x580
+   800b4:	94000058 	bl	80214 &lt;uart_puts&gt;
+</code></pre>
+<p>The code for <strong>default</strong> statement too similarly loads the corresponding string:</p>
+<pre><code>    default:
+      uart_puts(&quot;I dont know what X is...&quot;);
+      break;
+   800c0:	90000000 	adrp	x0, 80000 &lt;_start&gt;
+   800c4:	91168000 	add	x0, x0, #0x5a0
+   800c8:	94000053 	bl	80214 &lt;uart_puts&gt;
+</code></pre>
+<h3 id="for-loop"><a class="header" href="#for-loop">For Loop</a></h3>
+<p>Let us now look at the <strong>For loop</strong> example from the C language syntax section: </p>
+<pre><code class="language-c">#include &quot;uart.h&quot;
+int NUM = 5;
+void main() {
+  int i;
+  for(i = 0; i &lt; NUM; i++) {
+    uart_puts(&quot;Value of i: &quot;);
+    uart_print_num(i);
+  }
+}
+</code></pre>
+<p>Path of example:</p>
+<pre><code>exercises/c_functions/for_loop_example.c
+</code></pre>
+<p>Compiler/Linker commands:</p>
+<pre><code>aarch64-none-elf-gcc -O1 -ffreestanding -nostdinc -nostdlib -nostartfiles -I../include/ \
+-c for_loop_example.c -o for_loop_example.o
+aarch64-none-elf-ld -nostdlib -nostartfiles start.o for_loop_example.o ../common/uart.o -T link.ld -o for_loop_example.elf
+</code></pre>
+<p>Disassembly command:</p>
+<pre><code>aarch64-none-elf-objdump --source -d for_loop_example.o &gt; for_loop_example.disass
+</code></pre>
+<p>Disassembly output:</p>
+<pre><code>void main() {
+   80068:	a9bd7bfd 	stp	x29, x30, [sp, #-48]!
+   8006c:	910003fd 	mov	x29, sp
+   80070:	a90153f3 	stp	x19, x20, [sp, #16]
+   80074:	f90013f5 	str	x21, [sp, #32]
+  for(i = 0; i &lt; NUM; i++) {
+   80078:	d2800013 	mov	x19, #0x0                   	// #0
+    uart_puts(&quot;Value of i: &quot;);
+   8007c:	90000015 	adrp	x21, 80000 &lt;_start&gt;
+   80080:	9115c2b5 	add	x21, x21, #0x570
+  for(i = 0; i &lt; NUM; i++) {
+   80084:	90000014 	adrp	x20, 80000 &lt;_start&gt;
+   80088:	91160294 	add	x20, x20, #0x580
+    uart_puts(&quot;Value of i: &quot;);
+   8008c:	aa1503e0 	mov	x0, x21
+   80090:	9400005d 	bl	80204 &lt;uart_puts&gt;
+    uart_print_num(i);
+   80094:	aa1303e0 	mov	x0, x19
+   80098:	940000de 	bl	80410 &lt;uart_print_num&gt;
+  for(i = 0; i &lt; NUM; i++) {
+   8009c:	91000673 	add	x19, x19, #0x1
+   800a0:	b9400280 	ldr	w0, [x20]
+   800a4:	6b13001f 	cmp	w0, w19
+   800a8:	54ffff2c 	b.gt	8008c &lt;main+0x34&gt;
+  }
+}
+   800ac:	a94153f3 	ldp	x19, x20, [sp, #16]
+   800b0:	f94013f5 	ldr	x21, [sp, #32]
+   800b4:	a8c37bfd 	ldp	x29, x30, [sp], #48
+   800b8:	d65f03c0 	ret
+</code></pre>
+<p>Let us now look at the output in more detail on how the <strong>for</strong> loop gets converted to assembly instructions: </p>
+<p>As we recall from <strong>for</strong> loop section of C language syntax, the for loop syntax has three expressions: expr1 is the initial expression that is executed just once. The expression expr2 is a loop termination condition and is executed at the beginning of every iteration of the loop. The final expr3 typically changes variables that count the current iteration of the loop. The below code to move 0 to <strong>x19</strong> corresponds to initial expression that initializes i with 0:</p>
+<pre><code>  for(i = 0; i &lt; NUM; i++) {
+   80078:	d2800013 	mov	x19, #0x0                   	// #0
+</code></pre>
+<p>It subsequently initializes <strong>x21</strong> with address of string used in uart_puts within loop so that it need not repeat executing <strong>adrp</strong> instruction every iteration of the for loop: </p>
+<pre><code>    uart_puts(&quot;Value of i: &quot;);
+   8007c:	90000015 	adrp	x21, 80000 &lt;_start&gt;
+   80080:	9115c2b5 	add	x21, x21, #0x570
+</code></pre>
+<p>It similarly initializes <strong>x20</strong> with the address of global variable <strong>NUM</strong>: </p>
+<pre><code>   80084:	90000014 	adrp	x20, 80000 &lt;_start&gt;
+   80088:	91160294 	add	x20, x20, #0x580
+</code></pre>
+<p>The following assembly instructions correspond to <strong>expr2</strong> and <strong>expr3</strong> of the for loop. The <strong>x19</strong> value is incremented by 1 by the <strong>add</strong> instruction. The <strong>ldr</strong> instruction loads the value in global variable <strong>NUM</strong> using the <strong>x20</strong> register it had initialized before the loop and compares the value with <strong>x19</strong>. The result of the compare is used to decide whether to jump back to the start of the loop(address 0x8008c) and exit the loop by not taking the branch (<strong>b.gt</strong>). 
+for(i = 0; i &lt; NUM; i++) {
+8009c:	91000673 	add	x19, x19, #0x1
+800a0:	b9400280 	ldr	w0, [x20]
+800a4:	6b13001f 	cmp	w0, w19
+800a8:	54ffff2c 	b.gt	8008c &lt;main+0x34&gt;</p>
+<p>It is left as an exercise to the reader to generate disassebly for the <strong>while</strong> and <strong>do-while</strong> loop examples in C Language Syntax section and analyze the disassembly output.</p>
+<h2 id="disassembly-of-functions"><a class="header" href="#disassembly-of-functions">Disassembly of functions</a></h2>
+<p>Let us now at disassembly output of some functions.</p>
+<h3 id="swap-function-with-pointers"><a class="header" href="#swap-function-with-pointers">Swap function with pointers</a></h3>
+<p>Let us now look at an example to swap two integer variables. The <strong>swap</strong> function in the code below swaps the integer variables <em>num1</em> and <em>num2</em> using a temporary variable <em>temp</em>. The temp variable is first assigned the value of the <em>num1</em> variable. Then, the value of the <em>num2</em> is assigned to <em>num1</em>. Finally, the temp (which holds the initial value of <em>num1</em>) is assigned to <em>num2</em> completing the swapping of the two variables. This is clearly a naive implementation that will not correctly swap the values. Why is that the case? When we call the <code>swap()</code> from <code>main()</code> by passing values NUM1 and NUM2 a copy of those values are passed as <em>num1</em> and <em>num2</em>. The scope of these copies is limited to the <code>swap()</code> function and those memory locations do not &quot;exist&quot; outside that function.</p>
+<p>Let us take a look at the code for <strong>broken swap function</strong>: </p>
+<pre><code>#include &quot;uart.h&quot;
+
+// function to swap the two numbers
+void swap(int num1,int num2)
+{
+    int temp;
+    temp   = num1;
+    num1   = num2;
+    num2   =  temp;
+}
+
+int main()
+{
+    int NUM1 =  2, NUM2 = 5;
+
+    //displaying numbers after swapping
+    uart_print_num(NUM1);
+    uart_print_num(NUM2);
+
+    // Your code starts here
+
+    swap(NUM1,NUM2);
+
+    // Your code ends here
+
+    //displaying numbers after swapping
+    uart_print_num(NUM1);
+    uart_print_num(NUM2);
+
+    return 0;
+}
+
+</code></pre>
+<p>Path of example:</p>
+<pre><code>exercises/c_functions/broken_swap.c
+</code></pre>
+<p>Compiler/Linker commands:</p>
+<pre><code>aarch64-none-elf-gcc -O1 -ffreestanding -nostdinc -nostdlib -nostartfiles -I../include/ \
+-c broken_swap.c -o broken_swap.o
+aarch64-none-elf-ld -nostdlib -nostartfiles start.o broken_swap.o ../common/uart.o -T link.ld -o broken_swap.elf
+</code></pre>
+<p>Use this command to run ELF file using QEMU:</p>
+<p><code>qemu-system-aarch64 -M raspi3 -kernel broken_swap.elf -serial null -serial stdio -nographic</code></p>
+<p>This output from this example produces following output:</p>
+<pre><code>2
+5
+2
+5
+</code></pre>
+<p>instead of the expected output of:</p>
+<pre><code>2
+5
+5
+2
+</code></pre>
+<p>Let us now look at the disassembly of the ELF file in order to understand why it is not generating the expected output.</p>
+<p>Disassembly command:</p>
+<pre><code>aarch64-none-elf-objdump --source -d broken_swap.elf &gt; broken_swap.disass
+</code></pre>
+<p>Disassembly output for swap function:</p>
+<pre><code>0000000000080058 &lt;swap&gt;:
+// function to swap the two numbers
+void swap(int num1,int *num2)
+{
+    int temp;
+    temp   = num1;
+    num1   = num2;
+    num2   =  temp;
+}
+   80058:	d65f03c0 	ret
+
+</code></pre>
+<p>Surprisingly, the compiler has just generated a <em>RET</em> for the <strong>swap</strong> function ignoring the C code to swap the two variables using of temporary variable!!!. This is because, when we call a function in C, only the values of the arguments are passed to the function. So, in the above code, values in variable <strong>NUM1</strong> and <strong>NUM2</strong> are copied to variables <strong>num1</strong> and <strong>num2</strong> of swap function. So, the changes to <em>num1</em> and <em>num2</em> get reflected only within the particular function. The compiler figures out that the modifications it performs to <strong>num1</strong> and <strong>num2</strong> variables in <strong>swap</strong> functions do not get used anywhere and therefore, chooses to optimize out the C statements within the <em>swap</em> function. </p>
+<p>Let us know see how we can make modifications to function arguments to be seen by the calling function. To achieve this, we need to pass the address of the variable while calling the function. The following code shows the correct approach of performing the swapping so that the caller can see the effect.</p>
+<p>Code for Swap function with ponters: </p>
+<pre><code class="language-c">#include &quot;uart.h&quot;
+
+// function to swap the two numbers
+void swap(int *num1_ptr,int *num2_ptr)
+{
+    int temp;
+    temp   = *num1_ptr;
+    *num1_ptr   = *num2_ptr;
+    *num2_ptr   =  temp;
+}
+
+int main()
+{
+    int num1 =  2, num2 = 5;
+
+    //displaying numbers after swapping
+    uart_print_num(num1);
+    uart_print_num(num2);
+
+    // Your code starts here
+
+    swap(&amp;num1,&amp;num2);
+
+    // Your code ends here
+
+    //displaying numbers after swapping
+    uart_print_num(num1);
+    uart_print_num(num2);
+
+    return 0;
+}
+
+</code></pre>
+<p>Path of example:</p>
+<pre><code>exercises/c_functions/swap_with_pointers.c
+</code></pre>
+<p>Compiler/Linker commands:</p>
+<pre><code>aarch64-none-elf-gcc -O1 -ffreestanding -nostdinc -nostdlib -nostartfiles -I../include/ \
+-c swap_with_pointers.c -o swap_with_pointers.o
+aarch64-none-elf-ld -nostdlib -nostartfiles start.o swap_with_pointers.o ../common/uart.o -T link.ld -o swap_with_pointers.elf
+</code></pre>
+<p>Let us now look at its disassembly output for the swap function:</p>
+<p>Disassembly command:</p>
+<pre><code>aarch64-none-elf-objdump --source -d swap_with_pointers.elf &gt; swap_with_pointers.disass
+</code></pre>
+<p>Disassembly output for swap function:</p>
+<pre><code>// function to swap the two numbers
+void swap(int *num1_ptr,int *num2_ptr)
+{
+    int temp;
+    temp   = *num1_ptr;
+   80058:	b9400002 	ldr	w2, [x0]
+    *num1_ptr   = *num2_ptr;
+   8005c:	b9400023 	ldr	w3, [x1]
+   80060:	b9000003 	str	w3, [x0]
+    *num2_ptr   =  temp;
+   80064:	b9000022 	str	w2, [x1]
+}
+   80068:	d65f03c0 	ret
+
+</code></pre>
+<p>The above code passes addresses of variables num1 and num1 to the swap() function. The <strong>swap</strong> function takes 2 pointer variables *num1_ptr and *num2_ptr. Pointer variable num1_ptr holds the address of num1 and pointer variable num2_ptr holds the address of variable num2. Let us now run this ELF file on QEMU using command:</p>
+<p><code>qemu-system-aarch64 -M raspi3 -kernel broken_swap.elf -serial null -serial stdio -nographic</code></p>
+<p>This code now produces the expected output:</p>
+<pre><code>2
+5
+5
+2
+</code></pre>
+<p>Since we are directly changing the value present at particular address, the value gets reflected in the calling function. Therefore the expected output gets printed.</p>
+<h2 id="what-we-learned"><a class="header" href="#what-we-learned">What we learned</a></h2>
+<ul>
+<li>How to examine the disassembly output of ELF executable files</li>
+<li>Analysis of disassembly output of common C language constructs</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="c2assembly.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="conclusion_part1.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="c2assembly.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="conclusion_part1.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

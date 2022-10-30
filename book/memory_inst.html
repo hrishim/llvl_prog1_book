@@ -1,0 +1,438 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Memory Instructions - Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html" class="active"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="memory-instructions"><a class="header" href="#memory-instructions">Memory Instructions</a></h1>
+<p>Objective:</p>
+<ul>
+<li>Learn about different types of load and store instructions. Different addressing modes.</li>
+<li>Program loops and branch instructions.</li>
+<li>Integer registers and register sizes</li>
+<li>Some integer instructions</li>
+</ul>
+<p>Exercises:</p>
+<ul>
+<li>Memcopy in different sizes</li>
+<li>Copying using a loop</li>
+<li>Challenge exercise to reverse a string</li>
+<li>Challenge exercise to...</li>
+</ul>
+<p>Finally, lets start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.</p>
+<p>In most computer/embedded systems memory is located in a chip that is separate from the CPU. Memory is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use this instruction</p>
+<pre><code class="language-armasm">  LDRB W10, [X1], #0
+</code></pre>
+<p>This form of the load instruction uses the <strong>post-indexed</strong> addressing mode. This instruction performs two operations:</p>
+<ol>
+<li>Load 1 byte of memory from memory, into the specified destination register</li>
+<li>Update the address in the base register</li>
+</ol>
+<p>The memory address of the data is provided using a register, in this case X1. This instruction fetches 1 byte of data from memory at the address specified in X1. That byte is sign extended to 32 bits and stored in W10.</p>
+<p>The offset, specified as an immediate value is added to the base address (by the processor) and the result is stored in the register X1.</p>
+<p>In this specific example the immediate value is 0. Therefore the base address in X1 will remain unchanged after the instruction is executed.</p>
+<p>The LDRB instruction can also be used with <strong>pre-indexed</strong> addressing mode like this</p>
+<pre><code class="language-armasm">  LDRB W10, [X1, #0]!
+</code></pre>
+<p>In this addressing mode the data address is the sum of X1 and the immediate offset. One byte, at that address, is loaded (sign extended) into the destination register (W10) and the base register (X1) is also updated with the computed address.</p>
+<p>Below is an example of a <strong>post-indexed</strong> store instruction. This instruction stores 1 byte from the register W10 into the memory location contained in register X1.</p>
+<pre><code class="language-armasm">  STRB W10, [X1], #0
+</code></pre>
+<p>Both LDRB and STRB instructions have multiple <em>addressing modes</em> (i.e. ways of specifying the memory address). We will eventually learn all of those modes. But now let us write a small program with two instructions that we know so far.</p>
+<h2 id="copying-data"><a class="header" href="#copying-data">Copying Data</a></h2>
+<p>To learn how to load/store data from/to memory we will write a few assembly programs. The first program, below, will copy the words &quot;Hello&quot; from one location in memory to another location. The program code and instructions to compile and run it are in the file memory_instructions/ex1a_solution.s</p>
+<p>As a learning exercise, it would be best if you could type out the program into the specified location in the file memory/ex1a.s and try running it yourself. You can do this using any text editor.</p>
+<p>For all exercises in this book two assembly (.s) files are provided - a template file and a solution file. You should read the material in the book and attempt to write the code yourself for each exercise. Look at the solution only if you are unable to get your program to work correctly. The assembly files have clearly marked sections where you can write your code.</p>
+<p>For the first exercise, to get you started, we will discuss the code in detail. Open ex1a.s and type the code below into the appropriate location.</p>
+<pre><code class="language-armasm">    // Your code starts here
+
+    ldrb w4, [x0, #0] // load H
+    strb w4, [x1, #0] // store H
+
+    ldrb w4, [x0, #1] // load e
+    strb w4, [x1, #1] // store e
+
+    ldrb w4, [x0, #2] // load l
+    strb w4, [x1, #2] // store l
+
+    ldrb w4, [x0, #3] // load l
+    strb w4, [x1, #3] // store l
+
+    ldrb w4, [x0, #4] // load o
+    strb w4, [x1, #4] // store o
+
+    // Your code ends here
+
+
+</code></pre>
+<p>In ex1.s we have provided set up code code that will store the text &quot;Hello&quot; into one location in memory and &quot;Howdy&quot; in another location in memory. The setup also provides the start address of &quot;Hello&quot;  and the start address of &quot;Howdy&quot;. The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.</p>
+<p>So how does this program work. Actually, it is pretty simple. In a computer every character or letter is stored in a byte of data (8-bits, remember) in a format called ASCII. There are other formats for storing text but in this book we will use only ASCII since it is easy to deal with. The word Hello has five letters and therefore it takes five bytes of data to store it in memory. In ASCII encoding numbers are used to represent English alphabets, numbers, and some symbols.</p>
+<p>In ex1.s the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter &quot;H&quot;. The destination address - location where the string should be copied to - is provided in X1. Before the start of the program the address starting at X0 contains the word &quot;Hello&quot; in consecutive memory locations (X0, X0+1...X0+4). Just for fun we have stored the word &quot;Howdy&quot; starting at the address in X1.</p>
+<p>The code copies one character at a time from the address starting at X0 to the address at X1. Each character of the string Hello is 1 byte in size. So to copy the entire string we have to copy 5 bytes. Each character is stored in continuous locations of memory. For example, if <strong>H</strong> starts at memory address 0x5, <strong>e</strong> is at 0x6, and <strong>l</strong> at 0x7 and so on. Note: This is just an example. In the program the location of <strong>H</strong> is not at 0x5 but at [FIXME - Pradeep to add exact addresses and remove this Note].</p>
+<p>The solution provided uses the base plus immediate offset addressing mode (aka immediate offset mode). In this mode the address of the memory operation is computed by adding the specified base register with a immediate value. The immediate value is also provided by the programmer.</p>
+<p>The first instruction in the solution above is:</p>
+<pre><code class="language-armasm">  ldrb w4, [x0, #0]
+</code></pre>
+<p>This is a Load byte instruction that loads 1 byte of data from memory into the register W4. The address of the memory location to load the data from is computed by adding 0 to the base register X0. After execution of this instruction the memory contents of the byte starting at address (X0 + 1) will be loaded into the register W4. The value of register X0 will remain unchanged. Similarly the store instruction</p>
+<pre><code class="language-armasm">  strb w4, [x1, #0]
+</code></pre>
+<p>Stores one byte of data from W4 into the memory location (X1+0).</p>
+<p>To copy the full string we load the value of each character into W4 and store it in the appropriate memory location.</p>
+<hr />
+<p><strong>NOTE:</strong> Exercises, in this and other sections,  have some supporting code and assembly directives. You should not modify these lines in the file. The supporting code is for the following:</p>
+<ol>
+<li>Place the string Hello in some address in memory.</li>
+<li>Reserve some space in memory for you to copy the string</li>
+<li>Provide the address of the first character of Hello (i.e. H) in the register X1</li>
+<li>Provide the address of the destination in address X2</li>
+<li>The strings in at X1 and X2 are printed before and after your code is executed so that you can check if the copying has been done correctly.</li>
+</ol>
+<p>Later in this book we will discuss how to print strings.</p>
+<hr />
+<h3 id="addressing-modes"><a class="header" href="#addressing-modes">Addressing Modes</a></h3>
+<p>In ex_1a.s we introduced the immediate offset addressing mode. The Arm architecture has other addressing modes to specify addresses in load and store instructions. In the rest of this section we will take  look at these modes.</p>
+<p>Exercises ex_1b.s to ex_1d.s are similar to ex_1a.s. The objective is to accomplish the same result by using different addressing modes. Though the solutions for these exercises are provided we <strong>strongly</strong> encourage you to read the rest of this section and try to write the programs yourself. Consult the solution if you are unable to solve the exercise in reasonable time (say in one day).</p>
+<p><strong>Post-indexed Addressing Mode</strong></p>
+<p>Example:</p>
+<pre><code class="language-armasm">  ldrb w4, [x0], #1
+</code></pre>
+<p>This instruction performs two operations</p>
+<ol>
+<li>It loads the value from the memory address in the base register.</li>
+<li>It adds the base register with the provided offset and stores that result into the base register.</li>
+</ol>
+<p>In the example above, the value contained in memory location x0 is loaded into register w4. In addition x0 is increased by 1.</p>
+<p>Try to write the code for exercise ex_1b.s using post-indexed addressing mode.</p>
+<p><strong>Pre-indexed Addressing Mode</strong></p>
+<p>In this addressing mode the address is the sum of a base register and a specified offset value. The computed address is also stored back in the address register.</p>
+<p>Example:</p>
+<pre><code class="language-armasm">  ldrb w4, [x0, #1]!
+</code></pre>
+<p>In the example, the memory address is computed as the sum of x0 and 1. The byte in that location is loaded into register w4. The computed address is also stored in register x0.</p>
+<p>Try to write the code for exercise ex_1c.s using pre-indexed addressing mode. Hint - you can load (and store) the first character using a different addressing mode.</p>
+<p><strong>Base Plus Register Offset Addressing Mode</strong></p>
+<p>In this mode the address is the sum of the base register and an offset that is contained in another register.</p>
+<p>Example:</p>
+<pre><code class="language-armasm">  ldrb w4, [x0, x2]
+</code></pre>
+<p>The address for this load instruction is computed by adding the base register x0 with the register x2.</p>
+<p>Try to write the code for exercise ex_1d.s using register offset addressing mode. Hint - you can save an immediate value into a register using the <strong>mov</strong> instruction like this</p>
+<pre><code class="language-armasm">  mov  x2, #0
+</code></pre>
+<p>Note that in all the above addressing modes any register that is used in address computation is a 64-bit X register.</p>
+<h2 id="half-word-word-and-double-word-memory-operations"><a class="header" href="#half-word-word-and-double-word-memory-operations">Half-word, Word, and Double-Word Memory Operations</a></h2>
+<p>So far we have looked at load and store instructions that operate on one byte of memory. There are memory instructions that operate on larger chunks of memory, namely - half-word, word, and double-word.</p>
+<p>What are these terms and what sizes do they indicate?</p>
+<p>We already know that data in computers are represented as bits. Bits can take one of two values - 0 and 1. A group of 8-bits is called a byte. Furthermore, every byte of memory has its own identifier - a memory address that distinguishes each byte from other bytes in memory.</p>
+<p>A word is a group of bytes. However, unlike byte which is always 8 bits, the size of a word is not a standard across different architectures. In the Arm architecture the size of a word is 4 bytes (i.e. 32 bits). A half-word is 2 bytes and a double-word is 8 bytes.</p>
+<p>The architecture has load/store instructions that can load half-word, word, and double-word from/to memory.</p>
+<p>Load/store double-word example:</p>
+<pre><code class="language-armasm">	ldr x4, [x0], #8
+	str x4, [x1], #8
+</code></pre>
+<p>This instruction copies 64-bits of data (8 bytes) from the memory. The address of the first of these 8 bytes is contained in the register x0. Notice that the destination register is an <strong>x</strong> register so that we can accommodate the 8 bytes being read. Since we have used post-indexed addressing the address contained in x0 will also be incremented by 8.</p>
+<p>Load/store word example:</p>
+<pre><code class="language-armasm">    ldr w4, [x0], #4
+    str w4, [x1], #4
+</code></pre>
+<p>The <strong>ldr</strong> and <strong>str</strong> instructions load a half-word from memory (2 bytes). The examples above show post-indexed forms of the load instruction.</p>
+<p>Load/store half-word example:</p>
+<pre><code class="language-armasm">	ldrh w4, [x0], #2
+	strh w4, [x1], #2
+</code></pre>
+<p>The <strong>ldrh</strong> and <strong>strh</strong> instructions load a half-word from memory (2 bytes). The examples above show post-indexed forms of the load instruction.</p>
+<p><strong>Note:</strong> The Arm Architecture Reference Manual has detailed description of all the instructions discussed in this book. It is a useful reference to have when you attempt to write your own code for the exercises.</p>
+<h2 id="copy-memory-using-operations-of-different-sizes"><a class="header" href="#copy-memory-using-operations-of-different-sizes">Copy memory using operations of different sizes</a></h2>
+<p>Now for a small challenge. In file <em>exercises/memory_instructions/ex_1e.s</em> the text &quot;Welcome To Arm Assembly World&quot; has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location that you may write to. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.</p>
+<p>FIXME: We have not discussed ldp but use it in the solution. Pradeep to add ldp inside the &quot;details&quot; block below</p>
+<details>
+  <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
+<pre><code class="language-armasm">    // Your code starts here
+
+    ldr x4, [x0], #8 // copy &quot;Welcome &quot;
+    str x4, [x1], #8 // store &quot;Welcome &quot;
+
+    ldrh w4, [x0], #2 // copy &quot;To&quot;
+    strh w4, [x1], #2 // store &quot;To&quot;
+
+    ldr w4, [x0], #4 // copy &quot; Arm&quot;
+    str w4, [x1], #4 // store &quot; Arm&quot;
+
+    ldp x3, x4, [x0] // copy &quot; Assembly World&quot;
+    stp x3, x4, [x1] // store &quot; Assembly World&quot;
+
+    // Your code ends here
+</code></pre>
+</details>
+<h2 id="copying-data-using-a-loop"><a class="header" href="#copying-data-using-a-loop">Copying data using a loop</a></h2>
+<p>So far we have used multiple load and store instructions to copy data. For instance, in ex_1a.s we used five load and five store instructions to copy the letters &quot;Hello&quot; from one location to another.</p>
+<p>In this section we will see how to do the same using a loop and fewer load and store instructions instructions. The code in this section can be found in the file <em>exercises/memory_instructions/ex_1f_solution.s</em>. After reading the explanation in this section we recommend readers try to replicate this program using the file <em>exercises/memory_instructions/ex_1f.s</em>.</p>
+<p>Our objective is to copy a string of unknown length from one location to another. In this exercise, that string is &quot;Hello&quot; and it has 5 letters. But we want to write a generic program that will work even if the string were longer or shorter. Strings are stored in memory using a format called ASCII. There are other formats to represent alphabets in computers but this one is one of the simplest and most popular - though it does have limitations.</p>
+<p>The characters comprising a string are stored in contiguous locations in memory. Also, at the end of every string a special character (string termination) - namely 0 - is stored to indicate the end of the string. If the special character were nor present there would be no way to tell when a string has ended.</p>
+<p>The code listing below shows the program. You will notice that there are two labels that are clearly not assembly instructions. Labels such as &quot;find_len_start:&quot; and &quot;copy_loop_start:&quot; act as markers that can be used by assembly instructions to refer to the memory address of instructions or data.</p>
+<pre><code class="language-armasm">1.  mov  x2, #0
+2.  ldrb w5, [x0, x2]
+3.  cbz  w5, skip_to_copy
+find_len_start:
+4.  add  x2, x2, #0x1
+5.  ldrb w5, [x0, x2]
+6.  cbnz w5, find_len_start
+
+skip_to_copy:
+7.   mov  x3, #0x0
+copy_loop_start:
+8.   ldrb w4, [x0, x3]
+9.   strb w4, [x1, x3]
+10.  add  x3, x3, #0x1
+11.  cmp  w2, w3
+12.  b.gt copy_loop_start
+</code></pre>
+<p>The first section of the program, comprising of instructions 1-4, is to find the length of the string. We use x2 to store the count and initialize its value to zero using the <strong>mov</strong> instruction. This mov instruction places an immediate value into a register. There is also a variant that can be used to copy the contents of one register into another.</p>
+<p>This instruction is followed by a label <strong>find_len_start:</strong>. Labels are used to mark points in the code that can be referred to from other places in the code. Following the label, we load the first character into w5 using an ldrb instruction. This should be familiar to you from previous sections.</p>
+<p>The next instruction is a new one that we have not seen so far.</p>
+<pre><code class="language-armasm">   cbz  w5, skip_to_copy
+</code></pre>
+<p>CBZ is the &quot;compare and branch if zero&quot; instruction. This instruction checks if the value of a specified register is 0. If it is then processor  will jump to the instruction at the specified label. If not the processor continues to the next instruction.</p>
+<p>Instruction 3 compares if the value in w5 is 0. If it is zero then the processor will jump to the label skip_to_copy and will start executing instructions from instruction 4. Why do we use cbz? If the first character read is 0 then that means the string is a blank string with length 0. So we do not need to count the number of characters in that string. We can skip the code that is counting the number of characters and jump to the part that will copy the characters.</p>
+<p>After the cbz instruction we have a label named &quot;find_len_start:&quot;. Observe that the labels have to end with a colon symbol. But when used as part of an instruction, the colon is omitted. Labels in code refer to the address of the instruction immediately below them. The label find_len_start is a marker to the address of instruction 4. Other instructions in the program can refer to instruction 4 using this label. This is also useful if, later in the program, we want the CPU to start executing at instruction 4.</p>
+<p>The code comprising of instructions 4-6 is a loop. The CPU will execute them one after another and when it reaches instruction 6 - cnbz - it will either go on to instruction 7 or back to instruction 4. The cnbz instruction checks if a given register is <strong>not</strong> zero. If the instruction contains a value other than zero then the code jumps to the instruction with the specified label. In this case that is instruction 4.</p>
+<p>This loop (4-6) performs the task of finding the length of the given string. We store the count of the number of characters in register x2. We have previously checked that the first character is not 0 (i.e. end of string). Therefore, the string we have to copy has at least one character. In the loop the count is increased by 1 using an add instruction. The next instruction loads one byte of data from the address contained in [x0, x2]. The base address of the string is in register x0. When we add x2 to x0 we get the address of the second character of the string (because x2 is 1). The cbnz instruction checks if the loaded value is <strong>not</strong> zero. If the loaded value is not zero then the CPU will jump back to instruction 4 and start execution from there.</p>
+<p>The loop to count the number of characters will continue to execute until character 0 is loaded - indicating a end of string. At that instance the cbnz instruction will find the loaded value is 0 and so the CPU will not jump to find_len_start. Instead it will move on to the next instruction.</p>
+<p>After counting the number of characters in the string we copy the string to a location specified by the address in x1. We first initialize register x3 to 0 using a mov instruction. We will use x3 to track the current character being copied. It will also aid in computing the address of that character. Copying the string is also done using a loop comprising of instructions 8-12. The start of the loop is labelled copy_loop_start.</p>
+<p>The first instruction in the loop loads a byte from the string starting at x0 and the next instruction stores that value into a memory location starting at x1. Both instructions use a base plus register addressing with x0/x1 as the base and x3 as the offset  register. The next instruction increments the x3 register. We are using the x3 register as the offset from the base and also to count the number of bytes that have been copied.</p>
+<p>This is followed by a compare instruction to check if the value in x2 is greater than x3.</p>
+<pre><code class="language-armasm">  cmp w2, w3
+</code></pre>
+<p>The compare instruction compares the value in x2 with the value in x3 and sets appropriate flags in the flag register. The exact operation is described in the <a href="https://developer.arm.com/documentation/ddi0487/ga">Arm Architecture Reference Manual, Armv8, for Armv8-A architecture profile</a>. The manual section C6.2 provides an alphabetical list of AArch64 base instructions. There are two entries for the CMP instruction in that list. The first one, titled &quot;CMP(immediate)&quot; is the CMP instruction when it is used with an immediate operand. The second one, titled &quot;CMP(shifted register)&quot; provides details of the CMP instruction when used with registers. In this program we are using the register version of the instruction.</p>
+<p>Why is the cmp instruction using registers w2 and w3 instead of x2 and x3? Remember that in AArch64 integer registers can be referred to in 64-bit or 32-bit form. The x0-x30 register names refer to 64-bit register names and w0-w30 register names refer to the lower 32 bits of the X registers. So the <strong>cmp</strong> instruction is operating on 32-bit registers. In this program the registers x2 and x3 hold the count of number of characters. It is unlikely we will have strings with lengths in excess of 32-bits. Therefore we can use the corresponding &quot;W&quot; names to <strong>read</strong> these registers.</p>
+<hr />
+<p><strong>Note:</strong></p>
+<p>If the string length is larger 2^32-1 (4294967295) then we cannot use W registers instead of X registers. Since that number is reasonably large, for this exercise, we can assume we will never encounter longer strings. Whenever a register is used as part of an address we should always use the X form of the register. This is because all memory addresses in AArch64 are 64-bit wide. That is why the load and store instructions use X registers for the address.</p>
+<hr />
+<p>The instruction that follows cmp is a &quot;branch if greater than&quot; instruction. The cmp instruction has set the appropriate PFLAGS. The b.gt instruction uses the information in the flags to determine if the CPU should branch to the specified label or continue to the next instruction. The instruction will branch to copy_loop_start if the compare results show that w2 is greater than w3.</p>
+<pre><code class="language-armasm">  b.gt	copy_loop_start
+</code></pre>
+<p>Thus, the second loop executes instructions 8-12 until the value in register w3 becomes greater than the value in register w2 (length of the string). The characters in the string beginning at address in X0 are copied into the address beginning at the address in X1.</p>
+<h2 id="memory-instructions-challenge-assignments"><a class="header" href="#memory-instructions-challenge-assignments">Memory Instructions Challenge Assignments</a></h2>
+<h2 id="exercise-ex_2a"><a class="header" href="#exercise-ex_2a">Exercise ex_2a</a></h2>
+<p>The file ex_2a.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to copy a string from one memory location to another but the new string should be a reversed version of the original. So if the original string was &quot;Hello&quot; the new string should be &quot;olleH&quot;.</p>
+<p>The address of the string to reverse is provided in the register x0. The memory address where the reversed string should be placed is provided in register x1. Sufficient memory has been provided to hold both strings.</p>
+<p>Below is pseudo code to reverse the string. You can use this as a guide to write the assembly code.</p>
+<ol>
+<li>Count the length of the string using a loop</li>
+<li>Use two registers - one to count from 0 till end of string and another to count down from the end of string to 0.</li>
+<li>Using the above two registers in a loop, copy bytes from the string at location x0 to the string at location x1.</li>
+</ol>
+<p>The solution for this exercise is provided in ex_2a.solution.s. We recommend that you try to write the program your self before looking at the solution.</p>
+<h2 id="exercise-ex_2b"><a class="header" href="#exercise-ex_2b">Exercise ex_2b</a></h2>
+<p>The file ex_2b.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to reverse a string in-place. This means the string should not be copied to a new location but can be copied onto itself.</p>
+<p>The address of the string to be reversed is in register x0. Below is the pseudo code for the program:</p>
+<ol>
+<li>Find the length of the string.</li>
+<li>Use one register (any register, say X1) to count from 0 till the end of the string. Another register (X2) to count from the size of the string to 0.</li>
+<li>Using the above registers in a loop. Load the characters from both offsets and store them into the appropriate location.</li>
+</ol>
+<p>Hint: You can use different forms of memory addressing including post-indexed.</p>
+<p>The solution for this exercise is provided in ex_2b.solution.s. We recommend that you try to write the program your self before looking at the solution.</p>
+<h2 id="what-we-learned"><a class="header" href="#what-we-learned">What we learned</a></h2>
+<ol>
+<li>Load and Store instructions of different sized - byte, half-word, word, and double</li>
+<li>The following addressing modes: pre-indexed, post-indexed (imm and register variant), base plus offset (imm and register variant).</li>
+<li>Compare and branch instructions</li>
+<li>Labels in assembly</li>
+<li>Loops in code</li>
+</ol>
+<hr />
+<p><strong>NOTE:</strong> In Arm assembly language the different forms of mov instructions are aliases to other instructions. That means the instruction encoding of the mov instruction is the same as that for another Arm instruction. Both operations will yield the same result.</p>
+<p>For example:</p>
+<pre><code class="language-armasm">  mov x0, x2
+</code></pre>
+<p>The above instruction copies the value in x2 to x0. This instruction has the same encoding as an OR instruction shown below</p>
+<pre><code class="language-armasm">  or x0, XZR, x2
+</code></pre>
+<p>If this does not makes sense to you right now, that is OK. Just know that both the example instructions above will copy the value stored in x2 to x0.</p>
+<hr />
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="starting_assembly.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="integer_inst.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="starting_assembly.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="integer_inst.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

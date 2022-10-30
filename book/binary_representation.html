@@ -1,0 +1,485 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Binary Representation of Integers - Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html" class="active"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="binary-representation-of-integers"><a class="header" href="#binary-representation-of-integers">Binary Representation of Integers</a></h1>
+<p>This section we will learn about number representation using the binary system. Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.</p>
+<p>We are used to counting using the decimal number system. This system has ten symbols (decimal numerals) to represent numbers, namely - 0 1 2 3 4 5 6 7 8 9. Of course, these symbols can represent values greater than ten. For example, after counting from 0 till 9 we run out of symbols for ten. To represent ten and higher numbers more than one of those symbols is used - 10, 11, 12...10521... etc. A special symbol is pre-fixed to numbers to represent negative numbers (-1, -2, -3... etc.).</p>
+<p>OK, so all of this number representation is elementary school material. What is the point of all this? The main point is that numbers are represented with symbols. Modern computers use <em>binary</em>  representation for storing and operating on numbers. The decimal number format uses 10 symbols (11 actually if you count the minus sign for negative numbers) the binary number format uses just two symbols.</p>
+<p>Therefore, when working with computers at the lowest level, it is important to know how numbers are represented and how arithmetic operations are performed in binary .</p>
+<hr />
+<p><strong>Note:</strong></p>
+<p>Are there computers that use representations other than binary? There were a few that used ternary logic (i.e. base: 3). However, all computers that one is likely to encounter today use binary representation. Ternary and other base forms are outside the scope of this book.</p>
+<hr />
+<p>Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.</p>
+<h2 id="binary-representation"><a class="header" href="#binary-representation">Binary Representation</a></h2>
+<p>The binary number system uses two numerals - 0 and 1. So, just like in the decimal system, more than one of those symbols are needed to represent 2 and greater. The table below shows decimal numbers and their equivalent binary:</p>
+<table><thead><tr><th>Decimal</th><th>Binary</th></tr></thead><tbody>
+<tr><td>0</td><td>0b0</td></tr>
+<tr><td>1</td><td>0b1</td></tr>
+<tr><td>2</td><td>0b10</td></tr>
+<tr><td>3</td><td>0b11</td></tr>
+<tr><td>4</td><td>0b100</td></tr>
+<tr><td>5</td><td>0b101</td></tr>
+<tr><td>6</td><td>0b110</td></tr>
+<tr><td>7</td><td>0b111</td></tr>
+<tr><td>8</td><td>0b1000</td></tr>
+<tr><td>9</td><td>0b1001</td></tr>
+<tr><td>10</td><td>0b1010</td></tr>
+<tr><td>100</td><td>0b1100100</td></tr>
+<tr><td>1000</td><td>0b1111101000</td></tr>
+</tbody></table>
+<p>When referring to binary numbers in code it is common to prefix it with special characters to indicate the number is in binary representation. The convention is to use the prefix 0b for binary numbers and 0x for hexadecimal numbers. Decimal numbers have no prefix.</p>
+<p>In the <em>decimal system</em>, all numbers that are powers of 10, are represented with the symbol 1 followed by zero or more 0s. Examples include 1, 10, 100 etc. The position of numerals representing a number is called &quot;decimal place&quot;. So a number like say 25 has one decimal numeral in the 10's place and another in the 1's place.</p>
+<pre><code>25 = 2 * 10^1 + 5 * 10^0
+
+542 = 5 * 10^2 + 4 * 10^1 + 2 * 10^0
+
+Here ^ means raised to the power.
+Recall that any number raised to power 0 is 1. So 10^0 is 1.
+</code></pre>
+<p><strong>The binary number system uses base 2.</strong> This means the position of every numeral is a power of 2. Also, in binary representation, numbers that are a power of two are represented with the numeral 1 followed by 0s. This is similar to power of 10 numbers in the decimal system!!</p>
+<p>For example, the number 2 in binary is 0b10. Why is that? Because 0b10 is</p>
+<pre><code>1 * 2^1 + 0 * 2^0 = 2
+
+Here ^ means raised to the power.
+</code></pre>
+<p><em>Decimal numbers</em> that are powers of 10 are represented with the numeral 1 followed by the numeral 0. The number of 0s depends on the power of 10. In <em>binary</em> the same applies to numbers that are powers of 2. In the table above, the binary equivalent of 2, 4 and 8 all have only one numeral set to 1 and it is followed by 0s.</p>
+<h2 id="converting-from-binary-to-decimal-and-vice-versa"><a class="header" href="#converting-from-binary-to-decimal-and-vice-versa">Converting From Binary to Decimal and Vice Versa</a></h2>
+<p>It is pretty straight forward to convert a number from binary to decimal. All it requires is to multiply the binary numeral with the appropriate power of 2.</p>
+<p>For example, the binary number 0b10 can be converted to decimal the following way:</p>
+<pre><code>Binary number: 0b10
+
+1 * 2^1 + 0 * 2^0 = 2
+
+Decimal: 2
+</code></pre>
+<p>Another example,</p>
+<pre><code>Binary number: 0b1001
+
+1 * 2^3 + 0 * 2^2 + 0 * 2^1 + 1 * 2^0 = 8 + 0 + 0 + 1 = 9
+
+Decimal: 9
+</code></pre>
+<p>Converting from decimal to binary is a just a touch more difficult because it requires division. It is done by repeatedly dividing the number and recording the remainder. The division is continued until what remains is 0.</p>
+<p>Here is an example of how to convert the decimal number 8 to binary. We divide 8 by 2 successively until the quotient is 0. The quotient and remainder of each step of the division is shown below.</p>
+<pre><code>Decimal number: 8
+
+	2 | 8
+	  ----
+	2 | 4  - 0
+	  ----
+	2 | 2  - 0
+	  ----
+	2 | 1  - 0
+	  ----
+	    0  - 1
+</code></pre>
+<p>The binary representation is the remainder read backwards. So in this instance it will be  0b1000 (the leading 0 is dropped).</p>
+<h2 id="practice-converting-number-formats"><a class="header" href="#practice-converting-number-formats">Practice converting number formats</a></h2>
+<p>Convert the following binary numbers to decimal: 0b100, 0b1011, 0b10000, 0b11001</p>
+<details>
+  <summary>Click here to see answers.</summary>
+<table><thead><tr><th>Binary</th><th>Decimal</th></tr></thead><tbody>
+<tr><td>0b100</td><td>4</td></tr>
+<tr><td>0b1011</td><td>11</td></tr>
+<tr><td>0b10000</td><td>16</td></tr>
+<tr><td>0b11001</td><td>25</td></tr>
+</tbody></table>
+</details>
+<p>Convert the following decimal numbers to binary: 52, 29, 17, 32</p>
+<details>
+  <summary>Click here to see answers.</summary>
+<table><thead><tr><th>Decimal</th><th>Binary</th></tr></thead><tbody>
+<tr><td>52</td><td>0b110100</td></tr>
+<tr><td>29</td><td>0b11101</td></tr>
+<tr><td>17</td><td>0b10001</td></tr>
+<tr><td>32</td><td>0b100000</td></tr>
+</tbody></table>
+</details>
+<h2 id="binary-representation-in-computers"><a class="header" href="#binary-representation-in-computers">Binary representation in computers</a></h2>
+<p>Larger numbers may need more numerals for representation. For example, 0b100000000 (256) requires nine binary digits while 0b1 (1) requires just one binary digit. In practice it is very difficult to implement logic circuitry (adders, multipliers etc.) to account for the variation in binary digits. Therefore, computers use fixed-width integers. This means that numbers are represented with a fixed number of digits. The most common widths are 8-bit (byte), 16-bit (half-word), 32-bit (word), 64-bit (double word).</p>
+<p>Fixed-width representations can be used to represent numbers from 0 up to a maximum value. That maximum value is determined using the formula 2<sup>N</sup> - 1, where N is the width. The largest integer that can be represented in 8-bit fixed-width is</p>
+<pre><code> 2^8 - 1 = 256 - 1 = 255
+ 8-bit binary number can represent numbers in the range 0-255
+</code></pre>
+<p>This is a small number range and computers will be of limited use if all they can represent are numbers from 0 to 255. However, the word and double-word representations can be used to represent <strong>very</strong> large numbers. The maximum value that can be represented with a double-word is</p>
+<pre><code>2^64 - 1 = 18,446,744,073,709,551,616 - 1 = 18,446,744,073,709,551,615
+
+That is a 20-digit decimal number!!
+</code></pre>
+<hr />
+<p><strong>Note:</strong> There are software tricks that can be used to represent numbers with more than 64-bits. We will not encounter such large numbers in any of the exercises in this book.</p>
+<hr />
+<p>The <strong>minimum</strong> number of bits required to a number can be found by computing
+log<sub>2</sub>(number) and rounding up to the closest integer. If you do not know the logarithm (log) function that is fine, we will not need to use it extensively in this book. Another way is to find the smallest power of 2 that is <strong>greater</strong> than the given number - the exponent is the minimum number of bits required to represent that number. For example, the number 9 can be represented using 4 bits. Because 2<sup>4</sup> = 16 is the smallest power of 2 that is also greater than 9. Note that 2<sup>3</sup> is 8 and is smaller than 9.
+What about the number 8? Well 2<sup>3</sup> is <strong>equal</strong> to 8 and so we cannot represent it with 3 bits because we need the smallest power of 2 that is <strong>greater</strong> than 8. We need 4 bits to represent the number 8.</p>
+<p>Now that we know computers use fixed-width representations, the natural question is - what happens when a computation results in a number larger (or smaller) than the representable range?
+When using 8-bit numbers, what result is generated when the computer is told to add 1 and 255?</p>
+<p>The computation results in a overflow or carry. We will learn more about these concepts in this chapter and revisit them in the chapter on conditional flags.</p>
+<h2 id="binary-arithmetic---addition"><a class="header" href="#binary-arithmetic---addition">Binary Arithmetic - Addition</a></h2>
+<p>Binary addition and subtraction are done just like in decimal arithmetic. The basic rules remain the same.</p>
+<pre><code> 0 + 0 = 0
+ 0 + 1 = 1
+ 1 + 0 = 1
+ 1 + 1 = 10
+</code></pre>
+<p>Here is an example of adding 0b101 (5) and 0b11 (3)</p>
+<p>     1<sup>1</sup> 0<sup>1</sup> 1<br />
+     0   1   1<br />
+---------------<br />
+1   0   0   0</p>
+<p>Just like in decimal addition we add digits in the corresponding digits of the number from right to left. If the sum results in a carry (i.e. 1 + 1) then the carry is added to the next number. If the numbers are of dis-similar lengths then 0s are prefixed as required.</p>
+<p>When binary arithmetic is performed in digital circuits there is a fixed-width for representing the numbers. So if the sum of the two numbers is larger than what can be represented, some special provision has to be made to indicate to the programmer that the result is incorrect.</p>
+<p>For example, when adding the following <strong>4-bit numbers</strong> 0b1111 (15) and 0b0001 (1)</p>
+<p>      1<sup>1</sup> 1<sup>1</sup> 1<sup>1</sup> 1<br />
+      0   0   0   1<br />
+      ---------------<br />
+1 | 0   0   0   0</p>
+<p>Since there are only 4-bits to represent the numbers the result can only hold 0b0000. The fifth and most significant bit is lost. Clearly some indication has to be provided to the programmer that the result is incomplete without the most significant bit. Computers usually do this using a special &quot;flag&quot; register called the Carry flag. The Carry flag is 1-bit wide and holds the result of the carry over of an addition. If the addition did not result in a carry then this flag is set to 0. If the addition results in a carry then the flag is set to 1. In the ARM architecture the carry flag (C) is part of the <a href="./arm_exec_state.html">PSTATE</a>.</p>
+<h2 id="representing-negative-numbers"><a class="header" href="#representing-negative-numbers">Representing negative numbers</a></h2>
+<p>There are multiple methods to represent negative numbers. One common method is to use the highest digit in a fixed-width number to represent the sign. The diagram below shows unsigned and signed 8-bit numbers. Signed and unsigned 8-bit numbers use (surprise!!) 8-bits to represent the number. In the diagram below those 8 bits are represented as empty boxes. Each digit of the 8-bit number is individually referred to by it's index. The index starts from 0 and goes till 7. Index 0 is also called the least significant bit (LSB) and index 7 is called the most significant bit.</p>
+<p><img src="images/fixedWidth8bit.png" alt="8-bit fixed width" title="8-bit fixed width" /></p>
+<p>Signed numbers use the most significant bit to represent the sign and the remaining bits to represent the magnitude of the number. For 8-bit signed number the bit at index 7 is used as the sign bit and bits 0-6 are used to represent the magnitude. For a N-bit number the bit at the N-1<sup>th</sup> index is the sign bit and the remaining bits are used to represent the magnitude.</p>
+<p>For a 4-bit number the table below shows the binary and decimal equivalent when the number is interpreted as signed.</p>
+<table><thead><tr><th>Sign &amp; Magnitude Representation</th><th>Decimal</th></tr></thead><tbody>
+<tr><td>0b0000</td><td>0</td></tr>
+<tr><td>0b0001</td><td>1</td></tr>
+<tr><td>0b0010</td><td>2</td></tr>
+<tr><td>0b0011</td><td>3</td></tr>
+<tr><td>0b0100</td><td>4</td></tr>
+<tr><td>0b0101</td><td>5</td></tr>
+<tr><td>0b0110</td><td>6</td></tr>
+<tr><td>0b0111</td><td>7</td></tr>
+<tr><td>0b1000</td><td>-0</td></tr>
+<tr><td>0b1001</td><td>-1</td></tr>
+<tr><td>0b1010</td><td>-2</td></tr>
+<tr><td>0b1011</td><td>-3</td></tr>
+<tr><td>0b1100</td><td>-4</td></tr>
+<tr><td>0b1101</td><td>-5</td></tr>
+<tr><td>0b1110</td><td>-6</td></tr>
+<tr><td>0b1111</td><td>-7</td></tr>
+</tbody></table>
+<p>While the above method can represent negative numbers it is not very efficient. First, notice that there are two representations for 0, namely - 0b0000 and 0b1000. Also, it would be difficult to implement logic circuits to do arithmetic with the above representation. Therefore, other representations are used. Two commonly used representations are 2's complement method and the 1's complement method. The ARM architecture and the following chapters use only 2's complement to represent signed integers. We will go over 2's complement representation below.</p>
+<h3 id="twos-complement-representation"><a class="header" href="#twos-complement-representation">Two's complement representation</a></h3>
+<p>In two's complement the most significant bit (MSB) of the number represents the sign of the number. The remaining bits represent the magnitude but are not interpreted literally. An N-bit two's complement representation can represent numbers in the range -2<sup>(N-1)</sup> to (2<sup>(N-1)</sup> - 1)</p>
+<p>The table below shows 2's complement representation for a 4-bit number. Positive numbers in 2's complement start with 0 and the remaining bits represent the magnitude of the number. However, note that the maximum positive number that can be represented using in a 4-bit 2's complement representation is 0b0111 (i.e. 7). This corresponds to 2<sup>3</sup> - 1 = 7.</p>
+<table><thead><tr><th>Two's complement</th><th>Decimal</th></tr></thead><tbody>
+<tr><td>0b0000</td><td>0</td></tr>
+<tr><td>0b0001</td><td>1</td></tr>
+<tr><td>0b0010</td><td>2</td></tr>
+<tr><td>0b0011</td><td>3</td></tr>
+<tr><td>0b0100</td><td>4</td></tr>
+<tr><td>0b0101</td><td>5</td></tr>
+<tr><td>0b0110</td><td>6</td></tr>
+<tr><td>0b0111</td><td>7</td></tr>
+<tr><td>0b1111</td><td>-1</td></tr>
+<tr><td>0b1110</td><td>-2</td></tr>
+<tr><td>0b1101</td><td>-3</td></tr>
+<tr><td>0b1100</td><td>-4</td></tr>
+<tr><td>0b1011</td><td>-5</td></tr>
+<tr><td>0b1010</td><td>-6</td></tr>
+<tr><td>0b1001</td><td>-7</td></tr>
+<tr><td>0b1000</td><td>-8</td></tr>
+</tbody></table>
+<p>To convert a negative decimal number to 2's complement we use the following steps.</p>
+<ol>
+<li>Write the number in binary, ignoring the sign</li>
+<li>Invert the 0s and 1s in the number</li>
+<li>Add 1 to the result of step 2.</li>
+</ol>
+<p>Note that step 2 is the same as performing the NOT logic operation on the number. We will learn that and other logic operations in a later section.</p>
+<p>For example, let us convert -2 to two's complement binary representation.</p>
+<ol>
+<li>Number 2 in binary is 0b0010 (we will use a 4-bit binary representation)</li>
+<li>NOT (0b0010) = 0b1101</li>
+<li>Add 1 to the result: 0b1101 + 0b1 = 0b1110</li>
+</ol>
+<p>How do we convert a 2's complement number 0b1110 to decimal? The process is near identical.</p>
+<ol>
+<li>Note the sign bit</li>
+<li>Invert the 0's and 1's in the number</li>
+<li>Add 1 to the result of step 2. Convert the resulting binary number to decimal and affix appropriate sign.</li>
+</ol>
+<p>Let us reverse the processes we saw earlier and convert the 2's complement number 0b1110 to decimal.</p>
+<ol>
+<li>In this case the sign bit is 1, so it is a negative number.</li>
+<li>We then compute NOT(0b1110) which is 0b0001. Adding 1 we get 0b0010.</li>
+<li>Converting this to decimal we get 2. After affixing the sign we get -2.</li>
+</ol>
+<p>Here is another example - we convert -8 to two's complement binary.</p>
+<ol>
+<li>Number 8 is 0b1000</li>
+<li>NOT(0b1000) = 0b0111</li>
+<li>Add 1: 0b0111 + 0b1 = 0b1000</li>
+</ol>
+<hr />
+<p>Note:</p>
+<p>When writing numbers in binary there is no indication if the number is a signed 2's complement number or an unsigned number. So 0b1110 is both -2 (if interpreted as 2's complement signed number) as well as 14 (if interpreted as unsigned). The context in which the number is used determines whether it will be considered signed or unsigned.</p>
+<hr />
+<p>Let us try one more example. This time we will try to represent the number -9 as a 4-bit 2's complement number. If you have been following along so far you may wonder how this is possible. The smallest number that can be represented with 4-bit 2's complement is -2<sup>(4-1)</sup> = -2<sup>3</sup> = -8. We are actually going to show how this will not work.</p>
+<ol>
+<li>Number 9 is 0b1001</li>
+<li>NOT(0b1001) = 0b0110</li>
+<li>0b0110 + 0b1 = 0b0111</li>
+</ol>
+<p>The answer we get is a positive number since the MSB is 0. So clearly it is wrong. Since we know the answer should be a negative number can we &quot;fix&quot; things by pre-fixing a 1 to it? So what about 0b10111?</p>
+<p>But that is 5 bits not 4. Let us see if this represents -9 in a 5-bit 2's complement interpretation. Converting 0b10111 2's complement number to decimal:</p>
+<ol>
+<li>Sign is negative</li>
+<li>NOT(0b10111) = 0b01000</li>
+<li>0b01000 + 0b1 = 0b01001</li>
+</ol>
+<p>0b01001 in decimal is 9. Affix the sign and we get -9!!</p>
+<p>So if there were no limitation due to fixed width the 2's complement representation can be used to represent arbitrarily large or small integers. <strong>But in practice all arithmetic done using computers have fixed-width representation.</strong> </p>
+<hr />
+<p><strong>Some additional magic:</strong></p>
+<p>Let us consider a 4-bit 2's complement number 0b1001. One other way to convert it to decimal is</p>
+<ol>
+<li>Compute its decimal value as though it is unsigned. In this case, 0b1001 is 9</li>
+<li>Subtract it from 2<sup>4</sup>. So 9 - 2<sup>4</sup> = 9 - 16 = -7.</li>
+</ol>
+<p>Check the table of 2's complement above and you can see that -7 in 2's complement representation is 0b101.</p>
+<p><strong>This works only for negative numbers.</strong> So, to convert any N-bit 2's complement number to decimal you can first treat it is unsigned and compute the decimal value. Subtract that decimal value from 2<sup>N</sup> to get the answer.</p>
+<hr />
+<h3 id="sign-extension-and-zero-extension"><a class="header" href="#sign-extension-and-zero-extension">Sign-extension and Zero-extension</a></h3>
+<p>Here is another titbit about 2's complement representation. Consider a representation with arbitrary width:</p>
+<ul>
+<li>For positive numbers the leading number of zeros do not matter. So 0b0010 is the same as 0b00010 and 0b00000010 (all are 2)</li>
+<li>For negative numbers the leading number of ones do not matter. So 0b1110 is the same as 0b11110 and 0b11111110 (all are -2)</li>
+</ul>
+<p>The numbers 0b1110, 0b11110, and 0b11111110 all have 1 as the MSB. So in 2's complement representation they are negative numbers. If we invert the numbers and add 1 we will get 0b0010, 0b00010 and 0b000000010. This gives us -2.</p>
+<p>So if we want to convert a 4-bit 2's complement number to a larger fixed-width representation all we have to do is to replicate the sign bits the appropriate number of times. Replicating the sign bit to expand a fixed-width number is called <strong>sign-extension</strong>. The tables below show a positive and a negative number in 2's complement representation of different widths.</p>
+<table><thead><tr><th align="right">Two's complement</th><th>Decimal number -2</th></tr></thead><tbody>
+<tr><td align="right">0b1110</td><td>4-bit</td></tr>
+<tr><td align="right">0b11111110</td><td>8-bit</td></tr>
+<tr><td align="right">0b1111111111111110</td><td>16-bit</td></tr>
+</tbody></table>
+<table><thead><tr><th align="right">Two's complement</th><th>Decimal number 4</th></tr></thead><tbody>
+<tr><td align="right">0b0100</td><td>4-bit</td></tr>
+<tr><td align="right">0b00000100</td><td>8-bit</td></tr>
+<tr><td align="right">0b0000000000000100</td><td>16-bit</td></tr>
+</tbody></table>
+<p>When working with signed numbers, most of the time, we want to sign-extend when expanding to a larger fixed-width representation. Occasionally there may be times when we want to take a signed or unsigned number and get a higher width number by just prefixing zeros. That is called <strong>zero-extension</strong>.
+In the later sections of this book, when we start programming, we will see how sign- and zero-extensions are used.</p>
+<h2 id="binary-arithmetic-with-twos-complement-numbers"><a class="header" href="#binary-arithmetic-with-twos-complement-numbers">Binary Arithmetic With Two's-Complement Numbers</a></h2>
+<p>Addition with 2's complement numbers works just like adding unsigned numbers. Any carry from the sign bits is thrown away. Below is an example of adding 5 and -2 (both numbers are 4-bit wide).</p>
+<p>      0<sup>1</sup> 1 0 1  (5)<br>
+      1   1 1 0  (-2)<br>
+      ------------<br>
+<s>1</s> | 0   0 1 1  (3)</p>
+<p>To <strong>subtract</strong> a number from another, say A - B, we take the 2's complement of he second number (B) and <strong>add</strong> it to the first. Here are a few examples of subtraction</p>
+<hr />
+<p><strong>Example 1:</strong> Lets try 3 - 2<br> <br>
+0b0011 - 0b0010<br> <br> 
+Taking two's complement of 2 we get: 0b0011 + 0b1110<br>
+Adding the two numbers we get 0b0001 (carry is thrown away)</p>
+<p>Now when we say the &quot;carry is thrown away&quot; what we mean is that the carry is ignored when performing signed addition or subtraction. The carry flag will still be set but it can be ignored by the programmer. For signed addition and subtraction the carry flag does not hold any significance.</p>
+<hr />
+<p><strong>Example 2:</strong> This method works regardless of the sign of the two numbers. For example...</p>
+<p>3 - (-3) = 6<br> </p>
+<p>0b0011 - 0b1101 (note the -3 in 2's complement is 0b1101)<br>
+Taking 2's complement of -3 we get: 0b0011 + 0b0011<br>
+Adding the two numbers: 0b0011 + 0b0011 = 0b0110</p>
+<hr />
+<h3 id="overflow"><a class="header" href="#overflow">Overflow</a></h3>
+<p>What if the result of an operation is too large or too small to be represented using 4-bits. For example, continuing with 4-bit numbers, if we try to subtract -8 from 2 we get 2 - (-8) = 10. But 10 is too large to be represented using 4-bit two's complement representation. The detailed version of this subtraction is below.</p>
+<p><strong>Example:</strong> -1 + (-8) = -9 <br>
+Which is 0b1111 + 0b1000 <br>
+After addition we get 0b0111.</p>
+<p>But, 0b0111 is 7 and the answer we expect is -9. So this is clearly wrong. However, -9 cannot be represented with a 4-bit fixed width number. In this case, the overflow flag is set to indicate to the programmer that the result is too large. In the ARM architecture the overflow flag (O) is part of the <a href="./arm_exec_state.html">PSTATE</a>.</p>
+<h2 id="what-we-learned"><a class="header" href="#what-we-learned">What we learned</a></h2>
+<ol>
+<li>Binary representation of unsigned numbers</li>
+<li>Binary numbers represented with fixed-width</li>
+<li>Two's complement representation of signed numbers</li>
+<li>Binary arithmetic - addition and subtraction</li>
+<li>Carry and overflow</li>
+</ol>
+<p>Note that the carry flag is relevant for unsigned operations and the overflow flag is relevant for signed operations.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="arm_exec_state.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="starting_assembly.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="arm_exec_state.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="starting_assembly.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>

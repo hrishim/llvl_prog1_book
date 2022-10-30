@@ -1,0 +1,615 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Functions - Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</title>
+        <!-- Custom HTML head -->
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html" class="active"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<p>When developing large programs it is useful break down the code into smaller more manageable pieces. This an be done by placing frequently occurring instructions into functions. Organising code this way offers these advantages:</p>
+<ul>
+<li>It provides the program structure and enables better understanding of the code.</li>
+<li>Code is re-used therefore overall program size (i.e. lines of code) becomes smaller. It also becomes easier to test and fix errors.</li>
+</ul>
+<p>For example, say we are developing software for a scientific application and the algorithm we are using requires us to compute the sum of 1 to n numbers at different points in the code. The number n can change at different places in the program. First, we write the code to compute the sum of numbers.</p>
+<pre><code class="language-armasm"> //The general formula for the sum of numbers from 1 to n is sum = n * (n+1)/2
+ //Number to be placed in w0
+ add w1, w0, #1    //Compute n+1
+ mul w1, w0, w1    //Compute n * (n+1)
+ lsr w1, w1, #1    //Divide the result by 2
+</code></pre>
+<p>In the assembly code we expect that the value of n (an unsigned integer) should be made available in register w0. The three lines above will then compute the sum of integers from 1-n and place the result in w1. Note that to divide by 2 we use the lsr (right shift) instruction. If you do not understand how the lsr instruction is equivalent to division, review the chapters on binary arithmetic and integer instructions.</p>
+<p>Now back to the complex (hypothetical) program we were developing...</p>
+<p>We want to compute the sum of n integers at different points in our program. At each instance we want to compute the sum up to a different n. Sometimes the sum of numbers from 1-6, sometimes from 1-22 and later in the program 1-n (where n can be a different number). Example of the really large program:</p>
+<pre><code class="language-armasm">//Lots of complicated scientific computations
+.
+.
+.
+mov w0, #6
+//Compute sum of integers from 1-6
+add w1, w0, #1    //Compute n+1
+mul w1, w0, w1    //Compute n * (n+1)
+lsr w1, w1, #1    //Divide the result by 2
+
+//Use value in w1 as an input to more complicated computations...
+.
+.
+.
+mov w0, #22
+//Compute sum of integers from 1-22
+add w1, w0, #1    //Compute n+1
+mul w1, w0, w1    //Compute n * (n+1)
+lsr w1, w1, #1    //Divide the result by 2
+
+//Use value in w1 as an input to more complicated computations...
+.
+.
+.
+//So on and so forth
+</code></pre>
+<p>We could write our program as shown above and it will work. But the program is really long and difficult to understand. Also, if we made a mistake in typing the code to compute the sum of n integers anywhere in the program it could lead to errors.</p>
+<p>One way to reduce the program size (number of instructions) would be to some how write the code to compute sum of N numbers only once. Wherever the sum-of-N needs to be computed in our program we can branch to the code that computes it and branch back once the value is computed.</p>
+<p>What we want to do is restructure our program to something like this:</p>
+<pre><code class="language-armasm">sumOfN:
+//Compute sum of integers from 1-n where n is given by the caller in w0
+add w1, w0, #1    //Compute n+1
+mul w1, w0, w1    //Compute n * (n+1)
+lsr w1, w1, #1    //Divide the result by 2
+//Return to the appropriate location. Huh, how do I do that?
+
+//Main program starts here...
+//Lots of complicated scientific computations
+.
+.
+.
+mov w0, #6
+b sumOfN //Branch to the code that computes sum-of-N
+
+//Once sumOfN is done we need to execute from the instruction below
+
+//Use value in w1 as an input to more complicated computations...
+.
+.
+.
+mov w0, #22
+b sumOfN //Branch to the code that computes sum-of-N
+
+//Once sumOfN is done we need to execute from the instruction below
+
+//Use value in w1 as an input to more complicated computations...
+.
+.
+.
+//So on and so forth
+
+</code></pre>
+<p>However, this does not work (yet). Why so? Well, we can use an unconditional branch instruction to keep jumping to the code to compute sumOfN. <strong>But, after executing the code at sumOfN, how do we get back to the next instruction in the program?</strong> At each instance in the program where we jump to sumOfN the code has to return to the immediate next instruction. So the location to jump back after executing sumOfN changes.</p>
+<p>What we want is to be able to jump to sumOfN when needed, execute it, and jump back to the location from where we &quot;called&quot; the sumOfN &quot;function&quot;. There are a few special instructions in the ARM ISA that can be used to accomplish this objective. The first one is the &quot;branch with link&quot; instruction (BL, BLR). This instruction is used to jump from any location in code to the start of a function. The second instruction is the return (RET) instruction that returns from the function back to the instruction just after BL/BLR.</p>
+<p>The branch with link instruction stores the address of the next instruction (i.e. the instruction following itself) into register X30 and jumps to the memory location specified by the programmer.</p>
+<p>Branch with link variants</p>
+<ul>
+<li>BL immediate_address  : address to branch is encoded as an immediate</li>
+<li><em>BLR &lt;X<sub>n</sub>&gt;</em>   : address to branch is contained in X register</li>
+</ul>
+<p>The <em>RET {&lt;X<sub>n</sub>&gt;}</em> instruction is the last instruction in a function. It jumps to the address contained in the specified register. If the register name is omitted the contents of X30 are used as the address to jump to.</p>
+<p>So here is what our large program looks like with BL and RET instructions added.</p>
+<pre><code class="language-armasm">sumOfN:
+  //Compute sum of integers from 1-n where n is given by the caller in w0
+  add w1, w0, #1    //Compute n+1
+  mul w1, w0, w1    //Compute n * (n+1)
+  lsr w1, w1, #1    //Divide the result by 2
+  ret               //Return to the address in X30
+
+//Main program starts here...
+//Lots of complicated scientific computations
+.
+.
+.
+mov w0, #6
+bl sumOfN //Branch to the code that computes sum-of-N
+
+//Once sumOfN is done execution begins from the instruction below
+//Use value in w1 as an input to more complicated computations...
+.
+.
+.
+mov w0, #22
+bl sumOfN //Branch to the code that computes sum-of-N
+
+//Once sumOfN is done execution begins from the instruction below
+//Use value in w1 as an input to more complicated computations...
+.
+.
+.
+//So on and so forth
+
+</code></pre>
+<p>Note that it is possible to use just plain branch instruction to jump to sumOfN and back. We can do this by storing the return address in a X register ourselves and then jumping back to the address in that register. However, using BL/BLR and RET gives hint to the processor that a function is being called and will eventually return. The processor can use this information to execute the program more optimally.</p>
+<p>The key points to understand from the above discussion are:</p>
+<ul>
+<li>Jump to functions using <em>BL/BLR</em>, return from the function using <em>RET</em></li>
+<li>X30 is a special register that is used by <em>BL</em> to store the return address</li>
+</ul>
+<h2 id="execise-1a-function-to-count-leading-zeros"><a class="header" href="#execise-1a-function-to-count-leading-zeros">Execise 1A: Function to count leading zeros</a></h2>
+<p>Write a function to count the number of leading zeros. The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make count_leading_zeros.elf
+RUN_COMMAND: make run
+</code></pre>
+<h2 id="nested-function-calls"><a class="header" href="#nested-function-calls">Nested Function Calls</a></h2>
+<p>In a program it is possible for one function to call another. For example, sumOfN function could call addOne to add 1 to the value passed in.</p>
+<pre><code class="language-armasm">sumOfN:
+  //Compute sum of integers from 1-n where n is given by the caller in w0
+  mov w1, w0          //Save the value of w0
+  str x30, [sp, -#16]! //Save the value of X30 onto the stack, also change SP
+  bl addOne
+  ldr x30, [sp], #16   //Load the saved value of x30 back from stack
+  mul w1, w0, w1    //Compute n * (n+1)
+  lsr w1, w1, #1    //Divide the result by 2
+  ret               //Return to the address in X30
+
+addOne:
+  add w1, w0, #1    //Compute n+1
+  ret
+
+</code></pre>
+<p>When we use the <em>BL/BLR</em> to call a function the return address is stored in X30. So, from our program when we call sumOfN the return address is stored in X30. From sumOfN, when  we call addOne the X30 register will be overwritten with the address of the instruction to return to after executing addOne. Therefore, we save the contents of X30 in the stack before calling addOne function. After the function call we restore the contents of X30 from the stack and then return from sumOfN.</p>
+<p>Why save and restore X30 from the stack? Why not save it another register?</p>
+<p>In a real program, the other registers may be holding values used in  computation and so may not be available. Plus we do not know if the function being called would overwrite our chosen register. Therefore, the correct practice is to use the stack to save X30.</p>
+<h2 id="passing-parameters-via-registers"><a class="header" href="#passing-parameters-via-registers">Passing parameters via registers</a></h2>
+<p>Some functions may need data to be given to them to operate. For example the sumOfN and the addOne functions we used earlier needed input values. We passed the value N to sumOfN and the value to be incremented to addOne. In both cases the value was placed in register <em>w0</em> before we called the corresponding functions. The values that are passed to functions are called parameters.</p>
+<p>Parameters are passed quite commonly using registers. By convention and as specified in the <a href="https://github.com/ARM-software/abi-aa/releases">Arm Procedure Call Standard</a> registers <em>r0-r7</em> are used to pass parameters. If more than 8 parameters have to be passed to a function the remaining can be passed by pushing them on the stack.</p>
+<p>The <em>r0-r7</em> registers can also be used to return values from the function. In the example above we used the <em>w1</em> register to return values from the function.</p>
+<h2 id="exercise-1b-memcopy-as-a-function"><a class="header" href="#exercise-1b-memcopy-as-a-function">Exercise 1B: Memcopy as a function</a></h2>
+<p>We have implemented memcopy as a function and the code is shown below.
+Comments in the code explain how it is intended to work. However, in the present form the code has a bug (error). Can you spot the error and fix the problem.</p>
+<pre><code class="language-armasm">
+// Function to copy a string
+memcopy_string:
+    sub sp, sp, 32     // Adjust sp
+    str x19, [sp, 8]   // Save x19 (local var 1)
+    str x20, [sp, 16]  // Save x20 (local var 2)
+
+    mov x19, x0 // Store str1 in local var1 (x19)
+    mov x20, x1 // Store str2 in local var2 (x20)
+
+    // Find the string length
+    bl find_string_length
+
+    mov x2, x0  // Move length value to x2(third argument)
+    mov x0, x19 // Move str1 to x0(first argument)
+    mov x1, x20 // Move str2 to x1(second argument)
+
+    mov	  x19, #0x0    // Maintain count in local var 1(x19)
+copy_loop_start:
+    ldrb  w20, [x0, x19]  // Use local var 2(x20) to hold temporary results
+    strb  w20, [x1, x19]
+    add	  x19, x19, #0x1
+    cmp	  x2, x19
+    b.gt  copy_loop_start
+
+    ldr x19, [sp, 8]   // Restore x19
+    ldr x20, [sp, 16]  // Restore x20
+
+    add sp, sp, 32     // Adjust sp
+
+    ret
+
+
+// Helper function to find length of a string
+find_string_length:
+    sub sp, sp, 32    // Adjust sp
+    str x30, [sp]     // Save x30
+    str x19, [sp, 8]  // Save x19 (local var 1)
+    str x20, [sp, 16] // Save x20 (local var 2)
+
+    mov   x19, #0         // Maintain count in local var 1(x19)
+    ldrb  w20, [x0, x19]  // Use local var 2(x20) to hold temporary results
+    cbz   x20, find_len_end
+find_len_start:
+    add   x19, x19, #0x1
+    ldrb  w20, [x0, x19]
+    cbnz  x20, find_len_start
+
+find_len_end:
+    mov x0, x19  // Move return value to x0
+
+    ldr x19, [sp, 8]    // Restore x19
+    ldr x20, [sp, 16]   // Restore x20
+
+    ldr x30, [sp]       // Restore x30
+    add sp, sp, 32      // Adjust sp
+
+    ret
+
+</code></pre>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make memcopy_register.elf
+RUN_COMMAND: make run
+</code></pre>
+<h2 id="register-usage-conventions"><a class="header" href="#register-usage-conventions">Register usage conventions</a></h2>
+<p>So far we have been talking about small programs where we use very few of the available Arm registers. However, large programs can have millions of lines of code written in collaboration by programmers. These programs have many functions. It is quite common for programmers to rely on libraries for specific purposes. Those libraries may have been written by other programmers (in a different company/organization).</p>
+<p>A library can be thought of a set of functions the implement specific actions. For example, a math library can implement different mathematical operations. The functions in the library can be used by other programmers in their own programs.</p>
+<p>Even though the architecture permits the programmer to use registers <em>r0-r30</em> as they choose, in practice sharing code makes it necessary to have some conventions. For example, a programmer could write a library with functions that expect input parameters in registers <em>r13-r20</em>. How would others using that code know to pass parameters using those specific registers? One could say - &quot;read the documentation&quot;. But if every programmer were to pick their own favorite registers for different purposes then there would be a lot of documentation to read and adhere to - a total mess.</p>
+<p>Also, most programs are written in higher level programming languages like C/C++, Rust, Swift etc. Compilers (in combination with assemblers) convert programs written in these languages to assembly and after that to machine code. Using a common convention will make it easier for code compiled using different compilers to correctly interoperate.</p>
+<p>The <a href="https://github.com/ARM-software/abi-aa/releases">Arm procedure call standard</a> (PCS) prescribes a convention to be followed for using registers. Following this convention ensures that assembly (or higher level language) code written by different programmers will interoperate without any problems.</p>
+<p>The table below is from the Arm PCS. Readers are encouraged to refer to the full documentation for details.</p>
+<table><thead><tr><th>Registers</th><th>Role</th></tr></thead><tbody>
+<tr><td>r0-r7</td><td>parameters and result registers</td></tr>
+<tr><td>r8</td><td>indirect result location register</td></tr>
+<tr><td>r9-r15</td><td>temporary registers</td></tr>
+<tr><td>r16-r17</td><td>intra-procedure-call temporary register; used by the linker as scratch registers</td></tr>
+<tr><td>r18</td><td>temporary register</td></tr>
+<tr><td>r19-r28</td><td>callee-saved registers</td></tr>
+<tr><td>r29</td><td>frame pointer</td></tr>
+<tr><td>r30</td><td>link register</td></tr>
+<tr><td>SP</td><td>stack pointer</td></tr>
+</tbody></table>
+<p><strong>Note:</strong> The stack pointer (SP) sould only be used to hold the address of top of stack. Register <em>r30</em> (link register) should be used to hold the address of a return.</p>
+<p>As per the PCS, <em>r0-r7</em> are to be used for parameters and results. A called function may change the contents of these registers. So programmers should not expect these register contents will be preserved after a function call. Registers <em>r9-r15</em> and <em>r9-r15</em> can be used as temporary registers. This means they can be overwritten and these registers may not be preserved after a function call.</p>
+<p>If the programmer wishes, registers that may be clobbered can be saved on the stack before a function call and restored after the call.</p>
+<p>Callee-saved registers <em>r19-r28</em> are guaranteed to be preserved after a function call. Any function that uses these registers must save the values before use and restore the values before the function returns. These registers are called &quot;callee-saved&quot; because the onus is on the called function to preserve the values.</p>
+<h2 id="memcopy-using-variables-on-the-stack"><a class="header" href="#memcopy-using-variables-on-the-stack">Memcopy using variables on the stack</a></h2>
+<p>To illustrate how the stack can be used to store values local to a function we give you yet another version of the memcopy function. In this version we have the stack to hold the value for holding the index as we iterate over the elements and copy them.</p>
+<pre><code class="language-armasm">
+// Function to copy a string
+memcopy_string:
+    sub sp, sp, 48   // Adjust sp
+    str x30, [sp]    // Save x30
+
+    // Save arguments in stack
+    str x0, [sp, 8]  // Save first argument in stack at (sp + #8)
+    str x1, [sp, 16] // Save second argument in stack at (sp + #16)
+    str x2, [sp, 24] // Save third argument in stack at (sp + #24)
+
+    mov   x0, #0       // Initialize counter (local var)
+    str   x0, [sp, 32] // Maintain counter in stack at (sp + #32)
+
+copy_loop_start:
+    ldr x0, [sp, 8]    // Load first argument from stack
+    ldr x1, [sp, 16]   // Load second argument from stack
+    ldr x2, [sp, 24]   // Load third argument from stack
+    ldr x3, [sp, 32]   // Load local var counter from stack
+    ldrb w4, [x0, x3]
+    strb w4, [x1, x3]
+    add  x3, x3, #0x1
+    str  x3, [sp, 32]  // Save local var counter to stack
+    cmp   w2, w3
+    b.gt  copy_loop_start
+
+    ldr x30, [sp]      // Restore x30
+    add sp, sp, 48     // Adjust sp
+
+    ret
+
+
+// Helper function to find length of a string
+find_string_length:
+    sub sp, sp, 32 // Adjust sp
+    str x30, [sp]  // Save x30
+    str x0, [sp, 8]  // Save first argument
+
+    ldrb  w5, [x0]
+    cbz   w5, find_len_end
+
+    mov   x0, #0         //  Initialize counter (local var)
+    str   x0, [sp, 16]   //  Maintain counter in stack at (sp + #16)
+
+    ldr   x0, [sp, 8]    // Load first argument from stack
+find_len_start:
+    ldr   x1, [sp, 16]   // Load counter from stack
+    add   x1, x1, #0x1
+    str   x1, [sp, 16]   // Save updated counter
+    ldrb  w5, [x0, x1]
+    cbnz  w5, find_len_start
+
+find_len_end:
+    ldr   x0, [sp, 16]   // Load counter(return value) from stack to x0
+
+    ldr x30, [sp]        // Restore x30
+    add sp, sp, 32       // Adjust sp
+
+    ret
+
+</code></pre>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make memcopy_stack.elf
+RUN_COMMAND: make run
+</code></pre>
+<p>We have shown the above code as an example of how the stack can be used. It is <strong>NOT</strong> the ideal way to implement memcopy. The code below shows a more concise way to perform memcopy.</p>
+<pre><code class="language-armasm">
+// Function to copy a string
+memcopy_string:
+    sub sp, sp, 16  // Adjust sp
+    str x30, [sp]   // Save x30
+
+    mov   x3, #0x0
+copy_loop_start:
+    ldrb  w4, [x0, x3]
+    strb  w4, [x1, x3]
+    add   x3, x3, #0x1
+    cmp   x2, x3
+    b.gt  copy_loop_start
+
+    ldr x30, [sp]   // Restore x30
+    add sp, sp, 16  // Adjust sp
+
+    ret
+
+
+// Helper function to find length of a string
+find_string_length:
+    sub sp, sp, 16  // Adjust sp
+    str x30, [sp]   // Save x30
+
+    mov   x2, #0
+    ldrb  w3, [x0, x2]
+    cbz   w3, find_len_end
+find_len_start:
+    add   x2, x2, #0x1
+    ldrb  w3, [x0, x2]
+    cbnz  w3, find_len_start
+
+find_len_end:
+    mov x0, x2      // Move return value to x0
+
+    ldr x30, [sp]   // Restore sp
+    add sp, sp, 16  // Adjust sp
+
+    ret
+
+</code></pre>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make memcopy_optimized.elf
+RUN_COMMAND: make run
+</code></pre>
+<h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
+<p>Hrishi to explain general recursion here and what it involves.</p>
+<pre><code class="language-armasm">    // Recursive function to Find sum of all integers smaller than or equal to given number using a recursive function.
+    // For example, if given number is 4, the result would be 4+3+2+1 which is 10.
+sum_of_n_recursive:
+    stp x9, x30, [sp, -32]! // Save X30(link register) and a X19 (temporary register used as a local variable) onto the stack and adjust SP
+    mov w9, w0              // Move the number passed as argument to temporary register
+    cmp w0, 1               // Check if number is less that or equal to 1
+    ble done                // Branch to label 'done' if we have completed adding all numbers till 1
+    sub w0, w0, #1          // Subtract 1 from the number to perform a recursive call and obtain sum of all lower numbers
+    bl  sum_of_n_recursive  // Perform a recursive call to obtain sum of all lower numbers
+    add w0, w0, w9          // Add the resultant sum of all lower numbers with current number
+done:
+    ldp x9, x30, [sp], 32   // Restore back temporary register and X30 from stack
+    ret                     // Return the result
+</code></pre>
+<p>This code is available in file exercises/functions/sum_of_n.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make sum_of_n.elf
+RUN_COMMAND: make run
+</code></pre>
+<h2 id="practice-exercises"><a class="header" href="#practice-exercises">Practice exercises</a></h2>
+<h3 id="function-to-add-and-subtract-matrices"><a class="header" href="#function-to-add-and-subtract-matrices">Function to add and subtract matrices</a></h3>
+<p>In the provided template write functions to</p>
+<ul>
+<li>add two matrices</li>
+<li>subtract two matrices</li>
+</ul>
+<p>The address of the matrices and the destination matrix are parameters passed to the function via <em>x0</em>, <em>x1</em>, and <em>x2</em> registers. Register <em>x3</em> holds the dimension of square matrices. The result, which is the address of the destination matrix, should be returned in the <em>x0</em> register.</p>
+<p>The files to be used for this exercise and the compile and run commands are given below:</p>
+<ul>
+<li>Matrix Addition:</li>
+</ul>
+<pre><code>    File to be used: exercises/functions/matrix_addition.s
+    COMPILE_COMMAND: make matrix_addition.elf
+    RUN_COMMAND: make run
+</code></pre>
+<ul>
+<li>Matrix Subtraction:</li>
+</ul>
+<pre><code>    File to be used: exercises/functions/matrix_subtract.s
+    COMPILE_COMMAND: make matrix_subtract.elf
+    RUN_COMMAND: make run
+</code></pre>
+<h3 id="caesar-cipher"><a class="header" href="#caesar-cipher">Caesar Cipher</a></h3>
+<p>Show a function that will take a shift value and a string to encrypt. The output should be a encrypted string.
+For example, if input string is: &quot;Hello&quot; and shift value is '2', the expected encrypted string is: &quot;Jgnnq&quot;</p>
+<p>As a challenge the user can write a decrypt function also to perform the reverse operation and print the original string.</p>
+<p>For this exercise use the file exercises/functions/caesar_cipher.s.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make caesar_cipher.elf
+RUN_COMMAND: make run
+</code></pre>
+<h3 id="recursive-function-to-compute-n"><a class="header" href="#recursive-function-to-compute-n">Recursive function to compute n!</a></h3>
+<p>For this exercise use the file <em>exercises/functions/facorial.s</em>. In factorial.s, the number for which factorial will have to be computed is passed as argument to factorial_recursive function. Add code to compute the factorial using recursion and place the result in w0.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: make factorial.elf
+RUN_COMMAND: make run
+</code></pre>
+<h2 id="what-we-learned"><a class="header" href="#what-we-learned">What we learned</a></h2>
+<ul>
+<li>Breaking down programs into functions</li>
+<li>How parameters are passed into functions using registers</li>
+<li>How values are returned from functions</li>
+<li>Function recursion</li>
+<li>A little bit of the ARM procedure call standard</li>
+</ul>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="stack.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a rel="next" href="c_programming.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="stack.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                    <a rel="next" href="c_programming.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+    </body>
+</html>
