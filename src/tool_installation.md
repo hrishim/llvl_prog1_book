@@ -14,7 +14,7 @@ Download the installer from [here](https://git-scm.com/download/win) and follow 
 In your home directory create a subdirectory named "low_level_prog". Navigate to that directory in Windows Power Shell. Then type the following to checkout code from the repository:
 
 ```
-git clone https://github.com/hrishim/AArch64_Assembly.git
+git clone https://github.com/hrishim/llvl_prog1_code.git
 ```
 
 **FIXME:** Pradeep, Does git need to be added to the path
