@@ -52,9 +52,6 @@ Popping data from the stack can be done using load instructions. For example:
 ```
 
 
-FIXME: picture of stack at the start and after each instruction is executed.
-
-
 ## What we learned
    1. Stack pointer in AArch64
    2. How to push and pop data

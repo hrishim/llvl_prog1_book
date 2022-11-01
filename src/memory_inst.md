@@ -1,20 +1,5 @@
 # Memory Instructions
 
-
-Objective:
-
-- Learn about different types of load and store instructions. Different addressing modes.
-- Program loops and branch instructions.
-- Integer registers and register sizes
-- Some integer instructions
-
-Exercises:
-
-- Memcopy in different sizes
-- Copying using a loop
-- Challenge exercise to reverse a string
-- Challenge exercise to...
-
 Finally, lets start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.
 
 In most computer/embedded systems memory is located in a chip that is separate from the CPU. Memory is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use this instruction
@@ -90,7 +75,7 @@ So how does this program work. Actually, it is pretty simple. In a computer ever
 
 In ex1.s the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter "H". The destination address - location where the string should be copied to - is provided in X1. Before the start of the program the address starting at X0 contains the word "Hello" in consecutive memory locations (X0, X0+1...X0+4). Just for fun we have stored the word "Howdy" starting at the address in X1.
 
-The code copies one character at a time from the address starting at X0 to the address at X1. Each character of the string Hello is 1 byte in size. So to copy the entire string we have to copy 5 bytes. Each character is stored in continuous locations of memory. For example, if **H** starts at memory address 0x5, **e** is at 0x6, and **l** at 0x7 and so on. Note: This is just an example. In the program the location of **H** is not at 0x5 but at [FIXME - Pradeep to add exact addresses and remove this Note].
+The code copies one character at a time from the address starting at X0 to the address at X1. Each character of the string Hello is 1 byte in size. So to copy the entire string we have to copy 5 bytes. Each character is stored in continuous locations of memory. In this program, **H** starts at memory address 0x800ac, **e** is at 0x800ad, and **l** at 0x800ae and so on. **Note:** Each character is 1 byte in size. 
 
 The solution provided uses the base plus immediate offset addressing mode (aka immediate offset mode). In this mode the address of the memory operation is computed by adding the specified base register with a immediate value. The immediate value is also provided by the programmer.
 
@@ -228,9 +213,6 @@ The **ldrh** and **strh** instructions load a half-word from memory (2 bytes). T
 ## Copy memory using operations of different sizes
 Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the text "Welcome To Arm Assembly World" has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location that you may write to. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.
 
-
-FIXME: We have not discussed ldp but use it in the solution. Pradeep to add ldp inside the "details" block below
-
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
 
@@ -251,6 +233,7 @@ FIXME: We have not discussed ldp but use it in the solution. Pradeep to add ldp 
 
     // Your code ends here
 ```
+**Note:** The **ldp** (Load pair) and **stp** (Store pair) instructions in the above example loads/stores a pair of 64-bit **x** registers from memory. These instructions can therefore load/store 16 bytes (128 bits) of data at a time.  In this example, we have used the immediate offset addressing mode. The pair load/store instructions also support immediate offset, pre-indexed and post-indexed addressing modes.
 </details>
 
 ## Copying data using a loop

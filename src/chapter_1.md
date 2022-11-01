@@ -1,6 +1,6 @@
 # Introduction
 
-This is **Part 1** of a series of online books which will give readers an introduction to the ARM AArch64 architecture using ARM assembly language and the C programming language. It takes a hands-on approach to teaching programming and provides explanations along with exercises. Readers will benefit if they follow along by doing the exercises themselves. Ideally, after the first exercise, readers should try to write the programs on their own. We will initially learn to write programs in assembly language and then in the C programming language.  We strongly encourage readers to try solving each exercise in this book by themselves. Refer to the provided solution only when stuck and to learn alternative solutions to exercises.
+This is **Part 1** of a series of online books which will give readers an introduction to the ARM AArch64 architecture using ARM assembly language and the C programming language. It takes a hands-on approach to teaching programming and provides explanations along with exercises. Readers will benefit if they follow along by doing the exercises themselves. Ideally, after the first exercise, readers should try to write the programs on their own. We will initially learn to write programs in assembly language and then in the C programming language.  We strongly encourage readers to try solving each exercise in this book by themselves. Refer to the provided solution only when stuck and/or to learn alternative solutions to exercises.
 
 
 <BR>
