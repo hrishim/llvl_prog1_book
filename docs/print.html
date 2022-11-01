@@ -311,8 +311,7 @@ Copyright (c) 2003-2021 Fabrice Bellard and the QEMU Project developers
 <p>The register file is a small memory structure, comprising of multiple registers, that is close to the processor pipeline. It is used to store values required for instructions executing in the processor. Since it is closest to the processing core, it can be accessed quickly. Typically registers in the register file can be read/written in one CPU cycle. However, due to area and latency constraints the number of registers available is usually small. Therefore, for most programs the entire data needed to be read/written by the program cannot be stored in the register file. ARM is a RISC architecture. So compute instructions cannot directly use data located in memory. Nor can they write results directly back to memory. In this architecture, programmers have to explicitly load data from memory into a register and then use it to compute values. There are separate instructions - distinct from computational ones - to load and store data from memory.</p>
 <h2 id="bits-and-bytes"><a class="header" href="#bits-and-bytes">Bits and Bytes</a></h2>
 <p>As most readers probably know, computers store and process data as <em>bits</em>. A single bit - binary digit - is the minimum unit of information stored in a computer. A bit can can hold one of two values - 0 or 1. A group of 8 bits, called <em>byte</em>, is usually the smallest addressable unit of memory. In a modern computer system (most of them anyway) memory in a computer consists of a millions of bits that are grouped into bytes. Every byte has a unique address and can be individually loaded in to registers using specific instructions. A byte is 8-bits. A <em>word</em> is 4 bytes. A <em>double-word</em> is 8 bytes and a <em>half-word</em> is 2 bytes. These are the data sizes one will commonly encounter in assembly programming.</p>
-<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<p>In this book - i.e. part 1 - you will learn how to write programs that run on the Arm Cores. In the process we will learn the Arm A-class processor architecture, Arm assembly, and some C programming.</p>
+<p>In Part 1 you will learn how to write programs that run on the Arm Cores. In the process we will learn the Arm A-class processor architecture, Arm assembly, and some C programming.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="arm-registers-and-processor-execution-state"><a class="header" href="#arm-registers-and-processor-execution-state">ARM Registers and Processor Execution State</a></h1>
 <p>CPU Cores, also called processors, are programmable hardware that can perform computation. Programmable meaning they can be given a set of instructions - encoded as bits - and they will perform the computation as directed in the instructions.</p>
 <p>What instructions can a programmer give the processor? What resources does the processor have to execute those instructions? These are defined in the processor's architecture. The architecture of ARM processors are specified in the ARM Architecture Reference Manual (see References). The architecture also specifies the instructions that the processor is capable of understanding.</p>
@@ -933,19 +932,7 @@ copy_loop_start:
 <p>If this does not makes sense to you right now, that is OK. Just know that both the example instructions above will copy the value stored in x2 to x0.</p>
 <hr />
 <div style="break-before: page; page-break-before: always;"></div><h1 id="integer-instructions"><a class="header" href="#integer-instructions">Integer Instructions</a></h1>
-<p>We have already used two arithmetic instructions - <strong>add</strong> and <strong>cmp</strong> - in the previous section. In this section we introduce a few more commonly used integer instructions. Line before we will do this through a series of assembly programs. For some of the programs we have provided the explanation in pseudo code. This is an opportunity for the reader to write the assembly program by themselves in the specified file.</p>
-<p>Exercises:</p>
-<ul>
-<li>Find the sum of numbers in an array (ADD)</li>
-<li>Find the maximum number in an Array (CMP, BR, Jump)</li>
-<li>CLZ with loop</li>
-<li>CLZ with instruction</li>
-<li>Number of days in a month</li>
-<li>Matrix subtraction (SUB)</li>
-<li>Matrix subtraction (ADD)</li>
-<li>Fibonacci iterative</li>
-<li>Factorial (MUL)</li>
-</ul>
+<p>We have already used two arithmetic instructions - <strong>add</strong> and <strong>cmp</strong> - in the previous section. In this section we introduce a few more commonly used integer instructions. Like earlier, we will do this through a series of assembly programs. For some of the programs we have provided the explanation in pseudo code only. This is an opportunity for you to write the assembly program by yourself.</p>
 <h2 id="sum-of-numbers-in-an-array"><a class="header" href="#sum-of-numbers-in-an-array">Sum of numbers in an array</a></h2>
 <p>In this exercise we will add a set of numbers in a loop. We will also learn a new memory addressing method in the bargain.</p>
 <p>In computer programming, arrays are data structures that consist of the same type of data stored in contiguous locations of memory. Examples of the type of data includes 8-bit integers, 16-bit integers, 32-bit integers etc. ASCII strings are arrays of 8-bit integers that have a special value that indicates the end of string. Arrays of other types do not have any end markers like strings. Therefore, the programmer should know the number of elements stored in the array so that they do not overshoot the array and access memory locations outside of it.</p>
@@ -1383,14 +1370,6 @@ RUN_COMMAND: make run
 </ul>
 <p>In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the <a href="https://developer.arm.com/documentation/ddi0487/ga">Arm ARM</a> for a comprehensive list.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="condition-flags"><a class="header" href="#condition-flags">Condition Flags</a></h1>
-<p>Objective:</p>
-<ul>
-<li>What are condition flags</li>
-<li>Explain each flag individually</li>
-<li>Examples of how each flag is set/reset</li>
-<li>The types of conditional branches and what flags they use</li>
-</ul>
-<hr />
 <p>In <a href="condition_flags.html#Arm-Registers-and-Execution-State">Arm Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like b.gt that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
 <p>Condition flags are a set of bits that store state information about a previous operation. There are four condition flags:</p>
 <table><thead><tr><th>Flag</th><th>Name</th><th>Description</th></tr></thead><tbody>
@@ -2594,7 +2573,7 @@ EXPECTED_OUTPUT : X is 25
 <li><em>default</em> will match if no other <em>case</em> matches. However, it is optional. If omitted and the given expression does not match any <em>case</em> then none of the code statements inside the <em>switch</em> will be executed.</li>
 </ul>
 <p>Note that almost everything that can be done with <em>switch</em> statement can also be accomplished using <em>if-else</em>. But there may be times when one form is preferable over the other for conciseness or readability. fff</p>
-<h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
+<h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>We covered a lot of C programming language syntax in this section. While we have not covered all of the language this should be sufficient for the reader to tackle the programming exercises in the next section. We will cover additional bits of the language as and when we need to use them.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="c-programming-exercises"><a class="header" href="#c-programming-exercises">C Programming Exercises</a></h1>
 <p>Here are some programming exercises for you to try. Just like in previous exercises, try to complete it yourself before looking at the solution.</p>

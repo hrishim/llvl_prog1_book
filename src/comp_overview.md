@@ -71,6 +71,4 @@ The register file is a small memory structure, comprising of multiple registers,
 
 As most readers probably know, computers store and process data as *bits*. A single bit - binary digit - is the minimum unit of information stored in a computer. A bit can can hold one of two values - 0 or 1. A group of 8 bits, called *byte*, is usually the smallest addressable unit of memory. In a modern computer system (most of them anyway) memory in a computer consists of a millions of bits that are grouped into bytes. Every byte has a unique address and can be individually loaded in to registers using specific instructions. A byte is 8-bits. A *word* is 4 bytes. A *double-word* is 8 bytes and a *half-word* is 2 bytes. These are the data sizes one will commonly encounter in assembly programming.
 
-## Summary
-
-In this book - i.e. part 1 - you will learn how to write programs that run on the Arm Cores. In the process we will learn the Arm A-class processor architecture, Arm assembly, and some C programming.
+In Part 1 you will learn how to write programs that run on the Arm Cores. In the process we will learn the Arm A-class processor architecture, Arm assembly, and some C programming.

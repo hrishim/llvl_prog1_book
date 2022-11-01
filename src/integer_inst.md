@@ -1,19 +1,6 @@
 # Integer Instructions
 
-We have already used two arithmetic instructions - **add** and **cmp** - in the previous section. In this section we introduce a few more commonly used integer instructions. Line before we will do this through a series of assembly programs. For some of the programs we have provided the explanation in pseudo code. This is an opportunity for the reader to write the assembly program by themselves in the specified file.
-
-
-Exercises:
-
-- Find the sum of numbers in an array (ADD)
-- Find the maximum number in an Array (CMP, BR, Jump)
-- CLZ with loop
-- CLZ with instruction
-- Number of days in a month
-- Matrix subtraction (SUB)
-- Matrix subtraction (ADD)
-- Fibonacci iterative
-- Factorial (MUL)
+We have already used two arithmetic instructions - **add** and **cmp** - in the previous section. In this section we introduce a few more commonly used integer instructions. Like earlier, we will do this through a series of assembly programs. For some of the programs we have provided the explanation in pseudo code only. This is an opportunity for you to write the assembly program by yourself.
 
 ## Sum of numbers in an array
 
