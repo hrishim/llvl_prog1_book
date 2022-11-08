@@ -1,6 +1,6 @@
 # Condition Flags
 
-In [Arm Registers and Execution State](#Arm-Registers-and-Execution-State) we introduced the condition flags. In the previous section, we have already used arithmetic instructions like **cmp** that set the condition flags and instructions like b.gt that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.
+In [ARM Registers and Execution State](#ARM-Registers-and-Execution-State) we introduced the condition flags. In the previous section, we have already used arithmetic instructions like **cmp** that set the condition flags and instructions like b.gt that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.
 
 Condition flags are a set of bits that store state information about a previous operation. There are four condition flags:
 
@@ -288,9 +288,7 @@ SBC{S}: Rd = Rn - Rm - 1 + C
 ```
 These instructions can be used for performing multi-precision arithmetic and checksums.
 
-
-
-## What we learned this chapter
+## What we learnt this chapter
    - Condition flags and their meaning
    - Instructions that set condition code - CMP, TST, ADDS, SUBS, ADCS, SBCS, ANDS, BICS
    - Program flow control instructions

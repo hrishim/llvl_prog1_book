@@ -638,7 +638,7 @@ This code now produces the expected output:
 Since we are directly changing the value present at particular address, the value gets reflected in the calling function. Therefore the expected output gets printed.
 
 
-## What we learned
+## What we learnt this chapter
 
 - How to examine the disassembly output of ELF executable files
 - Analysis of disassembly output of common C language constructs

@@ -186,7 +186,7 @@ In a real program, the other registers may be holding values used in  computatio
 
 Some functions may need data to be given to them to operate. For example the sumOfN and the addOne functions we used earlier needed input values. We passed the value N to sumOfN and the value to be incremented to addOne. In both cases the value was placed in register *w0* before we called the corresponding functions. The values that are passed to functions are called parameters.
 
-Parameters are passed quite commonly using registers. By convention and as specified in the [Arm Procedure Call Standard](https://github.com/ARM-software/abi-aa/releases) registers *r0-r7* are used to pass parameters. If more than 8 parameters have to be passed to a function the remaining can be passed by pushing them on the stack.
+Parameters are passed quite commonly using registers. By convention and as specified in the [ARM Procedure Call Standard](https://github.com/ARM-software/abi-aa/releases) registers *r0-r7* are used to pass parameters. If more than 8 parameters have to be passed to a function the remaining can be passed by pushing them on the stack.
 
 The *r0-r7* registers can also be used to return values from the function. In the example above we used the *w1* register to return values from the function.
 
@@ -266,7 +266,7 @@ RUN_COMMAND: make run
 
 ## Register usage conventions
 
-So far we have been talking about small programs where we use very few of the available Arm registers. However, large programs can have millions of lines of code written in collaboration by programmers. These programs have many functions. It is quite common for programmers to rely on libraries for specific purposes. Those libraries may have been written by other programmers (in a different company/organization).
+So far we have been talking about small programs where we use very few of the available ARM registers. However, large programs can have millions of lines of code written in collaboration by programmers. These programs have many functions. It is quite common for programmers to rely on libraries for specific purposes. Those libraries may have been written by other programmers (in a different company/organization).
 
 A library can be thought of a set of functions the implement specific actions. For example, a math library can implement different mathematical operations. The functions in the library can be used by other programmers in their own programs.
 
@@ -274,9 +274,9 @@ Even though the architecture permits the programmer to use registers *r0-r30* as
 
 Also, most programs are written in higher level programming languages like C/C++, Rust, Swift etc. Compilers (in combination with assemblers) convert programs written in these languages to assembly and after that to machine code. Using a common convention will make it easier for code compiled using different compilers to correctly interoperate.
 
-The [Arm procedure call standard](https://github.com/ARM-software/abi-aa/releases) (PCS) prescribes a convention to be followed for using registers. Following this convention ensures that assembly (or higher level language) code written by different programmers will interoperate without any problems.
+The [ARM procedure call standard](https://github.com/ARM-software/abi-aa/releases) (PCS) prescribes a convention to be followed for using registers. Following this convention ensures that assembly (or higher level language) code written by different programmers will interoperate without any problems.
 
-The table below is from the Arm PCS. Readers are encouraged to refer to the full documentation for details.
+The table below is from the ARM PCS. Readers are encouraged to refer to the full documentation for details.
 
 | Registers | Role |
 | --- | --- |
@@ -507,7 +507,7 @@ COMPILE_COMMAND: make factorial.elf
 RUN_COMMAND: make run
 ```
 
-## What we learned
+## What we learnt this chapter
 
 - Breaking down programs into functions
 - How parameters are passed into functions using registers

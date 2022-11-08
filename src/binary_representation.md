@@ -402,7 +402,7 @@ After addition we get 0b0111.
 But, 0b0111 is 7 and the answer we expect is -9. So this is clearly wrong. However, -9 cannot be represented with a 4-bit fixed width number. In this case, the overflow flag is set to indicate to the programmer that the result is too large. In the ARM architecture the overflow flag (O) is part of the [PSTATE](./arm_exec_state.md).
 
 
-## What we learned
+## What we learnt this chapter
    1. Binary representation of unsigned numbers
    2. Binary numbers represented with fixed-width
    3. Two's complement representation of signed numbers

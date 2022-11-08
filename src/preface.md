@@ -6,3 +6,7 @@ The book would be useful to anyone looking to pursue a career in embedded system
 
 **Note:** 
 The contents of this book and associated code hosted in GitHub are provided for educational purposes only. Specifically, this material is not official documentation of the ARM architecture or the C programming language. All opinions expressed are solely that of the authors.
+
+---
+
+Copyright © M. S. Hrishikesh and Pradeep Nagarajan

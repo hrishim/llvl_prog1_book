@@ -75,7 +75,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> Arm Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> Arm AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html" class="active"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="preface.html">Preface</a></li><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html" class="active"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -216,7 +216,7 @@ loop:
 <p><strong>csel</strong> is a new instruction that can be used as part of this exercise. This instruction checks the condition set by the previous instruction (could be a cmp instruction) and if the condition is true it copies the value of Wn to Wd. If the condition is false it copies the value in Wm to Wd.</p>
 <pre><code class="language-armasm"> csel &lt;Wd&gt;, &lt;Wn&gt;, &lt;Wm&gt;, &lt;cond&gt;
 </code></pre>
-<p>The condition in the cond field can be one of the following (from <a href="https://developer.arm.com/documentation/ddi0487/ga">Arm ARM</a> C.1.2.4 Condition Code) :</p>
+<p>The condition in the cond field can be one of the following (from <a href="https://developer.arm.com/documentation/ddi0487/ga">ARM ARM</a> C.1.2.4 Condition Code) :</p>
 <table><thead><tr><th>Mnemonic</th><th>Meaning (integer)</th><th>Condition Flags</th></tr></thead><tbody>
 <tr><td>eq</td><td>Equal</td><td>Z == 1</td></tr>
 <tr><td>ne</td><td>Not Equal</td><td>Z == 0</td></tr>
@@ -313,7 +313,7 @@ done:
 <blockquote>
 <p>lsl w1, w1, 1</p>
 </blockquote>
-<p>The above instruction shifts the value in w1 left by 1 and saves the result in w1. There is a variant of <strong>lsl</strong> where the shift value can be specified in a register. You will find the syntax for the instruction in Arm ARM.</p>
+<p>The above instruction shifts the value in w1 left by 1 and saves the result in w1. There is a variant of <strong>lsl</strong> where the shift value can be specified in a register. You will find the syntax for the instruction in ARM ARM.</p>
 <p>The tbnz is a branch instruction that tests if the specified <strong>bit</strong>  in a given register is <strong>not zero</strong>. If the test result is true it branches to the label provided by the user. The <strong>tbz</strong> instruction checks if the bit is zero. If true it branches to the specified label.</p>
 <h2 id="computing-the-factorial-of-a-number"><a class="header" href="#computing-the-factorial-of-a-number">Computing the Factorial of a number</a></h2>
 <p>In this exercise we will compute the factorial of a number. Factorial value of a number 'N' is multiplication of all integers smaller than or equal to 'N'.</p>
@@ -555,7 +555,7 @@ RUN_COMMAND: make run
 <ul>
 <li>Refer earlier example in integer sectiom</li>
 </ul>
-<p>Counting leading zeroes in a number is such a common requirement in programs that the Arm ISA includes a specific instruction that does the job.</p>
+<p>Counting leading zeroes in a number is such a common requirement in programs that the ARM ISA includes a specific instruction that does the job.</p>
 <blockquote>
 <p>clz &lt;Wd&gt;, &lt;Wn&gt;</p>
 </blockquote>
@@ -564,14 +564,14 @@ RUN_COMMAND: make run
 <pre><code>COMPILE_COMMAND: make clz_inst.elf
 RUN_COMMAND: make run
 </code></pre>
-<h2 id="what-we-learned-this-chapter"><a class="header" href="#what-we-learned-this-chapter">What we learned this chapter</a></h2>
+<h2 id="what-we-learnt-this-chapter"><a class="header" href="#what-we-learnt-this-chapter">What we learnt this chapter</a></h2>
 <ul>
 <li>Arrays and how they appear in memory</li>
 <li>Integer instructions - ADD, SUB, TST, MUL</li>
 <li>Transferring data between registers - MOV</li>
 <li>Bit operations - AND, EOR, ORR, ASR, LSL, LSR, ROR</li>
 </ul>
-<p>In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the <a href="https://developer.arm.com/documentation/ddi0487/ga">Arm ARM</a> for a comprehensive list.</p>
+<p>In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the <a href="https://developer.arm.com/documentation/ddi0487/ga">ARM ARM</a> for a comprehensive list.</p>
 
                     </main>
 

@@ -105,7 +105,7 @@ The assembly program can be written in multiple ways. It does not matter if your
 ```armasm
  csel <Wd>, <Wn>, <Wm>, <cond>
 ```
-The condition in the cond field can be one of the following (from [Arm ARM](https://developer.arm.com/documentation/ddi0487/ga) C.1.2.4 Condition Code) :
+The condition in the cond field can be one of the following (from [ARM ARM](https://developer.arm.com/documentation/ddi0487/ga) C.1.2.4 Condition Code) :
 
 | Mnemonic | Meaning (integer)| Condition Flags |
 | ------ | ------ | ------ |
@@ -222,7 +222,7 @@ Most of the instructions in the program should be familiar by now except **tbz**
 
 > lsl w1, w1, 1
 
-The above instruction shifts the value in w1 left by 1 and saves the result in w1. There is a variant of **lsl** where the shift value can be specified in a register. You will find the syntax for the instruction in Arm ARM.
+The above instruction shifts the value in w1 left by 1 and saves the result in w1. There is a variant of **lsl** where the shift value can be specified in a register. You will find the syntax for the instruction in ARM ARM.
 
 The tbnz is a branch instruction that tests if the specified **bit**  in a given register is **not zero**. If the test result is true it branches to the label provided by the user. The **tbz** instruction checks if the bit is zero. If true it branches to the specified label.
 
@@ -532,7 +532,7 @@ RUN_COMMAND: make run
 
 - Refer earlier example in integer sectiom
 
-Counting leading zeroes in a number is such a common requirement in programs that the Arm ISA includes a specific instruction that does the job.
+Counting leading zeroes in a number is such a common requirement in programs that the ARM ISA includes a specific instruction that does the job.
 
 > clz \<Wd\>, \<Wn\>
 
@@ -545,10 +545,10 @@ COMPILE_COMMAND: make clz_inst.elf
 RUN_COMMAND: make run
 ```
 
-## What we learned this chapter
+## What we learnt this chapter
    - Arrays and how they appear in memory
    - Integer instructions - ADD, SUB, TST, MUL
    - Transferring data between registers - MOV
    - Bit operations - AND, EOR, ORR, ASR, LSL, LSR, ROR
 
-In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the [Arm ARM](https://developer.arm.com/documentation/ddi0487/ga) for a comprehensive list.
+In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the [ARM ARM](https://developer.arm.com/documentation/ddi0487/ga) for a comprehensive list.

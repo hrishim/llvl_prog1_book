@@ -1,8 +1,8 @@
-# Getting Started With Arm AArch64 Assembly
+# Getting Started With ARM AArch64 Assembly
 
 
 ## Assembly Instruction Encoding
-The Arm Architecture defines both 64- and 32-bit architectures. In this book we will focus on the 64-bit architecture which is called AArch64.
+The ARM Architecture defines both 64- and 32-bit architectures. In this book we will focus on the 64-bit architecture which is called AArch64.
 
 At a high level, micro-processors can be described as machines that execute a set of specifically assigned instructions. These instructions are coded/written by a programmer and are called programs (or applications, apps etc). The set of instructions that the micro-processor understands is defined in it's instruction set architecture (ISA).
 
@@ -50,7 +50,7 @@ Programming languages such as C, C++, Python etc allow programmers to write code
 
 The architecture provides a a number of registers that can be used by programmers for various purposes. In this chapter we will give you an overview of the portions of the architecture that are relevant to application programmers. As we cover more ground in later chapters we will gradually introduce the other portions of AArch64.
 
-Instructions in microprocessors operate on data that is stored in memory. However, Arm is a RISC architecture. This means that the instructions do not directly perform computation on **data in memory**. The data has to be first loaded into one of 31 general purpose registers in the processor. These registers can hold either 64-bit or 32-bit data. When accessed as 64-bit values the registers are named X0-X30 (counting from 0 remember, so 31 registers). When accessed as 32-bit values the registers are names W0-W30. 
+Instructions in microprocessors operate on data that is stored in memory. However, ARM is a RISC architecture. This means that the instructions do not directly perform computation on **data in memory**. The data has to be first loaded into one of 31 general purpose registers in the processor. These registers can hold either 64-bit or 32-bit data. When accessed as 64-bit values the registers are named X0-X30 (counting from 0 remember, so 31 registers). When accessed as 32-bit values the registers are names W0-W30. 
 
 These registers are called "general purpose" because they can be used by the programmer to store any data he/she desires. The X30 register alone, by convention, is also used as a procedure call link register. This register is used to specify the address the processor should return to after completing a function. We will discuss how to use this register and the BL instruction in the section on Function Calls.
 

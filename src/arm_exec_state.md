@@ -29,7 +29,7 @@ The X30 register has a special function. It is used as a link register for proce
 
 The general purpose registers can be used by Integer and Logic operation instructions. Another set of 32 registers are available for use with floating-point and SIMD instructions. We will not be using those instructions in this book, the interested reader can consult the ARM architecture reference manual for details.
 
-There are two additional registers with specific functions - stack pointer (SP) and program counter (PC). They cannot be used for general purpose computation. The SP register is a 64-bit register that points to the current "top of stack". The chapter on Functions will explain this use of this register. The PC register is a 64-bit register that holds the address of the current instruction being executed. This register cannot be written to directly. It is updated by the processor when a branch instruction is executed and on exception entry/return. We will learn more about control flow and exceptions later in this book.
+There are two additional registers with specific functions - stack pointer (SP) and program counter (PC). They cannot be used for general purpose computation. The SP register is a 64-bit register that points to the current "top of stack". The chapter on Functions will explain the use of this register. The PC register is a 64-bit register that holds the address of the current instruction being executed. This register cannot be written to directly. It is updated by the processor when a branch instruction is executed and on exception entry/return. We will learn more about control flow and exceptions later in this book.
 
 
 Here is the pseudo code for the operation  L = (A + B) * K:  
@@ -77,7 +77,7 @@ The PSTATE includes four exception masking bits.
 We will discuss exceptions and masking exceptions in part 2 of this book (not yet available). For now, just know that they are part of the PSTATE.
 
 
-## What we learned this chapter
+## What we learnt this chapter
    1. ARM general purpose registers 
    2. ARM PSTATE
 

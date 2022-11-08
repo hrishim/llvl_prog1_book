@@ -18,7 +18,7 @@ The book assumes readers have no prior knowledge of computer architecture or exp
 This material teaches how microprocessors work under the hood. Readers will learn how actual computation is performed using the basic instructions that a processor can execute. They will learn how system software works with the underlying hardware.
 
 Part 1 (i.e. this book) covers:
-- Arm AArch64 architecture for application programmers
+- ARM AArch64 architecture for application programmers
 - Writing code in ARM assembly language
 - An introduction to programming in C
 - How C code relates to assembly
@@ -47,6 +47,11 @@ The ARM architecture is ubiquitous and used in a range of devices from wrist wat
 
 ## Hardware and Software Requirements
 
-To follow the exercises in this book you need a PC or a Mac computer with 4GB of memory or more. In addition, the computer will need to have 5GB of free disk space. The supported operating systems are listed below. The computer should be running the specified version or later.
+To follow the exercises in this book you need a PC with 4GB of memory or more. In addition, the computer will need to have 5GB of free disk space. The supported operating systems are Windows 10 and Ubuntu 20.04 LTS. 
 
-macOS 10.15 (Catalina), Windows 10, and Ubuntu 20.04 LTS
+---
+
+Send comments and suggestons to (llpsuggestions):
+<img src="images/email_address.png" alt="drawing" width="180"/>
+
+

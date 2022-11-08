@@ -274,7 +274,7 @@ Disassembly of section .rodata:
 ```
 
 
-## What we learned
+## What we learnt this chapter
 
 - How C and assembly programs are compiled to ELF files
 - The ELF file is concerted to a binary file that can be used to run bare-metal

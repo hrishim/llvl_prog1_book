@@ -112,7 +112,7 @@ Later in this book we will discuss how to print strings.
 
 ### Addressing Modes
 
-In ex_1a.s we introduced the immediate offset addressing mode. The Arm architecture has other addressing modes to specify addresses in load and store instructions. In the rest of this section we will take  look at these modes.
+In ex_1a.s we introduced the immediate offset addressing mode. The ARM architecture has other addressing modes to specify addresses in load and store instructions. In the rest of this section we will take  look at these modes.
 
 Exercises ex_1b.s to ex_1d.s are similar to ex_1a.s. The objective is to accomplish the same result by using different addressing modes. Though the solutions for these exercises are provided we **strongly** encourage you to read the rest of this section and try to write the programs yourself. Consult the solution if you are unable to solve the exercise in reasonable time (say in one day).
 
@@ -176,7 +176,7 @@ What are these terms and what sizes do they indicate?
 
 We already know that data in computers are represented as bits. Bits can take one of two values - 0 and 1. A group of 8-bits is called a byte. Furthermore, every byte of memory has its own identifier - a memory address that distinguishes each byte from other bytes in memory.
 
-A word is a group of bytes. However, unlike byte which is always 8 bits, the size of a word is not a standard across different architectures. In the Arm architecture the size of a word is 4 bytes (i.e. 32 bits). A half-word is 2 bytes and a double-word is 8 bytes.
+A word is a group of bytes. However, unlike byte which is always 8 bits, the size of a word is not a standard across different architectures. In the ARM architecture the size of a word is 4 bytes (i.e. 32 bits). A half-word is 2 bytes and a double-word is 8 bytes.
 
 The architecture has load/store instructions that can load half-word, word, and double-word from/to memory.
 
@@ -208,10 +208,10 @@ Load/store half-word example:
 The **ldrh** and **strh** instructions load a half-word from memory (2 bytes). The examples above show post-indexed forms of the load instruction.
 
 
-**Note:** The Arm Architecture Reference Manual has detailed description of all the instructions discussed in this book. It is a useful reference to have when you attempt to write your own code for the exercises.
+**Note:** The ARM Architecture Reference Manual has detailed description of all the instructions discussed in this book. It is a useful reference to have when you attempt to write your own code for the exercises.
 
 ## Copy memory using operations of different sizes
-Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the text "Welcome To Arm Assembly World" has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location that you may write to. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.
+Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the text "Welcome To ARM Assembly World" has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location that you may write to. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.
 
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
@@ -225,8 +225,8 @@ Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the t
     ldrh w4, [x0], #2 // copy "To"
     strh w4, [x1], #2 // store "To"
 
-    ldr w4, [x0], #4 // copy " Arm"
-    str w4, [x1], #4 // store " Arm"
+    ldr w4, [x0], #4 // copy " ARM"
+    str w4, [x1], #4 // store " ARM"
 
     ldp x3, x4, [x0] // copy " Assembly World"
     stp x3, x4, [x1] // store " Assembly World"
@@ -297,7 +297,7 @@ This is followed by a compare instruction to check if the value in x2 is greater
   cmp w2, w3
 ```
 
-The compare instruction compares the value in x2 with the value in x3 and sets appropriate flags in the flag register. The exact operation is described in the [Arm Architecture Reference Manual, Armv8, for Armv8-A architecture profile](https://developer.arm.com/documentation/ddi0487/ga). The manual section C6.2 provides an alphabetical list of AArch64 base instructions. There are two entries for the CMP instruction in that list. The first one, titled "CMP(immediate)" is the CMP instruction when it is used with an immediate operand. The second one, titled "CMP(shifted register)" provides details of the CMP instruction when used with registers. In this program we are using the register version of the instruction.
+The compare instruction compares the value in x2 with the value in x3 and sets appropriate flags in the flag register. The exact operation is described in the [ARM Architecture Reference Manual, ARMv8, for ARMv8-A architecture profile](https://developer.arm.com/documentation/ddi0487/ga). The manual section C6.2 provides an alphabetical list of AArch64 base instructions. There are two entries for the CMP instruction in that list. The first one, titled "CMP(immediate)" is the CMP instruction when it is used with an immediate operand. The second one, titled "CMP(shifted register)" provides details of the CMP instruction when used with registers. In this program we are using the register version of the instruction.
 
 Why is the cmp instruction using registers w2 and w3 instead of x2 and x3? Remember that in AArch64 integer registers can be referred to in 64-bit or 32-bit form. The x0-x30 register names refer to 64-bit register names and w0-w30 register names refer to the lower 32 bits of the X registers. So the **cmp** instruction is operating on 32-bit registers. In this program the registers x2 and x3 hold the count of number of characters. It is unlikely we will have strings with lengths in excess of 32-bits. Therefore we can use the corresponding "W" names to **read** these registers.
 
@@ -347,7 +347,7 @@ Hint: You can use different forms of memory addressing including post-indexed.
 
 The solution for this exercise is provided in ex_2b.solution.s. We recommend that you try to write the program your self before looking at the solution.
 
-## What we learned
+## What we learnt this chapter
    1. Load and Store instructions of different sized - byte, half-word, word, and double
    2. The following addressing modes: pre-indexed, post-indexed (imm and register variant), base plus offset (imm and register variant).
    3. Compare and branch instructions
@@ -356,7 +356,7 @@ The solution for this exercise is provided in ex_2b.solution.s. We recommend tha
 
 
 ---
-**NOTE:** In Arm assembly language the different forms of mov instructions are aliases to other instructions. That means the instruction encoding of the mov instruction is the same as that for another Arm instruction. Both operations will yield the same result.
+**NOTE:** In ARM assembly language the different forms of mov instructions are aliases to other instructions. That means the instruction encoding of the mov instruction is the same as that for another ARM instruction. Both operations will yield the same result.
 
 For example:
 ```armasm

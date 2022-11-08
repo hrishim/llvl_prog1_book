@@ -52,7 +52,7 @@ Popping data from the stack can be done using load instructions. For example:
 ```
 
 
-## What we learned
+## What we learnt this chapter
    1. Stack pointer in AArch64
    2. How to push and pop data
    2. Stack pointer relative load and store
