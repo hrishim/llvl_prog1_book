@@ -3,7 +3,7 @@ authors = ["hrishim"]
 language = "en"
 multilingual = false
 src = "src"
-title = "Part 1: Introduction to Low-level Programming in C and Arm AArch64 Assembly"
+title = "Introduction to ARM AArch64 Architecture and Low-level Programming"
 
 [build]
 build-dir = "docs"
