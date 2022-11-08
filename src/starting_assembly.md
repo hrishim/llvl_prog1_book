@@ -28,12 +28,12 @@ Let us say we wish to add the value 323 to the contents of register R5 and place
 
 Note that we have set sf=0 so this instruction will be a 32-bit add. We have set the 12-bits of imm12 to the value 323. The values of Rn and Rd have been set to 5 and 10 respectively. The sh bit, which we have not discussed so far, has been set to 0. In hexadecimal format this bit pattern is **0x11050CAA**.  
 
-Clearly, it would be very difficult for programmers to write entire programs as hexadecimal digits. Thankfully that is not necessary. Programs can be written in a more convenient, human readable, way using Assembly Language. The same operation can be written in assembly code as: 
+Clearly, it would be very difficult for programmers to write entire programs as hexadecimal digits. Thankfully that is not necessary. Programs can be written in a more convenient human-readable way using Assembly Language. The same operation can be written in assembly code as: 
 
 
 >ADD W10, W0, #323
 
-The one bit of detail we have not covered is the function of the sh bit. When this bit is set to 0 the imm12 value is zero extended. If sh is set to 1 the imm12 value is left-shifted by 12 bits and then zero extended. For now, it does not matter if you do not understand the function of the sh bit. 
+The one bit of detail we have not covered is the function of the sh bit. When this bit is set to 0 the imm12 value is zero extended. If sh is set to 1 the imm12 value is left-shifted by 12 bits and then zero extended. For now, it does not matter if you do not understand the function of the sh bit. A special application called **Assembler** is used to convert assembly programs into hexadecimal encoding.
 
 ---
 **NOTE**
@@ -42,13 +42,11 @@ Zero extension is covered in the chapter on Integer Binary Arithmetic
 
 ---
 
-Programs can be written in assembly language and that is a more human friendly form compared to encoding everything in hex. But since the processor only understands encoded instructions, a special application called **Assembler** is used to convert assembly programs into hexadecimal encoding.
-
 Programming languages such as C, C++, Python etc allow programmers to write code at an even higher level of abstraction. Code written in high-level languages are first converted to Assembly language. This is done using an application called a **Compiler**. Once the program has been compiled another program called **Assembler** is used to convert the assembly code into instruction encoding.
 
 ## Registers
 
-The architecture provides a a number of registers that can be used by programmers for various purposes. In this chapter we will give you an overview of the portions of the architecture that are relevant to application programmers. As we cover more ground in later chapters we will gradually introduce the other portions of AArch64.
+The ARM architecture provides a a number of registers that can be used by programmers for various purposes. In this chapter we will give you an overview of the portions of the architecture that are relevant to application programmers. As we cover more ground in later chapters we will gradually introduce the other portions of AArch64.
 
 Instructions in microprocessors operate on data that is stored in memory. However, ARM is a RISC architecture. This means that the instructions do not directly perform computation on **data in memory**. The data has to be first loaded into one of 31 general purpose registers in the processor. These registers can hold either 64-bit or 32-bit data. When accessed as 64-bit values the registers are named X0-X30 (counting from 0 remember, so 31 registers). When accessed as 32-bit values the registers are names W0-W30. 
 
@@ -56,13 +54,13 @@ These registers are called "general purpose" because they can be used by the pro
 
 It is important to note that the 32-bit and the 64-bit register names are labels to access the same set of registers. The 32-bit names access the lower 32 bits (i.e. 0-31) and the 64-bit names access all the register bits (0-63).
 
-Like the general purpose registers, which can be used by integer and memory instructions, there is another set of **32** registers that can be used with SIMD and floating-point instructions. These registers are named V0-V31. We will use them in the chapter on floating-point and SIMD instructions.
+Like the general purpose registers, which can be used by integer and memory instructions, there is another set of **32** registers that can be used with SIMD and floating-point instructions. These registers are named V0-V31. We will not cover SIMD instructions and therefore we will not be using those registers.
 
 In addition to the above, programmers have access to the stack register (SP). The lower 32-bits of this register can be accessed using the name WSP. The stack register holds the memory address of the current *stack pointer*. The Stack is a special area in memory and will be discussed in detail in later sections.
 
 Finally there is the program control register. This register holds the memory address of the *current instruction*. In AArch64, cannot be directly modified by the programmer. It is updated by the processor when a branch/call instruction is executed and on exception return. 
 
-That was a lot of information and it is OK if you do not understand all of this yet. We will discuss the usage of all the above registers, and a few more, in more detail in each section.
+## Summary 
 
-The main point to understand in this section is that the processor cannot operate directly on data in memory. Values have to be loaded into *storage buffers* called registers. Integer instructions such as ADD, SUB etc operate on general purpose registers and can store the result of their operation also in a such a register.
+That was a lot of information and it is OK if you do not understand all of this yet. We will discuss how to use registers in more detail in following sections. The main point to understand in this section is that the processor cannot operate directly on data in memory. Values have to be loaded into *storage buffers* called registers. Integer instructions such as ADD, SUB etc operate on general purpose registers and can store the result of their operation also in a such a register. Once computation has been completed values can be copied from the registers holding results to memory. All of the copying between registers and memory have to be explicitly done by the programmer.
 
