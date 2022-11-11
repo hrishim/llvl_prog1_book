@@ -13,7 +13,7 @@ Condition flags are a set of bits that store state information about a previous 
 
 Each flag is a 1-bit value, so that there can only be two valid values:  0 (clear) or 1 (set). These flags indicate simple properties such as whether or not the result was negative, and can also be used in various combinations to identify conditions such as "less than or equal to".  
 
-The N flag represents the sign of the result of the previous operation. If say the operation was an addition (or subtraction, mutiplication, division etc) and the result was a negative number then this flag is set. If the result was a positive number then this flag is cleared.
+The N flag represents the sign of the result of the previous operation. If say the operation was an addition (or subtraction, multiplication, division etc) and the result was a negative number then this flag is set. If the result was a positive number then this flag is cleared.
 
 The Z flag, when set, indicates that the output of the previous instruction was zero. 
 

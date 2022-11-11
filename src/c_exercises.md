@@ -80,7 +80,7 @@ File to be used for this exercise is : exercises/c_functions/factorial.c. This f
 ```c
 unsigned int factorial(unsigned int n)
 {
-    //This function take a paramenter n and returns n!
+    //This function take a parameter n and returns n!
 
     int i;
 

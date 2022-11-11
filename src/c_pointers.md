@@ -30,7 +30,7 @@ temps[4]; // last element of the temps array
 uart_print_num(temps[2]); // print the third element
 ```
 
-We can now rewrite the above function to take an integer array and a number specifiying the size of the array.
+We can now rewrite the above function to take an integer array and a number specifying the size of the array.
 
 ```c
 int avg_temp(int temps[], int size) {
@@ -48,7 +48,7 @@ In the function above we used the syntax -  `avg_temp(int temps[], int size)` - 
 int scores[4] = {5, 9, 7, 2}
 ```
 
-When an array is defined like *scores* above, the compiler sets aside memory to hold the specified amount of memory. In this case we are asking for memory to hold **four** **integers**. Integers are 32-bits (8 bytes), so the compiler sets aside 32 bytes of memory to hold the array. These integers are can be refered to as - scores[0], scores[1], scores[2], and scores[3]. Note that if the array has N elements, the index of the last element is N-1. The allocated memory is contiguous, meaning scores[0] is immediately followed by scores[1], which is immediately followed by scores[2] and so on.
+When an array is defined like *scores* above, the compiler sets aside memory to hold the specified amount of memory. In this case we are asking for memory to hold **four** **integers**. Integers are 32-bits (8 bytes), so the compiler sets aside 32 bytes of memory to hold the array. These integers are can be referred to as - scores[0], scores[1], scores[2], and scores[3]. Note that if the array has N elements, the index of the last element is N-1. The allocated memory is contiguous, meaning scores[0] is immediately followed by scores[1], which is immediately followed by scores[2] and so on.
 
 The label assigned to the array (in this case *scores*) points to the memory location that is the start of the array. To this label the index times the size of the element is added to access individual elements. So when the programmer writes *scores[0]* the address of the first element is computed as the address pointed to by *scores* + 0 * size of an integer (i.e. 8 bytes). Similarly, the address of *scores[3]* = address of *scores* + 3 * 8.
 
@@ -104,7 +104,7 @@ would be represented in memory as:
 
 ## Pointers
 
-A related concept to arrays is pointers. In the desciption of arrays above we said that the name of the array **points to the memory location of the start of the array**. What that means is the array name (*scores*) hold the address of the memory location where the first element of the array is stored. We can define pointer variables of other types - *int, char, and float* - that hold the address of the memory location holding the data. 
+A related concept to arrays is pointers. In the description of arrays above we said that the name of the array **points to the memory location of the start of the array**. What that means is the array name (*scores*) hold the address of the memory location where the first element of the array is stored. We can define pointer variables of other types - *int, char, and float* - that hold the address of the memory location holding the data. 
 
 Memory in (most) computers is byte addressable. This means that every byte (8-bits) of memory in the machine has an address. When the programmer defines a variable in C, the compiler allocates the appropriate size required at a specific location in memory. So ``int x;`` in a program instructs the compiler to reserve 8-bytes somewhere in memory. It also informs the compiler that we will be referring to this memory location in our program using the name *x*. Note that the programmer does not have the ability to specify where in memory those 8-bytes should be stored. The compiler decides the actual address to allocate and will allocate 8 contiguous bytes of memory for the variable *x*.
 
@@ -123,7 +123,7 @@ uart_print_num(y);  // this will print the address of x
 uart_print_num(*y);  //this will print 2
 ```
 
-It is improtant to note that a pointer is useful **only when it points to a valid location in memory**. For example if we had not assigned `y` to `&x` then it will contain an arbitrary value (not always 0). This means that when we later dereference y by using `*y` we will be attempting to access memory contents that may or may not be part of our program. Just like accessing memory  beyond the array bounds, this can also lead to bugs (including serious security bugs) and crashes. It is up to the programmer to ensure that pointers in the program always point to valid and intended memory locations.
+It is important to note that a pointer is useful **only when it points to a valid location in memory**. For example if we had not assigned `y` to `&x` then it will contain an arbitrary value (not always 0). This means that when we later dereference y by using `*y` we will be attempting to access memory contents that may or may not be part of our program. Just like accessing memory  beyond the array bounds, this can also lead to bugs (including serious security bugs) and crashes. It is up to the programmer to ensure that pointers in the program always point to valid and intended memory locations.
 
 This may seem interesting (or complex) but **how are pointers useful?** One way they are useful is to allow functions to manipulate data rather than copy of a data. When we pass a parameter to a function, behind the scenes, a copy of the value is created and the function sees the copy.
 
@@ -139,7 +139,7 @@ void main() {
 }
 ```
 
-In the example above we pass a *int* to the function `some_fn`. No this creates a copy of the contents of variable *x* and gives that copy to the function via the stack (we will see more about that shortly). Inside `some_fn` we are using a copy of *x*. Note that even if the function was defined as `void some_fn(int x)` the *x* parameter used inside the function and the one in `main` are different memory locations that jusy happen to have the same name. Changing the value of a parameter passed this way will not change the original. So any changes insde `some_fn` will not affect the value of *x* in `main`. The last statement in `main` will print 5.
+In the example above we pass a *int* to the function `some_fn`. No this creates a copy of the contents of variable *x* and gives that copy to the function via the stack (we will see more about that shortly). Inside `some_fn` we are using a copy of *x*. Note that even if the function was defined as `void some_fn(int x)` the *x* parameter used inside the function and the one in `main` are different memory locations that just happen to have the same name. Changing the value of a parameter passed this way will not change the original. So any changes inside `some_fn` will not affect the value of *x* in `main`. The last statement in `main` will print 5.
 
 However, if we rewrite the code so that `some_fn` is passed a `int *` instead of an integer then instead of a copy the address of *x* will be passed. Here is that code:
 
@@ -155,7 +155,7 @@ void main() {
 }
 ```
 
-Note that there are two changes from the earlier version. The signature of the function is now `some_fn(int *y)`. Also, when we call this function we are passing it the address of *x* using the syntax `&x`. Inside the function we tell the compiler to multiply the contents of the **integer** at address `y` and multiply that by 2. The result is then stored in the memory addres pointed to by `y`. Since we are operating on the "memory address of x" (also known as y inside `some_fn`) the actual contents of the variable `x` will now be changed. The final print statement will print 10.
+Note that there are two changes from the earlier version. The signature of the function is now `some_fn(int *y)`. Also, when we call this function we are passing it the address of *x* using the syntax `&x`. Inside the function we tell the compiler to multiply the contents of the **integer** at address `y` and multiply that by 2. The result is then stored in the memory address pointed to by `y`. Since we are operating on the "memory address of x" (also known as y inside `some_fn`) the actual contents of the variable `x` will now be changed. The final print statement will print 10.
 
 That was a whirlwind tour of arrays and pointers. Now that we know a little about them let us practice using them by doing a few programming exercises.
 
@@ -182,7 +182,7 @@ int find_max(int integer_array[], int n)
 
     // Your code ends here
 
-    // return the maxumim value 'max_val'
+    // return the maximum value 'max_val'
     return max_val;
 }
 
@@ -224,7 +224,7 @@ RUN_COMMAND: make run
 
 ## Memcopy (Pointers/String)
 
-We have already done multiple exercises to copy data from one location to another in the assembly programming section. In this exerise the objective is to write a *memcopy* function in C that will copy the specified amount of data from one memory location to another.
+We have already done multiple exercises to copy data from one location to another in the assembly programming section. In this exercise the objective is to write a *memcopy* function in C that will copy the specified amount of data from one memory location to another.
 
 To compile and run:
 ```
@@ -333,7 +333,7 @@ RUN_COMMAND: make run
 
 ## Matrix addition (2-D array)
 
-In this exercise, we will take two square matrices, 'A' and 'B' as input parameters and store the result in matrix 'C'. Two matrices can be added only if they have the same dimensions. The result will be a matrix of the same dimensions. To perform the addition, numbers in matching postions in the input matrices are added and the result is placed in the same position in the output matrix. 
+In this exercise, we will take two square matrices, 'A' and 'B' as input parameters and store the result in matrix 'C'. Two matrices can be added only if they have the same dimensions. The result will be a matrix of the same dimensions. To perform the addition, numbers in matching positions in the input matrices are added and the result is placed in the same position in the output matrix. 
 
 You should write your code in the designated location in the file matrix_addition.c
 

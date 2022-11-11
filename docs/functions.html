@@ -259,7 +259,7 @@ bl sumOfN //Branch to the code that computes sum-of-N
 <li>Jump to functions using <em>BL/BLR</em>, return from the function using <em>RET</em></li>
 <li>X30 is a special register that is used by <em>BL</em> to store the return address</li>
 </ul>
-<h2 id="execise-1a-function-to-count-leading-zeros"><a class="header" href="#execise-1a-function-to-count-leading-zeros">Execise 1A: Function to count leading zeros</a></h2>
+<h2 id="exercise-1a-function-to-count-leading-zeros"><a class="header" href="#exercise-1a-function-to-count-leading-zeros">Exercise 1A: Function to count leading zeros</a></h2>
 <p>Write a function to count the number of leading zeros. The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s</p>
 <p>To compile and run:</p>
 <pre><code>COMPILE_COMMAND: make count_leading_zeros.elf
@@ -374,7 +374,7 @@ RUN_COMMAND: make run
 <tr><td>r30</td><td>link register</td></tr>
 <tr><td>SP</td><td>stack pointer</td></tr>
 </tbody></table>
-<p><strong>Note:</strong> The stack pointer (SP) sould only be used to hold the address of top of stack. Register <em>r30</em> (link register) should be used to hold the address of a return.</p>
+<p><strong>Note:</strong> The stack pointer (SP) should only be used to hold the address of top of stack. Register <em>r30</em> (link register) should be used to hold the address of a return.</p>
 <p>As per the PCS, <em>r0-r7</em> are to be used for parameters and results. A called function may change the contents of these registers. So programmers should not expect these register contents will be preserved after a function call. Registers <em>r9-r15</em> and <em>r9-r15</em> can be used as temporary registers. This means they can be overwritten and these registers may not be preserved after a function call.</p>
 <p>If the programmer wishes, registers that may be clobbered can be saved on the stack before a function call and restored after the call.</p>
 <p>Callee-saved registers <em>r19-r28</em> are guaranteed to be preserved after a function call. Any function that uses these registers must save the values before use and restore the values before the function returns. These registers are called &quot;callee-saved&quot; because the onus is on the called function to preserve the values.</p>
@@ -493,7 +493,7 @@ find_len_end:
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
-<p>Hrishi to explain general recursion here and what it involves.</p>
+<p><strong>FIXME</strong>: Hrishi to explain general recursion here and what it involves.</p>
 <pre><code class="language-armasm">    // Recursive function to Find sum of all integers smaller than or equal to given number using a recursive function.
     // For example, if given number is 4, the result would be 4+3+2+1 which is 10.
 sum_of_n_recursive:
@@ -586,6 +586,20 @@ RUN_COMMAND: make run
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

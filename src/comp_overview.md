@@ -5,7 +5,7 @@ This section gives an overview of the main components of a computer system. It i
 The components in a computer system are mounted on a board and connected to each other by wires embedded in the board. These components include a system on chip (SoC), peripherals and connectors. The SoC is the component that performs computation. Everything else on the board is to enable the SoC to perform its work and for the external world (including human users) to interact with the SoC. This is a general description of a computer system. Every individual system will have some differences. The peripherals on the board may be different. Also, some systems may have high-speed interconnects such as PCI that allows extension cards to be connected to the system.
 
 In part one of this book we will be working with a **software model** of the popular single board computer -  
-[Raspberry Pi](https://www.raspberrypi.org/). The image below shows a Raspberry Pi 3 B+ model single-board computer. The big silver colored square chip with text on it is the SoC.
+[Raspberry Pi](https://www.raspberrypi.org/). The image below shows a Raspberry Pi 3 B+ model single-board computer. The big silver coloured square chip with text on it is the SoC.
 
 <!--
 ![Raspberry Pi Board](https://upload.wikimedia.org/wikipedia/commons/9/90/Front_of_Raspberry_Pi.jpg)

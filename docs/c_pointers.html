@@ -155,7 +155,7 @@ int scores[4] = {5, 9, 7, 2}
 temps[4]; // last element of the temps array
 uart_print_num(temps[2]); // print the third element
 </code></pre>
-<p>We can now rewrite the above function to take an integer array and a number specifiying the size of the array.</p>
+<p>We can now rewrite the above function to take an integer array and a number specifying the size of the array.</p>
 <pre><code class="language-c">int avg_temp(int temps[], int size) {
   int sum = 0;
   for (int i = 0; i &lt; size; i++ ) {
@@ -167,7 +167,7 @@ uart_print_num(temps[2]); // print the third element
 <p>In the function above we used the syntax -  <code>avg_temp(int temps[], int size)</code> - this means that the function takes two parameters, an integer array and an integer. The actual number of elements in the array does not have to be specified as part of the array parameter. It is possible to access array elements beyond the last element in the array. However, one should not do that by design because we could be accessing memory of another variable. So the programmer has to keep track of the array length and ensure array access are within bounds. Accessing beyond the array bounds can lead to bugs (including serious security bugs) and crashes.</p>
 <pre><code class="language-c">int scores[4] = {5, 9, 7, 2}
 </code></pre>
-<p>When an array is defined like <em>scores</em> above, the compiler sets aside memory to hold the specified amount of memory. In this case we are asking for memory to hold <strong>four</strong> <strong>integers</strong>. Integers are 32-bits (8 bytes), so the compiler sets aside 32 bytes of memory to hold the array. These integers are can be refered to as - scores[0], scores[1], scores[2], and scores[3]. Note that if the array has N elements, the index of the last element is N-1. The allocated memory is contiguous, meaning scores[0] is immediately followed by scores[1], which is immediately followed by scores[2] and so on.</p>
+<p>When an array is defined like <em>scores</em> above, the compiler sets aside memory to hold the specified amount of memory. In this case we are asking for memory to hold <strong>four</strong> <strong>integers</strong>. Integers are 32-bits (8 bytes), so the compiler sets aside 32 bytes of memory to hold the array. These integers are can be referred to as - scores[0], scores[1], scores[2], and scores[3]. Note that if the array has N elements, the index of the last element is N-1. The allocated memory is contiguous, meaning scores[0] is immediately followed by scores[1], which is immediately followed by scores[2] and so on.</p>
 <p>The label assigned to the array (in this case <em>scores</em>) points to the memory location that is the start of the array. To this label the index times the size of the element is added to access individual elements. So when the programmer writes <em>scores[0]</em> the address of the first element is computed as the address pointed to by <em>scores</em> + 0 * size of an integer (i.e. 8 bytes). Similarly, the address of <em>scores[3]</em> = address of <em>scores</em> + 3 * 8.</p>
 <p>We use <em>typed variables</em> in C to hold data. In a previous chapter we discussed the different types that are available to C programmers. Arrays are also typed and all values in the array are of the same type. In the example above we used an array of <em>int</em>. Since the size of an <em>int</em> is 8 bytes the compiler knows to scale the index by 8 when we index into the <em>scores</em> array.</p>
 <p>Similar to <em>int</em> arrays we can create arrays of any type in C. Strings in C are a special type of <em>char</em> arrays. The difference between a regular character array and a string is that the last entry of a string is a special character - '\0'. Here is an example of a char array:</p>
@@ -197,7 +197,7 @@ uart_print_num(temps[2]); // print the third element
 <p>would be represented in memory as:</p>
 <p><img src="images/matrix_representation.png" alt="Matrix in memory" title="Matrix in memory" /></p>
 <h2 id="pointers"><a class="header" href="#pointers">Pointers</a></h2>
-<p>A related concept to arrays is pointers. In the desciption of arrays above we said that the name of the array <strong>points to the memory location of the start of the array</strong>. What that means is the array name (<em>scores</em>) hold the address of the memory location where the first element of the array is stored. We can define pointer variables of other types - <em>int, char, and float</em> - that hold the address of the memory location holding the data. </p>
+<p>A related concept to arrays is pointers. In the description of arrays above we said that the name of the array <strong>points to the memory location of the start of the array</strong>. What that means is the array name (<em>scores</em>) hold the address of the memory location where the first element of the array is stored. We can define pointer variables of other types - <em>int, char, and float</em> - that hold the address of the memory location holding the data. </p>
 <p>Memory in (most) computers is byte addressable. This means that every byte (8-bits) of memory in the machine has an address. When the programmer defines a variable in C, the compiler allocates the appropriate size required at a specific location in memory. So <code>int x;</code> in a program instructs the compiler to reserve 8-bytes somewhere in memory. It also informs the compiler that we will be referring to this memory location in our program using the name <em>x</em>. Note that the programmer does not have the ability to specify where in memory those 8-bytes should be stored. The compiler decides the actual address to allocate and will allocate 8 contiguous bytes of memory for the variable <em>x</em>.</p>
 <p>In the C programming language pointers are used to refer to the memory location of variables. In the code below we define a <em>int</em> variable <em>x</em> and initialize it with a value. The second line declares <em>y</em> as a pointer of type <em>int</em>. This means that <em>y</em> is now a variable that is intended to hold the <strong>address</strong> of another variable. In the third line we assign the address of <em>x</em> to <em>y</em>. Note that <code>&amp;x</code> means &quot;address of x&quot;. The very last statement we use <code>*y</code> to access the contents of the memory address pointed to by <em>y</em>. Since y is an integer (8-bytes) this means we are telling the compiler to interpret the 8 bytes starting from the address contained in <em>y</em> as an integer and pass it to <code>uart_print_num</code>. </p>
 <pre><code class="language-c">int x = 2; // integer
@@ -211,7 +211,7 @@ uart_print_num(y);  // this will print the address of x
 // That memory location is also known in this program as x.
 uart_print_num(*y);  //this will print 2
 </code></pre>
-<p>It is improtant to note that a pointer is useful <strong>only when it points to a valid location in memory</strong>. For example if we had not assigned <code>y</code> to <code>&amp;x</code> then it will contain an arbitrary value (not always 0). This means that when we later dereference y by using <code>*y</code> we will be attempting to access memory contents that may or may not be part of our program. Just like accessing memory  beyond the array bounds, this can also lead to bugs (including serious security bugs) and crashes. It is up to the programmer to ensure that pointers in the program always point to valid and intended memory locations.</p>
+<p>It is important to note that a pointer is useful <strong>only when it points to a valid location in memory</strong>. For example if we had not assigned <code>y</code> to <code>&amp;x</code> then it will contain an arbitrary value (not always 0). This means that when we later dereference y by using <code>*y</code> we will be attempting to access memory contents that may or may not be part of our program. Just like accessing memory  beyond the array bounds, this can also lead to bugs (including serious security bugs) and crashes. It is up to the programmer to ensure that pointers in the program always point to valid and intended memory locations.</p>
 <p>This may seem interesting (or complex) but <strong>how are pointers useful?</strong> One way they are useful is to allow functions to manipulate data rather than copy of a data. When we pass a parameter to a function, behind the scenes, a copy of the value is created and the function sees the copy.</p>
 <pre><code class="language-c">void some_fn(int y) {
   y = y * 2;
@@ -223,7 +223,7 @@ void main() {
   uart_print_num(x); // what will be printed?
 }
 </code></pre>
-<p>In the example above we pass a <em>int</em> to the function <code>some_fn</code>. No this creates a copy of the contents of variable <em>x</em> and gives that copy to the function via the stack (we will see more about that shortly). Inside <code>some_fn</code> we are using a copy of <em>x</em>. Note that even if the function was defined as <code>void some_fn(int x)</code> the <em>x</em> parameter used inside the function and the one in <code>main</code> are different memory locations that jusy happen to have the same name. Changing the value of a parameter passed this way will not change the original. So any changes insde <code>some_fn</code> will not affect the value of <em>x</em> in <code>main</code>. The last statement in <code>main</code> will print 5.</p>
+<p>In the example above we pass a <em>int</em> to the function <code>some_fn</code>. No this creates a copy of the contents of variable <em>x</em> and gives that copy to the function via the stack (we will see more about that shortly). Inside <code>some_fn</code> we are using a copy of <em>x</em>. Note that even if the function was defined as <code>void some_fn(int x)</code> the <em>x</em> parameter used inside the function and the one in <code>main</code> are different memory locations that just happen to have the same name. Changing the value of a parameter passed this way will not change the original. So any changes inside <code>some_fn</code> will not affect the value of <em>x</em> in <code>main</code>. The last statement in <code>main</code> will print 5.</p>
 <p>However, if we rewrite the code so that <code>some_fn</code> is passed a <code>int *</code> instead of an integer then instead of a copy the address of <em>x</em> will be passed. Here is that code:</p>
 <pre><code class="language-c">void some_fn(int *y) {
   *y = *y * 2;
@@ -235,7 +235,7 @@ void main() {
   uart_print_num(x); // what will be printed?
 }
 </code></pre>
-<p>Note that there are two changes from the earlier version. The signature of the function is now <code>some_fn(int *y)</code>. Also, when we call this function we are passing it the address of <em>x</em> using the syntax <code>&amp;x</code>. Inside the function we tell the compiler to multiply the contents of the <strong>integer</strong> at address <code>y</code> and multiply that by 2. The result is then stored in the memory addres pointed to by <code>y</code>. Since we are operating on the &quot;memory address of x&quot; (also known as y inside <code>some_fn</code>) the actual contents of the variable <code>x</code> will now be changed. The final print statement will print 10.</p>
+<p>Note that there are two changes from the earlier version. The signature of the function is now <code>some_fn(int *y)</code>. Also, when we call this function we are passing it the address of <em>x</em> using the syntax <code>&amp;x</code>. Inside the function we tell the compiler to multiply the contents of the <strong>integer</strong> at address <code>y</code> and multiply that by 2. The result is then stored in the memory address pointed to by <code>y</code>. Since we are operating on the &quot;memory address of x&quot; (also known as y inside <code>some_fn</code>) the actual contents of the variable <code>x</code> will now be changed. The final print statement will print 10.</p>
 <p>That was a whirlwind tour of arrays and pointers. Now that we know a little about them let us practice using them by doing a few programming exercises.</p>
 <h2 id="find-maximum-number-in-an-array-integer-array"><a class="header" href="#find-maximum-number-in-an-array-integer-array">Find maximum number in an array (Integer array)</a></h2>
 <p>The objective of this exercise is to find the maximum number in a given array of numbers.</p>
@@ -256,7 +256,7 @@ int find_max(int integer_array[], int n)
 
     // Your code ends here
 
-    // return the maxumim value 'max_val'
+    // return the maximum value 'max_val'
     return max_val;
 }
 
@@ -292,7 +292,7 @@ RUN_COMMAND: make run
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="memcopy-pointersstring"><a class="header" href="#memcopy-pointersstring">Memcopy (Pointers/String)</a></h2>
-<p>We have already done multiple exercises to copy data from one location to another in the assembly programming section. In this exerise the objective is to write a <em>memcopy</em> function in C that will copy the specified amount of data from one memory location to another.</p>
+<p>We have already done multiple exercises to copy data from one location to another in the assembly programming section. In this exercise the objective is to write a <em>memcopy</em> function in C that will copy the specified amount of data from one memory location to another.</p>
 <p>To compile and run:</p>
 <pre><code>COMPILE_COMMAND: make memcopy.elf
 RUN_COMMAND: make run
@@ -382,7 +382,7 @@ RUN_COMMAND: make run
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="matrix-addition-2-d-array"><a class="header" href="#matrix-addition-2-d-array">Matrix addition (2-D array)</a></h2>
-<p>In this exercise, we will take two square matrices, 'A' and 'B' as input parameters and store the result in matrix 'C'. Two matrices can be added only if they have the same dimensions. The result will be a matrix of the same dimensions. To perform the addition, numbers in matching postions in the input matrices are added and the result is placed in the same position in the output matrix. </p>
+<p>In this exercise, we will take two square matrices, 'A' and 'B' as input parameters and store the result in matrix 'C'. Two matrices can be added only if they have the same dimensions. The result will be a matrix of the same dimensions. To perform the addition, numbers in matching positions in the input matrices are added and the result is placed in the same position in the output matrix. </p>
 <p>You should write your code in the designated location in the file matrix_addition.c</p>
 <pre><code class="language-c">#define N 3
 
@@ -461,6 +461,20 @@ RUN_COMMAND: make run
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

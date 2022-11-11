@@ -135,7 +135,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="memory-instructions"><a class="header" href="#memory-instructions">Memory Instructions</a></h1>
-<p>Finally, lets start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.</p>
+<p>Finally, let us start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.</p>
 <p>In most computer/embedded systems memory is located in a chip that is separate from the CPU. Memory is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use this instruction</p>
 <pre><code class="language-armasm">  LDRB W10, [X1], #0
 </code></pre>
@@ -259,7 +259,7 @@
 <p>The <strong>ldrh</strong> and <strong>strh</strong> instructions load a half-word from memory (2 bytes). The examples above show post-indexed forms of the load instruction.</p>
 <p><strong>Note:</strong> The ARM Architecture Reference Manual has detailed description of all the instructions discussed in this book. It is a useful reference to have when you attempt to write your own code for the exercises.</p>
 <h2 id="copy-memory-using-operations-of-different-sizes"><a class="header" href="#copy-memory-using-operations-of-different-sizes">Copy memory using operations of different sizes</a></h2>
-<p>Now for a small challenge. In file <em>exercises/memory_instructions/ex_1e.s</em> the text &quot;Welcome To ARM Assembly World&quot; has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location that you may write to. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.</p>
+<p>Now for a small challenge. In file <em>exercises/memory_instructions/ex_1e.s</em> the text &quot;Welcome To ARM Assembly World&quot; has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location to which you may write. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.</p>
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
 <pre><code class="language-armasm">    // Your code starts here
@@ -395,6 +395,20 @@ copy_loop_start:
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

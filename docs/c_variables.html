@@ -145,7 +145,7 @@
   count = 45;   //write a value to count
 }               //end of the main function
 </code></pre>
-<p>Lets break down the three lines above. The line defining <em>count</em> asks the compiler to reserve memory that corresponds to an &quot;integer&quot; and assign it the label <em>count</em>. In the remainder of  <em>main()</em> we can refer to this memory location using its label (i.e. variable name).</p>
+<p>Let us break down the three lines above. The line defining <em>count</em> asks the compiler to reserve memory that corresponds to an &quot;integer&quot; and assign it the label <em>count</em>. In the remainder of  <em>main()</em> we can refer to this memory location using its label (i.e. variable name).</p>
 <p>The <em>count</em> above is defined to be an integer. What other data types are supported in C:</p>
 <ul>
 <li><em>char</em> : a single byte of data capable of holding one ASCII<sup>1</sup> character</li>
@@ -178,7 +178,7 @@ unsigned char c;  // unsigned char
 
 int l,m,n;        // defining 3 variables l, m, and n in one line
 </code></pre>
-<p>Variables are labels to memory locations. In our programs, once we define them, we can assign values to them, and also overwrite existing values by assigning the variable a new value. All variables must be declared before use. A declaration specifies the type of the variable (therefore it's size in memory) and the name of the variable. Variables may be optionally initialized at the time of declaration. It is considered good programming practice to initialize variables.</p>
+<p>Variables are labels to memory locations. In our programs, once we define them, we can assign values to them, and also overwrite existing values by assigning the variable a new value. All variables must be declared before use. A declaration specifies the type of the variable (therefore its size in memory) and the name of the variable. Variables may be optionally initialized at the time of declaration. It is considered good programming practice to initialize variables.</p>
 <pre><code class="language-c">int x = 5;
 
 x = 7;
@@ -216,6 +216,20 @@ x = 11;
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

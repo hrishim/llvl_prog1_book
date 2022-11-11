@@ -17,7 +17,7 @@ void main() {   //beginning of the main function
 }               //end of the main function
 ```
 
-Lets break down the three lines above. The line defining *count* asks the compiler to reserve memory that corresponds to an "integer" and assign it the label *count*. In the remainder of  *main()* we can refer to this memory location using its label (i.e. variable name).
+Let us break down the three lines above. The line defining *count* asks the compiler to reserve memory that corresponds to an "integer" and assign it the label *count*. In the remainder of  *main()* we can refer to this memory location using its label (i.e. variable name).
 
 The *count* above is defined to be an integer. What other data types are supported in C:
 
@@ -59,7 +59,7 @@ unsigned char c;  // unsigned char
 int l,m,n;        // defining 3 variables l, m, and n in one line
 ```
 
-Variables are labels to memory locations. In our programs, once we define them, we can assign values to them, and also overwrite existing values by assigning the variable a new value. All variables must be declared before use. A declaration specifies the type of the variable (therefore it's size in memory) and the name of the variable. Variables may be optionally initialized at the time of declaration. It is considered good programming practice to initialize variables.
+Variables are labels to memory locations. In our programs, once we define them, we can assign values to them, and also overwrite existing values by assigning the variable a new value. All variables must be declared before use. A declaration specifies the type of the variable (therefore its size in memory) and the name of the variable. Variables may be optionally initialized at the time of declaration. It is considered good programming practice to initialize variables.
 
 ```c
 int x = 5;

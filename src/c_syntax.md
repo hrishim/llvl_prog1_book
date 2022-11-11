@@ -500,7 +500,7 @@ switch (expression) {
 }
 ```
 
-The way *swtich* works is that if *expression* matches any of the expressions in a case statement then the code corresponding to the  matching case statements are executed.
+The way *switch* works is that if *expression* matches any of the expressions in a case statement then the code corresponding to the  matching case statements are executed.
 
 Here is an example of using the *switch* statement:
 
@@ -540,7 +540,7 @@ Some things to be aware of regarding *switch*:
 - The code fragments of each case has to end with a *break* statement to exit the *switch*. If not, matching with other *case* statements will continue.
 - *default* will match if no other *case* matches. However, it is optional. If omitted and the given expression does not match any *case* then none of the code statements inside the *switch* will be executed.
 
-Note that almost everything that can be done with *switch* statement can also be accomplished using *if-else*. But there may be times when one form is preferable over the other for conciseness or readability. fff
+Note that almost everything that can be done with *switch* statement can also be accomplished using *if-else*. But there may be times when one form is preferable over the other for conciseness or readability.
 
 ## Summary
 

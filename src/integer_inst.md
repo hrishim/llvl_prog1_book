@@ -70,7 +70,7 @@ To compute the address of the load, the offset register (x2) is left shifted by 
 
 > x4 + (x2 << 2)
 
-Why do we left shift by 2? Every element in this array is 4 bytes large. The address of each element is offset from the base by the element's index number times 4. For example, for the 4th element in the array the offset from the begining of the array is 3 * 4 = 12 bytes. Remember that the first element of the array is at the 0th index and the fourth element is at index 3.
+Why do we left shift by 2? Every element in this array is 4 bytes large. The address of each element is offset from the base by the element's index number times 4. For example, for the 4th element in the array the offset from the beginning of the array is 3 * 4 = 12 bytes. Remember that the first element of the array is at the 0th index and the fourth element is at index 3.
 
 We track the index of the current element in register w2 and therefore we multiply that number by 4 to get the memory address offset. As we saw in the binary arithmetic section, multiplying by 4 is the same as left shifting by 2.
 
@@ -218,7 +218,7 @@ done:
 
 The comments in the program should give enough information about how the code works. But there are a few new instructions that we will will go over.
 
-Most of the instructions in the program should be familiar by now except **tbz**, **tbnz** and **lsl**. The **lsl** instruction takes three arguments, the destination register, the source register and a shift value. The instruction shifts the source register left by the specified amount and stores the result into the desination.  
+Most of the instructions in the program should be familiar by now except **tbz**, **tbnz** and **lsl**. The **lsl** instruction takes three arguments, the destination register, the source register and a shift value. The instruction shifts the source register left by the specified amount and stores the result into the destination.  
 
 > lsl w1, w1, 1
 
@@ -242,7 +242,7 @@ For example, factorial of 5 is:
 5 * 4 * 3 * 2 * 1 = 120
 ```
 
-For this exercise use the file *exercises/integer_instructions/facorial.s*. In factorial.s we have placed - the number for which factorial will have to be computed - in register w0. We will compute the factorial and place the result in w0. The print function that is called later will print the value stored in w0.
+For this exercise use the file *exercises/integer_instructions/factorial.s*. In factorial.s we have placed - the number for which factorial will have to be computed - in register w0. We will compute the factorial and place the result in w0. The print function that is called later will print the value stored in w0.
 
 We will first introduce the multiply instructions. There are multiply instructions that operate on 32-bit or 64-bit values and return a result of the same size as the operands. For example, two 64-bit registers can be multiplied to produce a 64-bit result with the MUL instruction.
 
@@ -323,7 +323,7 @@ The actual representation of this matrix in memory would be something like this:
 
 ![Matrix in memory](images/matrix_representation.png "Matrix in memory")
 
-In this exercise, we will take two square matrices, 'A' and 'B' as input parameters and store the result in matrix 'C'. Two matrices can be added only if they have the same dimensions. The result will be a matrix of the same dimensions. To perform the addition, numbers in matching postions in the input matrices are added and the result is placed in the same position in the output matrix. Following diagram illustrates this by adding two 2x2 matrices 'A' and 'B' and places the result in matrix 'C'.
+In this exercise, we will take two square matrices, 'A' and 'B' as input parameters and store the result in matrix 'C'. Two matrices can be added only if they have the same dimensions. The result will be a matrix of the same dimensions. To perform the addition, numbers in matching positions in the input matrices are added and the result is placed in the same position in the output matrix. Following diagram illustrates this by adding two 2x2 matrices 'A' and 'B' and places the result in matrix 'C'.
 
 ![Matrix Addition](images/matrix_add.png "Matrix Addition")
 
@@ -530,13 +530,13 @@ RUN_COMMAND: make run
 
 ## Count leading zeros using CLZ instruction
 
-- Refer earlier example in integer sectiom
+- Refer earlier example in integer section
 
 Counting leading zeroes in a number is such a common requirement in programs that the ARM ISA includes a specific instruction that does the job.
 
 > clz \<Wd\>, \<Wn\>
 
-This instruction counts the nimber of leading zeroes of the number stored in Wn and places the result in Wd!! The result value is 32 if no bits are set in the source register, and zero if bit 31 is set. In this execercise let us redo the exercise using this instruction.
+This instruction counts the number of leading zeroes of the number stored in Wn and places the result in Wd!! The result value is 32 if no bits are set in the source register, and zero if bit 31 is set. In this exercise let us redo the exercise using this instruction.
 
 
 To compile and run:

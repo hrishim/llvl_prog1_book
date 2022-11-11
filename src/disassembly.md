@@ -46,7 +46,7 @@ aarch64-none-elf-gcc -O0 -ffreestanding -nostdinc -nostdlib -nostartfiles -I../i
 -c if_else_example.c -o if_else_example.o
 ```
 
-The **-O0** option in the above command tells compiler not to optimize the code. The compiler optimization tries to improve the generated assembly code by making it consume fewer resources (compile time, memory space etc) so that it will result in faster-running machine code. We disable optimization here to make it easier to relate the C statements with the disassembly. Compiler supports different levels for optimization from **-O0** to **-O3**. **-O0** completly disables optimization and **-O3** performs maximum amount of optimization.
+The **-O0** option in the above command tells compiler not to optimize the code. The compiler optimization tries to improve the generated assembly code by making it consume fewer resources (compile time, memory space etc) so that it will result in faster-running machine code. We disable optimization here to make it easier to relate the C statements with the disassembly. Compiler supports different levels for optimization from **-O0** to **-O3**. **-O0** completely disables optimization and **-O3** performs maximum amount of optimization.
 
 The linker command to produce final executable for this example is:
 ```
@@ -195,7 +195,7 @@ Let us now see the code for **find_lower_int** function:
 ```
 Although, the **main** function completely avoided call to **find_lower_int** function, the compiler has still generates code for the **find_lower_int** function so that it can honour calls from any other function that could not be optimized. It chooses to perform the entire functionality by using the **csel** instruction and returns the result in **x0** to its caller.
 
-As an exercise, you can try generating just the disassenbly output without interleaving source code for this example.
+As an exercise, you can try generating just the disassembly output without interleaving source code for this example.
 
 At **-O0** the compiler generates very verbose code with a lot of unnecessary loads and stores. At higher optimization levels it could completely remove C code. This is a good thing in the real world but not useful when we want to show readers examples of what C code looks like when compiled. Therefore, for the remaining examples, we will use an optimization level that helps illustrate the point we want to convey.
 
@@ -223,7 +223,7 @@ void main() {
       uart_puts("X is 25");
       break;
     default:
-      uart_puts("I dont know what X is...");
+      uart_puts("I don't know what X is...");
       break;
   }
 }

@@ -138,7 +138,7 @@
 <p>This section gives an overview of the main components of a computer system. It is not a comprehensive explanation of everything on a computer board. The intention is to provide readers with sufficient context to understand the rest of this book.</p>
 <p>The components in a computer system are mounted on a board and connected to each other by wires embedded in the board. These components include a system on chip (SoC), peripherals and connectors. The SoC is the component that performs computation. Everything else on the board is to enable the SoC to perform its work and for the external world (including human users) to interact with the SoC. This is a general description of a computer system. Every individual system will have some differences. The peripherals on the board may be different. Also, some systems may have high-speed interconnects such as PCI that allows extension cards to be connected to the system.</p>
 <p>In part one of this book we will be working with a <strong>software model</strong> of the popular single board computer -<br />
-<a href="https://www.raspberrypi.org/">Raspberry Pi</a>. The image below shows a Raspberry Pi 3 B+ model single-board computer. The big silver colored square chip with text on it is the SoC.</p>
+<a href="https://www.raspberrypi.org/">Raspberry Pi</a>. The image below shows a Raspberry Pi 3 B+ model single-board computer. The big silver coloured square chip with text on it is the SoC.</p>
 <!--
 ![Raspberry Pi Board](https://upload.wikimedia.org/wikipedia/commons/9/90/Front_of_Raspberry_Pi.jpg)
 -->
@@ -206,6 +206,20 @@
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

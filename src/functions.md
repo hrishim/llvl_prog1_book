@@ -143,7 +143,7 @@ The key points to understand from the above discussion are:
 - Jump to functions using *BL/BLR*, return from the function using *RET*
 - X30 is a special register that is used by *BL* to store the return address
 
-## Execise 1A: Function to count leading zeros
+## Exercise 1A: Function to count leading zeros
 
 Write a function to count the number of leading zeros. The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s
 
@@ -290,7 +290,7 @@ The table below is from the ARM PCS. Readers are encouraged to refer to the full
 | r30 | link register |
 | SP | stack pointer |
 
-**Note:** The stack pointer (SP) sould only be used to hold the address of top of stack. Register *r30* (link register) should be used to hold the address of a return.
+**Note:** The stack pointer (SP) should only be used to hold the address of top of stack. Register *r30* (link register) should be used to hold the address of a return.
 
 As per the PCS, *r0-r7* are to be used for parameters and results. A called function may change the contents of these registers. So programmers should not expect these register contents will be preserved after a function call. Registers *r9-r15* and *r9-r15* can be used as temporary registers. This means they can be overwritten and these registers may not be preserved after a function call.
 
@@ -429,7 +429,7 @@ RUN_COMMAND: make run
 
 ## Recursion
 
-Hrishi to explain general recursion here and what it involves.
+**FIXME**: Hrishi to explain general recursion here and what it involves.
 
 ```armasm
     // Recursive function to Find sum of all integers smaller than or equal to given number using a recursive function.

@@ -198,7 +198,7 @@ RUN_COMMAND: make run
 <p>File to be used for this exercise is : exercises/c_functions/factorial.c. This file provides following skeleton. You will have to add code to compute factorial and place the result in variable 'factorial_val'.</p>
 <pre><code class="language-c">unsigned int factorial(unsigned int n)
 {
-    //This function take a paramenter n and returns n!
+    //This function take a parameter n and returns n!
 
     int i;
 
@@ -378,6 +378,20 @@ RUN_COMMAND: make run
 
         </div>
 
+        <!-- Livereload script (if served using the cli tool) -->
+        <script type="text/javascript">
+            var socket = new WebSocket("ws://localhost:3000/__livereload");
+            socket.onmessage = function (event) {
+                if (event.data === "reload") {
+                    socket.close();
+                    location.reload();
+                }
+            };
+
+            window.onbeforeunload = function() {
+                socket.close();
+            }
+        </script>
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>

@@ -1,6 +1,6 @@
 # Memory Instructions
 
-Finally, lets start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.
+Finally, let us start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.
 
 In most computer/embedded systems memory is located in a chip that is separate from the CPU. Memory is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use this instruction
 ```armasm
@@ -211,7 +211,7 @@ The **ldrh** and **strh** instructions load a half-word from memory (2 bytes). T
 **Note:** The ARM Architecture Reference Manual has detailed description of all the instructions discussed in this book. It is a useful reference to have when you attempt to write your own code for the exercises.
 
 ## Copy memory using operations of different sizes
-Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the text "Welcome To ARM Assembly World" has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location that you may write to. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.
+Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the text "Welcome To ARM Assembly World" has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location to which you may write. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.
 
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
