@@ -493,11 +493,26 @@ find_len_end:
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
-<p><strong>FIXME</strong>: Hrishi to explain general recursion here and what it involves.</p>
-<pre><code class="language-armasm">    // Recursive function to Find sum of all integers smaller than or equal to given number using a recursive function.
+<p>Recursion is a simple but important programming concept (actually, more like a trick) that can be used for some kinds of problems. As you are already aware functions can call other functions. A recursive function calls itself! Every recursive function will call itself until a specified condition is satisfied. When the terminating condition is satisfies the function stops calling itself and typically returns. </p>
+<p>Here is a high level description of how this function (<em>sum_of_n_recursive</em>) works. The function is passed an integer - say N - in the <em>X0</em> register and it computes the sum of numbers from 1 to N by repeatedly calling itself. The result is returned in the <em>X0</em> register. By the way, remember that <em>w0</em> refers to the lower 32 bits of <em>x0</em>. The pseudo code for the function is as follows:</p>
+<ol>
+<li>Compare the passed in value with 1</li>
+<li>If the value is one then return the passed in value (just dont modify <em>w0</em> register)</li>
+<li>If the value  (<em>w0</em>) is not 1 then... 
+<ol>
+<li>copy the value in <em>w0</em> into <em>w9</em></li>
+<li>subtract 1 from <em>w0</em></li>
+<li>call <em>sum_of_n_recursive</em> again (now with N-1 as input)</li>
+<li>Add the return value of call at step 3.3 to w9</li>
+<li>return leaving the result in w0</li>
+</ol>
+</li>
+</ol>
+<p>The assembly code for <em>sum_of_n_recursive</em> is below. It is also available in the file exercises/functions/sum_of_n.s.</p>
+<pre><code class="language-armasm">    // Recursive function to Find sum of all integers smaller than or equal to given number.
     // For example, if given number is 4, the result would be 4+3+2+1 which is 10.
 sum_of_n_recursive:
-    stp x9, x30, [sp, -32]! // Save X30(link register) and a X19 (temporary register used as a local variable) onto the stack and adjust SP
+    stp x9, x30, [sp, -32]! // Save X30(link register) and a X9 (temporary register used as a local variable) onto the stack and adjust SP
     mov w9, w0              // Move the number passed as argument to temporary register
     cmp w0, 1               // Check if number is less that or equal to 1
     ble done                // Branch to label 'done' if we have completed adding all numbers till 1
@@ -508,7 +523,6 @@ done:
     ldp x9, x30, [sp], 32   // Restore back temporary register and X30 from stack
     ret                     // Return the result
 </code></pre>
-<p>This code is available in file exercises/functions/sum_of_n.s.</p>
 <p>To compile and run:</p>
 <pre><code>COMPILE_COMMAND: make sum_of_n.elf
 RUN_COMMAND: make run

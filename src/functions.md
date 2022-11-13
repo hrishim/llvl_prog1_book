@@ -429,13 +429,28 @@ RUN_COMMAND: make run
 
 ## Recursion
 
-**FIXME**: Hrishi to explain general recursion here and what it involves.
+Recursion is a simple but important programming concept (actually, more like a trick) that can be used for some kinds of problems. As you are already aware functions can call other functions. A recursive function calls itself! Every recursive function will call itself until a specified condition is satisfied. When the terminating condition is satisfies the function stops calling itself and typically returns. 
+
+
+Here is a high level description of how this function (*sum_of_n_recursive*) works. The function is passed an integer - say N - in the *X0* register and it computes the sum of numbers from 1 to N by repeatedly calling itself. The result is returned in the *X0* register. By the way, remember that *w0* refers to the lower 32 bits of *x0*. The pseudo code for the function is as follows:
+
+1. Compare the passed in value with 1
+2. If the value is one then return the passed in value (just dont modify *w0* register)
+3. If the value  (*w0*) is not 1 then... 
+    1. copy the value in *w0* into *w9*
+    1. subtract 1 from *w0*
+    1. call *sum_of_n_recursive* again (now with N-1 as input)
+    1. Add the return value of call at step 3.3 to w9  
+    1. return leaving the result in w0
+
+
+The assembly code for *sum_of_n_recursive* is below. It is also available in the file exercises/functions/sum_of_n.s.
 
 ```armasm
-    // Recursive function to Find sum of all integers smaller than or equal to given number using a recursive function.
+    // Recursive function to Find sum of all integers smaller than or equal to given number.
     // For example, if given number is 4, the result would be 4+3+2+1 which is 10.
 sum_of_n_recursive:
-    stp x9, x30, [sp, -32]! // Save X30(link register) and a X19 (temporary register used as a local variable) onto the stack and adjust SP
+    stp x9, x30, [sp, -32]! // Save X30(link register) and a X9 (temporary register used as a local variable) onto the stack and adjust SP
     mov w9, w0              // Move the number passed as argument to temporary register
     cmp w0, 1               // Check if number is less that or equal to 1
     ble done                // Branch to label 'done' if we have completed adding all numbers till 1
@@ -446,13 +461,14 @@ done:
     ldp x9, x30, [sp], 32   // Restore back temporary register and X30 from stack
     ret                     // Return the result
 ```
-This code is available in file exercises/functions/sum_of_n.s.
+
 
 To compile and run:
 ```
 COMPILE_COMMAND: make sum_of_n.elf
 RUN_COMMAND: make run
 ```
+
 
 ## Practice exercises
 
@@ -506,6 +522,8 @@ To compile and run:
 COMPILE_COMMAND: make factorial.elf
 RUN_COMMAND: make run
 ```
+
+
 
 ## What we learnt this chapter
 
