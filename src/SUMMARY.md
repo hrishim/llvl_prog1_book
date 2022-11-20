@@ -1,6 +1,5 @@
 # Summary
 
-[Preface](./preface.md)
 - [Introduction](./chapter_1.md)
 - [Tool Installation](./tool_installation.md)
 - [Computer System Overview](./comp_overview.md)
