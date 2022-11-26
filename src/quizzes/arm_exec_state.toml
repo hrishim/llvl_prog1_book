@@ -1,0 +1,31 @@
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "How many general purpose registers does ARM AArch64 provide (enter a number like 3)?"
+answer.answer = "31"
+context = "The architecture provides programmers with 31 general purpose registers."
+
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "How many bits can the X0 register hold (enter a number like 3)?"
+answer.answer = "64"
+context = "The registers named X0-X30 64-bit are 64-bits wide."
+
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "Which register is the link register (enter a number like 3)?"
+answer.answer = "30"
+context = "The X30 register has a special function. It is used as a link register for procedure calls."
+
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "How many condition flags does the AArch64 have?"
+prompt.distractors = [
+    "6",
+    "8",
+    "3"
+]
+answer.answer = "4"
+context = """
+There are four condition flags.
+"""

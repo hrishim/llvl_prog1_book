@@ -167,14 +167,14 @@
                     <main>
                         <h1 id="binary-representation-of-integers"><a class="header" href="#binary-representation-of-integers">Binary Representation of Integers</a></h1>
 <p>This section we will learn about number representation using the binary system. Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.</p>
-<p>We are used to counting using the decimal number system. This system has ten symbols (decimal numerals) to represent numbers, namely - 0 1 2 3 4 5 6 7 8 9. Of course, these symbols can represent values greater than ten. For example, after counting from 0 till 9 we run out of symbols for ten. To represent ten and higher numbers more than one of those symbols is used - 10, 11, 12...10521... etc. A special symbol is pre-fixed to numbers to represent negative numbers (-1, -2, -3... etc.).</p>
+<p>We are used to counting using the decimal number system. This system has ten symbols (decimal numerals) to represent numbers, namely - 0 1 2 3 4 5 6 7 8 9. Of course, using these symbols we can represent values greater than ten. For example, after counting from 0 till 9 we run out of symbols for ten. To represent ten and higher numbers more than one of those symbols is used - 10, 11, 12...10521... etc. A special symbol is pre-fixed to numbers to represent negative numbers (-1, -2, -3... etc.).</p>
 <p>OK, so all of this number representation is elementary school material. What is the point of all this? The main point is that numbers are represented with symbols. Modern computers use <em>binary</em>  representation for storing and operating on numbers. The decimal number format uses 10 symbols (11 actually if you count the minus sign for negative numbers) the binary number format uses just two symbols.</p>
 <p>Therefore, when working with computers at the lowest level, it is important to know how numbers are represented and how arithmetic operations are performed in binary .</p>
 <hr />
 <p><strong>Note:</strong></p>
 <p>Are there computers that use representations other than binary? There were a few that used ternary logic (i.e. base: 3). However, all computers that one is likely to encounter today use binary representation. Ternary and other base forms are outside the scope of this book.</p>
 <hr />
-<p>Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.</p>
+<p>Remember - representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. </p>
 <h2 id="binary-representation"><a class="header" href="#binary-representation">Binary Representation</a></h2>
 <p>The binary number system uses two numerals - 0 and 1. So, just like in the decimal system, more than one of those symbols are needed to represent 2 and greater. The table below shows decimal numbers and their equivalent binary:</p>
 <table><thead><tr><th>Decimal</th><th>Binary</th></tr></thead><tbody>
@@ -240,28 +240,43 @@ Decimal: 9
 </code></pre>
 <p>The binary representation is the remainder read backwards. So in this instance it will be  0b1000 (the leading 0 is dropped).</p>
 <h2 id="practice-converting-number-formats"><a class="header" href="#practice-converting-number-formats">Practice converting number formats</a></h2>
-<p>Convert the following binary numbers to decimal: 0b100, 0b1011, 0b10000, 0b11001</p>
+<p><strong>Convert from binary to decimal:</strong></p>
+<div class="quiz-placeholder" data-quiz-name="binary_representation_a"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;1* 2^2 + 0 * 2^0 + 0 * 2^0&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;4&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 0b100 (type a number as the answer?&quot;}},{&quot;context&quot;:&quot;1 * 2^3 + 0 * 2^2 + 1 * 2^1 + 1 * 2^0&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;11&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 0b1011 (type a number as the answer?&quot;}},{&quot;context&quot;:&quot;1 * 2^4 + 0 * 2^3 + 0 * 2^2 + 0 * 2^1 + 0 * 2^0&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;16&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 0b10000 (type a number as the answer?&quot;}},{&quot;context&quot;:&quot;1 * 2^4 + 1 * 2^3 + 0 * 2^2 + 0 * 2^1 + 1 * 2^0&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;25&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 0b11001 (type a number as the answer?&quot;}}]}"  data-quiz-fullscreen="" ></div>
+<p><strong>Convert from decimal to binary:</strong></p>
+<div class="quiz-placeholder" data-quiz-name="binary_representation_b"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0b110100&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 52 (type a binary number as the answer - e.g. 0b101)?&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0b11101&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 29 (type a binary number as the answer - e.g. 0b101)?&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0b10001&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 17 (type a binary number as the answer - e.g. 0b101)?&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0b100000&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the decimal equivalent of 32 (type a binary number as the answer - e.g. 0b101)?&quot;}}]}"  data-quiz-fullscreen="" ></div>
+<!---
+Convert the following binary numbers to decimal: 0b100, 0b1011, 0b10000, 0b11001
+
+
 <details>
   <summary>Click here to see answers.</summary>
-<table><thead><tr><th>Binary</th><th>Decimal</th></tr></thead><tbody>
-<tr><td>0b100</td><td>4</td></tr>
-<tr><td>0b1011</td><td>11</td></tr>
-<tr><td>0b10000</td><td>16</td></tr>
-<tr><td>0b11001</td><td>25</td></tr>
-</tbody></table>
+
+| Binary | Decimal |
+| ------ | ------ |
+| 0b100 | 4 |
+| 0b1011 | 11 |
+| 0b10000 | 16 |
+| 0b11001 | 25 |
+
 </details>
-<p>Convert the following decimal numbers to binary: 52, 29, 17, 32</p>
+
+
+Convert the following decimal numbers to binary: 52, 29, 17, 32
+
 <details>
   <summary>Click here to see answers.</summary>
-<table><thead><tr><th>Decimal</th><th>Binary</th></tr></thead><tbody>
-<tr><td>52</td><td>0b110100</td></tr>
-<tr><td>29</td><td>0b11101</td></tr>
-<tr><td>17</td><td>0b10001</td></tr>
-<tr><td>32</td><td>0b100000</td></tr>
-</tbody></table>
+
+| Decimal | Binary |
+| ------ | ------ |
+| 52 | 0b110100 |
+| 29 | 0b11101 |
+| 17 | 0b10001 |
+| 32 | 0b100000 |
+
 </details>
+-->
 <h2 id="binary-representation-in-computers"><a class="header" href="#binary-representation-in-computers">Binary representation in computers</a></h2>
-<p>Larger numbers may need more numerals for representation. For example, 0b100000000 (256) requires nine binary digits while 0b1 (1) requires just one binary digit. In practice it is very difficult to implement logic circuitry (adders, multipliers etc.) to account for the variation in binary digits. Therefore, computers use fixed-width integers. This means that numbers are represented with a fixed number of digits. The most common widths are 8-bit (byte), 16-bit (half-word), 32-bit (word), 64-bit (double word).</p>
+<p>Larger numbers may need more numerals for representation. For example, 0b100000000 (256) requires nine binary digits while 0b1 (1) requires just one binary digit. In practice it is very difficult to implement logic circuitry (adders, multipliers etc.) to operate on numbers with varying number of digits. Therefore, computers use fixed-width representations. This means that numbers are represented with a fixed number of digits. The most common widths are 8-bit (byte), 16-bit (half-word), 32-bit (word), 64-bit (double word).</p>
 <p>Fixed-width representations can be used to represent numbers from 0 up to a maximum value. That maximum value is determined using the formula 2<sup>N</sup> - 1, where N is the width. The largest integer that can be represented in 8-bit fixed-width is</p>
 <pre><code> 2^8 - 1 = 256 - 1 = 255
  8-bit binary number can represent numbers in the range 0-255
@@ -274,8 +289,8 @@ That is a 20-digit decimal number!!
 <hr />
 <p><strong>Note:</strong> There are software tricks that can be used to represent numbers with more than 64-bits. We will not encounter such large numbers in any of the exercises in this book.</p>
 <hr />
-<p>The <strong>minimum</strong> number of bits required to a number can be found by computing
-log<sub>2</sub>(number) and rounding up to the closest integer. If you do not know the logarithm (log) function that is fine, we will not need to use it extensively in this book. Another way is to find the smallest power of 2 that is <strong>greater</strong> than the given number - the exponent is the minimum number of bits required to represent that number. For example, the number 9 can be represented using 4 bits. Because 2<sup>4</sup> = 16 is the smallest power of 2 that is also greater than 9. Note that 2<sup>3</sup> is 8 and is smaller than 9.
+<p>The <strong>minimum</strong> number of bits required to represent a number can be found by computing
+log<sub>2</sub>(number) and rounding up to the closest integer. If you do not know the logarithm (log) function that is fine, we will not need to use it extensively in this book. Another way is to find the smallest power of 2 that is <strong>greater</strong> than the given number and then the exponent is the minimum number of bits required to represent that number. For example, the number 9 can be represented using 4 bits. Because 2<sup>4</sup> = 16 is the smallest power of 2 that is greater than 9. Note that 2<sup>3</sup> is 8 and is smaller than 9.
 What about the number 8? Well 2<sup>3</sup> is <strong>equal</strong> to 8 and so we cannot represent it with 3 bits because we need the smallest power of 2 that is <strong>greater</strong> than 8. We need 4 bits to represent the number 8.</p>
 <p>Now that we know computers use fixed-width representations, the natural question is - what happens when a computation results in a number larger (or smaller) than the representable range?
 When using 8-bit numbers, what result is generated when the computer is told to add 1 and 255?</p>
@@ -292,7 +307,7 @@ When using 8-bit numbers, what result is generated when the computer is told to 
      0   1   1<br />
 ---------------<br />
 1   0   0   0</p>
-<p>Just like in decimal addition we add digits in the corresponding digits of the number from right to left. If the sum results in a carry (i.e. 1 + 1) then the carry is added to the next number. If the numbers are of dis-similar lengths then 0s are prefixed as required.</p>
+<p>Just like in decimal addition we add corresponding digits of the numbers from right to left. If the sum results in a carry (i.e. 1 + 1) then the carry is added to the next number. If the numbers are of dis-similar lengths then 0s are prefixed as required.</p>
 <p>When binary arithmetic is performed in digital circuits there is a fixed-width for representing the numbers. So if the sum of the two numbers is larger than what can be represented, some special provision has to be made to indicate to the programmer that the result is incorrect.</p>
 <p>For example, when adding the following <strong>4-bit numbers</strong> 0b1111 (15) and 0b0001 (1)</p>
 <p>      1<sup>1</sup> 1<sup>1</sup> 1<sup>1</sup> 1<br />
@@ -460,7 +475,7 @@ After addition we get 0b0111.</p>
 <li>Carry and overflow</li>
 </ol>
 <p>Note that the carry flag is relevant for unsigned operations and the overflow flag is relevant for signed operations.</p>
-
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css">
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

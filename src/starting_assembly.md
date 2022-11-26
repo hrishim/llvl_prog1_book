@@ -1,5 +1,6 @@
 # Getting Started With ARM AArch64 Assembly
 
+Now that we have covered how numbers are represented we can start learning some assembly programming.
 
 ## Assembly Instruction Encoding
 The ARM Architecture defines both 64- and 32-bit architectures. In this book we will focus on the 64-bit architecture which is called AArch64.
@@ -17,9 +18,9 @@ For example, the encoding shown below, taken from the ARM ARM shows the encoding
 
 In the figure above, notice that the bits are numbered from 0 to 31. Starting the count from 0 is quite common in computer science and engineering. 
 
-Lets take a look at each part of the encoding. For this specific instruction, bit 31 - labeled as 'sf' - determines whether the instruction is operating on 32- bits (when sf is 0) or 64-bits of data (when sf is 1).
+Lets take a look at each part of the encoding. For this specific instruction, bit 31 - labeled as 'sf' - determines whether the instruction is operating on 32 bits (when sf is 0) or 64 bits of data (when sf is 1).
 
-The twelve bits in the index range 10-21 hold the immediate value. The register numbers to use are encoded in bits 0-4 (Rd) and 5-9 (Rn). In the architecture, programmers are provided 32 general purpose registers to use. They can be encoded using 5 bits (i.e. 2<sup>5</sup> = 32). The S bit (29) indicates whether the instruction will set condition codes. Since the S bit is 0 in this encoding, it means this instruction will not set condition codes. We will discuss condition codes in more detail later in this book. 
+The twelve bits in the index range 10-21 hold the immediate value. The register numbers to use are encoded in bits 0-4 (Rd) and 5-9 (Rn). In the architecture, programmers are provided 31 general purpose registers to use. They can be encoded using 5 bits (i.e. 2<sup>5</sup> = 32). The S bit (29) indicates whether the instruction will set condition codes. Since the S bit is 0 in this encoding, it means this instruction will not set condition codes. We will discuss condition codes in more detail later in this book. 
 
 
 Let us say we wish to add the value 323 to the contents of register R5 and place the results in the register R10. The encoding for that operation using an Add immediate instruction in AArch64 will look like below. 
@@ -42,7 +43,7 @@ Zero extension is covered in the chapter on Integer Binary Arithmetic
 
 ---
 
-Programming languages such as C, C++, Python etc allow programmers to write code at an even higher level of abstraction. Code written in high-level languages are first converted to Assembly language. This is done using an application called a **Compiler**. Once the program has been compiled another program called **Assembler** is used to convert the assembly code into instruction encoding.
+Programming languages such as C, C++, Python etc allow programmers to write code at an even higher level of abstraction. Code written in high-level languages are first converted to Assembly language. This is done using an application called a **Compiler**. Once the program has been compiled an **Assembler** is used to convert the assembly code into instruction encoding.
 
 ## Registers
 
@@ -58,7 +59,7 @@ Like the general purpose registers, which can be used by integer and memory inst
 
 In addition to the above, programmers have access to the stack register (SP). The lower 32-bits of this register can be accessed using the name WSP. The stack register holds the memory address of the current *stack pointer*. The Stack is a special area in memory and will be discussed in detail in later sections.
 
-Finally there is the program control register. This register holds the memory address of the *current instruction*. In AArch64, cannot be directly modified by the programmer. It is updated by the processor when a branch/call instruction is executed and on exception return. 
+Finally there is the program control (PC) register. This register holds the memory address of the *current instruction*. In AArch64, PC cannot be directly modified by the programmer. It is updated by the processor when a branch/call instruction is executed and on exception return. 
 
 ## Summary 
 

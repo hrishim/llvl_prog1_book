@@ -2,7 +2,7 @@
 
 This section we will learn about number representation using the binary system. Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.
 
-We are used to counting using the decimal number system. This system has ten symbols (decimal numerals) to represent numbers, namely - 0 1 2 3 4 5 6 7 8 9. Of course, these symbols can represent values greater than ten. For example, after counting from 0 till 9 we run out of symbols for ten. To represent ten and higher numbers more than one of those symbols is used - 10, 11, 12...10521... etc. A special symbol is pre-fixed to numbers to represent negative numbers (-1, -2, -3... etc.).
+We are used to counting using the decimal number system. This system has ten symbols (decimal numerals) to represent numbers, namely - 0 1 2 3 4 5 6 7 8 9. Of course, using these symbols we can represent values greater than ten. For example, after counting from 0 till 9 we run out of symbols for ten. To represent ten and higher numbers more than one of those symbols is used - 10, 11, 12...10521... etc. A special symbol is pre-fixed to numbers to represent negative numbers (-1, -2, -3... etc.).
 
 OK, so all of this number representation is elementary school material. What is the point of all this? The main point is that numbers are represented with symbols. Modern computers use *binary*  representation for storing and operating on numbers. The decimal number format uses 10 symbols (11 actually if you count the minus sign for negative numbers) the binary number format uses just two symbols.
 
@@ -19,7 +19,7 @@ Are there computers that use representations other than binary? There were a few
 
 ---
 
-Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.
+Remember - representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. 
 
 
 ## Binary Representation
@@ -114,7 +114,17 @@ The binary representation is the remainder read backwards. So in this instance i
 
 ## Practice converting number formats
 
+**Convert from binary to decimal:**
+
+{{#quiz ./quizzes/binary_representation_a.toml}}
+
+**Convert from decimal to binary:**
+{{#quiz ./quizzes/binary_representation_b.toml}}
+
+
+<!---
 Convert the following binary numbers to decimal: 0b100, 0b1011, 0b10000, 0b11001
+
 
 <details>
   <summary>Click here to see answers.</summary>
@@ -127,6 +137,7 @@ Convert the following binary numbers to decimal: 0b100, 0b1011, 0b10000, 0b11001
 | 0b11001 | 25 |
 
 </details>
+
 
 Convert the following decimal numbers to binary: 52, 29, 17, 32
 
@@ -141,10 +152,11 @@ Convert the following decimal numbers to binary: 52, 29, 17, 32
 | 32 | 0b100000 |
 
 </details>
+-->
 
 ## Binary representation in computers
 
-Larger numbers may need more numerals for representation. For example, 0b100000000 (256) requires nine binary digits while 0b1 (1) requires just one binary digit. In practice it is very difficult to implement logic circuitry (adders, multipliers etc.) to account for the variation in binary digits. Therefore, computers use fixed-width integers. This means that numbers are represented with a fixed number of digits. The most common widths are 8-bit (byte), 16-bit (half-word), 32-bit (word), 64-bit (double word).
+Larger numbers may need more numerals for representation. For example, 0b100000000 (256) requires nine binary digits while 0b1 (1) requires just one binary digit. In practice it is very difficult to implement logic circuitry (adders, multipliers etc.) to operate on numbers with varying number of digits. Therefore, computers use fixed-width representations. This means that numbers are represented with a fixed number of digits. The most common widths are 8-bit (byte), 16-bit (half-word), 32-bit (word), 64-bit (double word).
 
 Fixed-width representations can be used to represent numbers from 0 up to a maximum value. That maximum value is determined using the formula 2<sup>N</sup> - 1, where N is the width. The largest integer that can be represented in 8-bit fixed-width is
 
@@ -167,8 +179,8 @@ That is a 20-digit decimal number!!
 
 ---
 
-The **minimum** number of bits required to a number can be found by computing
-log<sub>2</sub>(number) and rounding up to the closest integer. If you do not know the logarithm (log) function that is fine, we will not need to use it extensively in this book. Another way is to find the smallest power of 2 that is **greater** than the given number - the exponent is the minimum number of bits required to represent that number. For example, the number 9 can be represented using 4 bits. Because 2<sup>4</sup> = 16 is the smallest power of 2 that is also greater than 9. Note that 2<sup>3</sup> is 8 and is smaller than 9.
+The **minimum** number of bits required to represent a number can be found by computing
+log<sub>2</sub>(number) and rounding up to the closest integer. If you do not know the logarithm (log) function that is fine, we will not need to use it extensively in this book. Another way is to find the smallest power of 2 that is **greater** than the given number and then the exponent is the minimum number of bits required to represent that number. For example, the number 9 can be represented using 4 bits. Because 2<sup>4</sup> = 16 is the smallest power of 2 that is greater than 9. Note that 2<sup>3</sup> is 8 and is smaller than 9.
 What about the number 8? Well 2<sup>3</sup> is **equal** to 8 and so we cannot represent it with 3 bits because we need the smallest power of 2 that is **greater** than 8. We need 4 bits to represent the number 8.
 
 Now that we know computers use fixed-width representations, the natural question is - what happens when a computation results in a number larger (or smaller) than the representable range?
@@ -194,7 +206,7 @@ Here is an example of adding 0b101 (5) and 0b11 (3)
 \---------------  
   1 &nbsp;&nbsp;0 &nbsp;&nbsp;0 &nbsp;&nbsp;0
 
-Just like in decimal addition we add digits in the corresponding digits of the number from right to left. If the sum results in a carry (i.e. 1 + 1) then the carry is added to the next number. If the numbers are of dis-similar lengths then 0s are prefixed as required.
+Just like in decimal addition we add corresponding digits of the numbers from right to left. If the sum results in a carry (i.e. 1 + 1) then the carry is added to the next number. If the numbers are of dis-similar lengths then 0s are prefixed as required.
 
 When binary arithmetic is performed in digital circuits there is a fixed-width for representing the numbers. So if the sum of the two numbers is larger than what can be represented, some special provision has to be made to indicate to the programmer that the result is incorrect.
 

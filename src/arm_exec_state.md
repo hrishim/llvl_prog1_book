@@ -81,3 +81,5 @@ We will discuss exceptions and masking exceptions in part 2 of this book (not ye
    1. ARM general purpose registers 
    2. ARM PSTATE
 
+Now, a short _quiz_:
+{{#quiz ./quizzes/arm_exec_state.toml}}
