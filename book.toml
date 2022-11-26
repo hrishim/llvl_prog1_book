@@ -7,3 +7,7 @@ title = "Introduction to ARM AArch64 Architecture and Low-level Programming"
 
 [build]
 build-dir = "docs"
+
+[preprocessor.quiz]
+fullscreen = true
+cache-answers = false

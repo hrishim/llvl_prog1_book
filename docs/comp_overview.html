@@ -4,27 +4,47 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Computer System Overview - Introduction to ARM AArch64 Architecture and Low-level Programming</title>
+        
+        
+
+
         <!-- Custom HTML head -->
+        
+
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
         <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
         <link rel="stylesheet" href="fonts/fonts.css">
+        
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        
+
+        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -83,6 +103,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
+                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -99,20 +120,28 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
+                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
+                        
                     </div>
 
                     <h1 class="menu-title">Introduction to ARM AArch64 Architecture and Low-level Programming</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
+                        
+                        
+
                     </div>
                 </div>
 
+                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
@@ -123,6 +152,8 @@
                         </ul>
                     </div>
                 </div>
+                
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -179,33 +210,47 @@
 <h2 id="bits-and-bytes"><a class="header" href="#bits-and-bytes">Bits and Bytes</a></h2>
 <p>As most readers probably know, computers store and process data as <em>bits</em>. A single bit - binary digit - is the minimum unit of information stored in a computer. A bit can hold one of two values - 0 or 1. A group of 8 bits, called <em>byte</em>, is usually the smallest addressable unit of memory. In a modern computer system (most of them anyway) memory in a computer consists of a millions of bits that are grouped into bytes. Every byte has a unique address and can be individually loaded into registers using specific instructions. A byte is 8-bits. A <em>word</em> is 4 bytes. A <em>double-word</em> is 8 bytes and a <em>half-word</em> is 2 bytes. These are the data sizes one will commonly encounter in assembly programming.</p>
 <p>In Part 1 you will learn how to write programs that run on the ARM Cores. In the process we will learn the ARM A-class processor architecture, ARM assembly, and some C programming.</p>
-
+<p>Now, a short <em>quiz</em>:</p>
+<div class="quiz-placeholder" data-quiz-name="comp_overview"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;System on Chip&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the expansion of SoC?&quot;}},{&quot;context&quot;:&quot;The CPU is the main computation engine inside an SoC.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;CPU&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;GPU&quot;,&quot;MMU&quot;,&quot;DPU&quot;],&quot;prompt&quot;:&quot;What is the main computation engine in an SoC?&quot;}},{&quot;context&quot;:&quot;Many modern CPUs are multi-processors, meaning they have more than one processing core in the CPU.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;True&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;False&quot;],&quot;prompt&quot;:&quot;CPUs can have only one processing core in them.&quot;}},{&quot;context&quot;:&quot;Note that the fetch stage of the processor works automatically to load instructions from memory into the processor pipeline. No explicit program instruction is needed for this purpose. \n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;No&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;Yes&quot;],&quot;prompt&quot;:&quot;Do programmers have to explicitly load instructions from memory?&quot;}},{&quot;context&quot;:&quot;A byte is 8-bits. A word is 4 bytes. A double-word is 8 bytes and a half-word is 2 bytes.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;8&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;How many bytes in a double-word (enter a number like 3)?&quot;}}]}"  data-quiz-fullscreen="" ></div>
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css">
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                        
                             <a rel="prev" href="tool_installation.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
+                        
+
+                        
                             <a rel="next" href="arm_exec_state.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
+                        
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
                     <a rel="prev" href="tool_installation.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
+                
+
+                
                     <a rel="next" href="arm_exec_state.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
+                
             </nav>
 
         </div>
 
+        
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
             var socket = new WebSocket("ws://localhost:3000/__livereload");
@@ -220,16 +265,34 @@
                 socket.close();
             }
         </script>
+        
+
+        
+
+        
+
+        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
+        
+
+        
+
+        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+
+        
+
     </body>
 </html>

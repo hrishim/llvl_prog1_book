@@ -1,0 +1,46 @@
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "What is the expansion of SoC?"
+answer.answer = "System on Chip"
+context = ""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "What is the main computation engine in an SoC?"
+prompt.distractors = [
+    "GPU",
+    "MMU",
+    "DPU"
+]
+answer.answer = "CPU"
+context = """
+The CPU is the main computation engine inside an SoC.
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "CPUs can have only one processing core in them."
+prompt.distractors = [
+    "False"
+]
+answer.answer = "True"
+context = """
+Many modern CPUs are multi-processors, meaning they have more than one processing core in the CPU.
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Do programmers have to explicitly load instructions from memory?"
+prompt.distractors = [
+    "Yes"
+]
+answer.answer = "No"
+context = """
+Note that the fetch stage of the processor works automatically to load instructions from memory into the processor pipeline. No explicit program instruction is needed for this purpose. 
+"""
+
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "How many bytes in a double-word (enter a number like 3)?"
+answer.answer = "8"
+context = "A byte is 8-bits. A word is 4 bytes. A double-word is 8 bytes and a half-word is 2 bytes."
