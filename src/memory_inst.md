@@ -37,13 +37,13 @@ Both LDRB and STRB instructions have multiple *addressing modes* (i.e. ways of s
 
 ## Copying Data
 
-To learn how to load/store data from/to memory we will write a few assembly programs. The first program, below, will copy the words "Hello" from one location in memory to another location. The program code and instructions to compile and run it are in the file memory_instructions/ex1a_solution.s
+To learn how to load/store data from/to memory we will write a few assembly programs. The first program, below, will copy the words "Hello" from one location in memory to another location. The program code and instructions to compile and run it are in the file **memory_instructions/ex1a_solution.s**
 
-As a learning exercise, it would be best if you could type out the program into the specified location in the file memory/ex1a.s and try running it yourself. You can do this using any text editor.
+As a learning exercise, it would be best if you could type out the program into the specified location in the file **memory_instructions/ex_1a.s** and try running it yourself. You can do this using any text editor.
 
 For all exercises in this book two assembly (.s) files are provided - a template file and a solution file. You should read the material in the book and attempt to write the code yourself for each exercise. Look at the solution only if you are unable to get your program to work correctly. The assembly files have clearly marked sections where you can write your code.
 
-For the first exercise, to get you started, we will discuss the code in detail. Open ex1a.s and type the code below into the appropriate location.
+For the first exercise, to get you started, we will discuss the code in detail. Open *ex_1a.s* and type the code below into the appropriate location.
 
 ```armasm
     // Your code starts here
@@ -69,15 +69,15 @@ For the first exercise, to get you started, we will discuss the code in detail. 
 ```
 
 
-In ex1.s we have provided set up code code that will store the text "Hello" into one location in memory and "Howdy" in another location in memory. The setup also provides the start address of "Hello"  and the start address of "Howdy". The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.
+In *ex_1a.s* we have provided set up code code that will store the text "Hello" into one location in memory and "Howdy" in another location in memory. The setup also provides the start address of "Hello"  and the start address of "Howdy". The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.
 
-So how does this program work. Actually, it is pretty simple. In a computer every character or letter is stored in a byte of data (8-bits, remember) in a format called ASCII. There are other formats for storing text but in this book we will use only ASCII since it is easy to deal with. The word Hello has five letters and therefore it takes five bytes of data to store it in memory. In ASCII encoding numbers are used to represent English alphabets, numbers, and some symbols.
+So how does this program work. Actually, it is pretty simple. In a computer every character or letter is stored in a byte of data (8-bits, remember) in a format called ASCII. There are other formats for storing text but in this book we will use only ASCII since it is easy to deal with. The word Hello has five letters and therefore it takes five bytes of data to store it in memory. In ASCII encoding, numbers are used to represent English alphabets, numbers, and some symbols.
 
-In ex1.s the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter "H". The destination address - location where the string should be copied to - is provided in X1. Before the start of the program the address starting at X0 contains the word "Hello" in consecutive memory locations (X0, X0+1...X0+4). Just for fun we have stored the word "Howdy" starting at the address in X1.
+In *ex_1a.s* the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter "H". The destination address - location where the string **should be copied to** - is provided in X1. Before the start of the program the address starting at X0 contains the word "Hello" in consecutive memory locations (X0, X0+1...X0+4). Just for fun we have stored the word "Howdy" starting at the address in X1.
 
 The code copies one character at a time from the address starting at X0 to the address at X1. Each character of the string Hello is 1 byte in size. So to copy the entire string we have to copy 5 bytes. Each character is stored in continuous locations of memory. In this program, **H** starts at memory address 0x800ac, **e** is at 0x800ad, and **l** at 0x800ae and so on. **Note:** Each character is 1 byte in size. 
 
-The solution provided uses the base plus immediate offset addressing mode (aka immediate offset mode). In this mode the address of the memory operation is computed by adding the specified base register with a immediate value. The immediate value is also provided by the programmer.
+The solution provided uses the base plus **immediate offset addressing mode** (aka immediate offset mode). This is a new addressing mode that we have not discussed earlier. In this mode the address of the memory operation is computed by adding the specified base register with a immediate value. The immediate value is also provided by the programmer. The register containing the base address remains unchanged.
 
 The first instruction in the solution above is:
 
@@ -167,6 +167,7 @@ Try to write the code for exercise ex_1d.s using register offset addressing mode
 
 Note that in all the above addressing modes any register that is used in address computation is a 64-bit X register.
 
+{{#quiz ./quizzes/memory_inst_a.toml}}
 
 ## Half-word, Word, and Double-Word Memory Operations
 

@@ -1,0 +1,35 @@
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "The instruction ldrb w11, [x5], #6 uses ______ addressing mode. "
+prompt.distractors = [
+    "pre-indexed",
+    "base plus register offset",
+    "immediate offset"
+]
+answer.answer = "post-indexed"
+context = """
+This instruction uses post-indexed addressing mode.
+"""
+
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2]! what value will x0 contain?"
+answer.answer = "0x802"
+context = "The instruction uses pre-indexed addressing mode. So the address will be updated to x0 + 2 = 0x802."
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "The instruction strb w20, [x1], #4 will store the data contained in w20 to the address at x1."
+prompt.distractors = [
+    "False",
+]
+answer.answer = "True"
+context = """
+This instruction uses post-indexed addressing mode so the address in x1 will be used for the memory operation. The instruction will also update the x1 register with the value x1 + 4.
+"""
+
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2] what value will x0 contain?"
+answer.answer = "0x800"
+context = "The instruction uses immediate offset addressing mode. So the address used will be x0 + 2 = 0x802. But x0 will remain unchanged."
