@@ -1,23 +1,23 @@
 [[questions]]
 type = "ShortAnswer"
-prompt.prompt = "What is the decimal equivalent of 52 (type a binary number as the answer - e.g. 0b101)?"
-answer.answer = "0b110100"
+prompt.prompt = "What is the binary equivalent of 32 (type a binary number as the answer - e.g. 0b101)?"
+answer.answer = "0b100000"
 context = ""
 
 [[questions]]
 type = "ShortAnswer"
-prompt.prompt = "What is the decimal equivalent of 29 (type a binary number as the answer - e.g. 0b101)?"
-answer.answer = "0b11101"
-context = ""
-
-[[questions]]
-type = "ShortAnswer"
-prompt.prompt = "What is the decimal equivalent of 17 (type a binary number as the answer - e.g. 0b101)?"
+prompt.prompt = "What is the binary equivalent of 17 (type a binary number as the answer - e.g. 0b101)?"
 answer.answer = "0b10001"
 context = ""
 
 [[questions]]
 type = "ShortAnswer"
-prompt.prompt = "What is the decimal equivalent of 32 (type a binary number as the answer - e.g. 0b101)?"
-answer.answer = "0b100000"
+prompt.prompt = "What is the binary equivalent of 29 (type a binary number as the answer - e.g. 0b101)?"
+answer.answer = "0b11101"
+context = ""
+
+[[questions]]
+type = "ShortAnswer"
+prompt.prompt = "What is the binary equivalent of 52 (type a binary number as the answer - e.g. 0b101)?"
+answer.answer = "0b110100"
 context = ""

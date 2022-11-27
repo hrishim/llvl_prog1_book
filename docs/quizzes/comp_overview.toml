@@ -21,9 +21,9 @@ The CPU is the main computation engine inside an SoC.
 type = "MultipleChoice"
 prompt.prompt = "CPUs can have only one processing core in them."
 prompt.distractors = [
-    "False"
+    "True"
 ]
-answer.answer = "True"
+answer.answer = "False"
 context = """
 Many modern CPUs are multi-processors, meaning they have more than one processing core in the CPU.
 """
