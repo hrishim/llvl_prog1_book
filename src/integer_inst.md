@@ -15,7 +15,7 @@ The figure above shows how the elements of an array appear in memory. In this ex
 
 Arrays are a convenient way to store a list of the same type of object. When an operation is to be performed on all elements of a array it is typically done in a loop. Programmers can easily read/write to each item in the list by using the register + offset, pre-indexed, or post-indexed modes of addressing.
 
-One common programming error is to access beyond the end of an array. The dotted region in the figure represents memory that is outside the array. Programmer should be careful to only access memory locations that are part of the program. Accessing memory outside the locations representing the program's data may not cause the program to crash always. But may cause subtle errors and crashes that are difficult to debug.
+One common programming error is to access memory beyond the end of an array. The dotted region in the figure represents memory that is outside the array. Programmer should be careful to only access memory locations that are part of the program. Accessing memory outside the locations representing the program's data may not cause the program to crash always. But it is an error and can cause crashes that are difficult to debug.
 
 We will now look at a program that has 32-bit integers stored in an array. The program will add all the integers in the array and print their sum. Our program is organized as follows:
 - The address of the first element of the array is stored in the register x4
@@ -62,7 +62,7 @@ loop:
     // Your code ends here
 ```
 
-One can add comments in the code by starting the line with the text "//". Everything following in that line will be ignored when the program is assembled/compiled. In this program the explanation for every instruction is provided as comments. The load instruction in this program uses a slightly different form of memory addressing than the ones we have encountered so far. This addressing mode is the register + offset mode that we learnt in the section on Memory Instructions. The addressing mode allows the programmer to provide an optional operation that is to be performed on the offset register.
+One can add comments in the code by starting the line with the text "//". Everything following in that line will be ignored when the program is assembled/compiled. In this program the explanation for every instruction is provided as comments. The load instruction uses register + offset mode that we learnt in the section on Memory Instructions. This addressing mode allows the programmer to provide an optional operation that is to be performed on the offset register.
 
 >ldr    w3, [x4, x2, lsl 2]
 
@@ -84,7 +84,7 @@ We used the LSL extend operator in this example. The register+offset addressing 
 - SXTW
 - SXTX
 
-We will learn about these operators later in the book.
+Refer to the ARM Architecture Manual to learn more about them.
 
 ---
 
@@ -97,9 +97,7 @@ Here is a challenge for you. Write a program to find the maximum number in a giv
 - The size of each element in the array is 1 word (4 bytes)
 - Store the number
 
-Can you write a program to find the maximum number in the array?
-
-The assembly program can be written in multiple ways. It does not matter if your program is not identical to the solution as long as it finds the correct answer.
+The program can be written in multiple ways. It does not matter if your version is not identical to the solution as long as it finds the correct answer.
 
 **csel** is a new instruction that can be used as part of this exercise. This instruction checks the condition set by the previous instruction (could be a cmp instruction) and if the condition is true it copies the value of Wn to Wd. If the condition is false it copies the value in Wm to Wd.
 ```armasm
@@ -387,15 +385,15 @@ We recommend that you try to write the program your self before looking at the s
 
 ## Printing the Fibonacci series
 
-Fibonacci series, named after an Italian mathematician, is a sequence of numbers, where every number is sum of the preceding two numbers. The first two numbers of the series are '0' and '1'.
+The Fibonacci series is a sequence of numbers, where every number is sum of the preceding two numbers. The first two numbers of the series are '0' and '1'.
 
 Fibonacci series is:
 ```0, 1, 1, 2, 3, 5, 8, 13, 21, 34, . . . ```
 
-We can notice that every number in this series is the sum of the preceding two numbers. The objective of this exercise, is to write code to store first N numbers of Fibonacci series in an array. The file exercises/integer_instructions/fibonacci.s has to be used for this challenge. Here is the information you need to write this program:
+Notice that every number in this series is the sum of the preceding two numbers. The objective of this exercise, is to write code to store first N numbers of Fibonacci series in an array. The file exercises/integer_instructions/fibonacci.s has to be used for this challenge. Here is the information you need to write this program:
 
-1. The number of elements to be stored in the array is available in register x0
-2. The memory address where fibonacci series will have to be stored is available in register x1
+1. The number of elements to be stored in the array is available in x0
+2. The result should be stored as an array starting at the memory address in x1
 
 Below is a pseudo code to generate the fibonacci series. You can use this as a guide to write the assembly code.
 
@@ -459,13 +457,12 @@ loop:
 
 # Logic Operations
 
-In this section we introduce a few more commonly used logic instructions. We will do this through a series of assembly programs.
+Logical instructions are the instructions which perform basic logical operations such as OR, AND, XOR, and so on. The logical operations operate on **individual bits of the register**. The instructions (except NOT) take two registers as input and write the result to an output register.
 
-Logical instructions are the instructions which perform basic logical operations such as OR, AND, XOR, and so on. The logical operations operate on individual bits of the register.
-- The AND operation returns 1, if the matching bits from both the operands are 1, otherwise it returns 0.
-- The OR operator returns 1, if the matching bits from either or both operands are one. It returns 0, if both the bits are zero.
-- The XOR operation sets the resultant bit to 1, if and only if the bits from the operands are different. If the bits from the operands are same (both 0 or both 1), the resultant bit is cleared to 0.
-- The NOT operation reverses the bits in an operand.
+- **AND**: For every bit in the input registers set the corresponding output bit to 1, if the bits from both inputs are 1, otherwise it sets output to 0.
+- **OR**: If the corresponding bits from either input is 1 the appropriate output bit is set to 1 else it is set to 0. 
+- **XOR**: Set each output bit to 1, if corresponding bits from the inputs are different. If the bits from the input operands are same (i.e. both 0 or both 1), the corresponding result bit is set to 0.
+- The NOT operation reverses the bits in an operand. Every bit that is a 1 in the input is set to 0 in the output and every 0 in the input is set to 1 in the output.
 
 ## Print the XOR truth table (EOR)
 

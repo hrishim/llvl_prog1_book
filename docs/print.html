@@ -773,30 +773,28 @@ After addition we get 0b0111.</p>
 <p>That was a lot of information and it is OK if you do not understand all of this yet. We will discuss how to use registers in more detail in following sections. The main point to understand in this section is that the processor cannot operate directly on data in memory. Values have to be loaded into <em>storage buffers</em> called registers. Integer instructions such as ADD, SUB etc operate on general purpose registers and can store the result of their operation also in a such a register. Once computation has been completed values can be copied from the registers holding results to memory. All of the copying between registers and memory have to be explicitly done by the programmer.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="memory-instructions"><a class="header" href="#memory-instructions">Memory Instructions</a></h1>
 <p>Finally, let us start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.</p>
-<p>In most computer/embedded systems memory is located in a chip that is separate from the CPU. Memory is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use this instruction</p>
+<p>In most computer/embedded systems memory is located in a chip that is separate from the CPU. It is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use a <em>load byte</em> instruction:</p>
 <pre><code class="language-armasm">  LDRB W10, [X1], #0
 </code></pre>
-<p>This form of the load instruction uses the <strong>post-indexed</strong> addressing mode. This instruction performs two operations:</p>
+<p>There are different types of load instructions in the AArch64 ISA. This type of load uses the <strong>post-indexed</strong> addressing mode. It performs two operations:</p>
 <ol>
-<li>Load 1 byte of memory from memory, into the specified destination register</li>
+<li>Load 1 byte of data from memory into the specified destination register</li>
 <li>Update the address in the base register</li>
 </ol>
-<p>The memory address of the data is provided using a register, in this case X1. This instruction fetches 1 byte of data from memory at the address specified in X1. That byte is sign extended to 32 bits and stored in W10.</p>
-<p>The offset, specified as an immediate value is added to the base address (by the processor) and the result is stored in the register X1.</p>
-<p>In this specific example the immediate value is 0. Therefore the base address in X1 will remain unchanged after the instruction is executed.</p>
+<p>The memory address of the data is provided using a register, in this case X1. This instruction fetches 1 byte of data from memory at the address specified in X1. That byte is sign extended to 32 bits and stored in W10. The offset, specified as an immediate value, is added to the base address (by the processor) and the result is stored in the register X1. In this specific example the immediate value is 0. Therefore the base address in X1 will remain unchanged after the instruction is executed.</p>
 <p>The LDRB instruction can also be used with <strong>pre-indexed</strong> addressing mode like this</p>
 <pre><code class="language-armasm">  LDRB W10, [X1, #0]!
 </code></pre>
 <p>In this addressing mode the data address is the sum of X1 and the immediate offset. One byte, at that address, is loaded (sign extended) into the destination register (W10) and the base register (X1) is also updated with the computed address.</p>
 <p>Below is an example of a <strong>post-indexed</strong> store instruction. This instruction stores 1 byte from the register W10 into the memory location contained in register X1.</p>
-<pre><code class="language-armasm">  STRB W10, [X1], #0
+<pre><code class="language-armasm">  STRB W10, [X1], #2
 </code></pre>
 <p>Both LDRB and STRB instructions have multiple <em>addressing modes</em> (i.e. ways of specifying the memory address). We will eventually learn all of those modes. But now let us write a small program with two instructions that we know so far.</p>
 <h2 id="copying-data"><a class="header" href="#copying-data">Copying Data</a></h2>
 <p>To learn how to load/store data from/to memory we will write a few assembly programs. The first program, below, will copy the words &quot;Hello&quot; from one location in memory to another location. The program code and instructions to compile and run it are in the file <strong>memory_instructions/ex1a_solution.s</strong></p>
 <p>As a learning exercise, it would be best if you could type out the program into the specified location in the file <strong>memory_instructions/ex_1a.s</strong> and try running it yourself. You can do this using any text editor.</p>
-<p>For all exercises in this book two assembly (.s) files are provided - a template file and a solution file. You should read the material in the book and attempt to write the code yourself for each exercise. Look at the solution only if you are unable to get your program to work correctly. The assembly files have clearly marked sections where you can write your code.</p>
-<p>For the first exercise, to get you started, we will discuss the code in detail. Open <em>ex_1a.s</em> and type the code below into the appropriate location.</p>
+<p>For all exercises in this book two assembly files (with extension &quot;.s&quot;) are provided - a template file and a solution file. You should read the material in the book and attempt to write the code yourself for each exercise. Look at the solution only if you are unable to get your program to work correctly. The template files have clearly marked sections where you can write your code.</p>
+<p>To get you started we will discuss the code for the first exercise in detail. Open <em>ex_1a.s</em> and type the code below into the appropriate location.</p>
 <pre><code class="language-armasm">    // Your code starts here
 
     ldrb w4, [x0, #0] // load H
@@ -818,15 +816,19 @@ After addition we get 0b0111.</p>
 
 
 </code></pre>
-<p>In <em>ex_1a.s</em> we have provided set up code code that will store the text &quot;Hello&quot; into one location in memory and &quot;Howdy&quot; in another location in memory. The setup also provides the start address of &quot;Hello&quot;  and the start address of &quot;Howdy&quot;. The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.</p>
-<p>So how does this program work. Actually, it is pretty simple. In a computer every character or letter is stored in a byte of data (8-bits, remember) in a format called ASCII. There are other formats for storing text but in this book we will use only ASCII since it is easy to deal with. The word Hello has five letters and therefore it takes five bytes of data to store it in memory. In ASCII encoding, numbers are used to represent English alphabets, numbers, and some symbols.</p>
-<p>In <em>ex_1a.s</em> the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter &quot;H&quot;. The destination address - location where the string <strong>should be copied to</strong> - is provided in X1. Before the start of the program the address starting at X0 contains the word &quot;Hello&quot; in consecutive memory locations (X0, X0+1...X0+4). Just for fun we have stored the word &quot;Howdy&quot; starting at the address in X1.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_1a.elf
+RUN_COMMAND: make run
+</code></pre>
+<p>In <em>ex_1a.s</em> we have provided set up code code that will store the text &quot;Hello&quot; into one location in memory and &quot;Howdy&quot; in another location in memory. The setup also provides the start address of &quot;Hello&quot; (in X0) and the start address of &quot;Howdy&quot; (in X1). The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.</p>
+<p>So how does this program work? Actually, it is pretty simple. Every character or letter is stored in a format called ASCII. In ASCII encoding, numbers are used to represent English alphabets, numbers, and some symbols. For example the representation for the letter <em>a</em> in ASCII is 0b01000001 (i.e. 65). There are other formats for storing text but in this book we will use ASCII since it is easy to deal with. In ASCII each character is stored in a byte of data. The word Hello has five letters and therefore it takes five bytes of data to store it in memory. </p>
+<p>In <em>ex_1a.s</em> the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter &quot;H&quot;. The destination address - location where the string <strong>should be copied to</strong> - is provided in X1. Before the start of the program the address starting at X0 contains the word &quot;Hello&quot; in consecutive memory locations (X0, X0+1...X0+4). The starting address of the word &quot;Howdy&quot; is in X1.</p>
 <p>The code copies one character at a time from the address starting at X0 to the address at X1. Each character of the string Hello is 1 byte in size. So to copy the entire string we have to copy 5 bytes. Each character is stored in continuous locations of memory. In this program, <strong>H</strong> starts at memory address 0x800ac, <strong>e</strong> is at 0x800ad, and <strong>l</strong> at 0x800ae and so on. <strong>Note:</strong> Each character is 1 byte in size. </p>
 <p>The solution provided uses the base plus <strong>immediate offset addressing mode</strong> (aka immediate offset mode). This is a new addressing mode that we have not discussed earlier. In this mode the address of the memory operation is computed by adding the specified base register with a immediate value. The immediate value is also provided by the programmer. The register containing the base address remains unchanged.</p>
 <p>The first instruction in the solution above is:</p>
 <pre><code class="language-armasm">  ldrb w4, [x0, #0]
 </code></pre>
-<p>This is a Load byte instruction that loads 1 byte of data from memory into the register W4. The address of the memory location to load the data from is computed by adding 0 to the base register X0. After execution of this instruction the memory contents of the byte starting at address (X0 + 1) will be loaded into the register W4. The value of register X0 will remain unchanged. Similarly the store instruction</p>
+<p>This is a Load byte instruction that loads 1 byte of data from memory into the register W4. The address of the memory location to load the data from is computed by adding 0 to the base register X0. After execution of this instruction the memory contents of the byte starting at address <em>X0 + 0</em> will be loaded into the register W4. The value of register X0 will remain unchanged. Similarly the store instruction</p>
 <pre><code class="language-armasm">  strb w4, [x1, #0]
 </code></pre>
 <p>Stores one byte of data from W4 into the memory location (X1+0).</p>
@@ -840,7 +842,6 @@ After addition we get 0b0111.</p>
 <li>Provide the address of the destination in address X2</li>
 <li>The strings in at X1 and X2 are printed before and after your code is executed so that you can check if the copying has been done correctly.</li>
 </ol>
-<p>Later in this book we will discuss how to print strings.</p>
 <hr />
 <h3 id="addressing-modes"><a class="header" href="#addressing-modes">Addressing Modes</a></h3>
 <p>In ex_1a.s we introduced the immediate offset addressing mode. The ARM architecture has other addressing modes to specify addresses in load and store instructions. In the rest of this section we will take  look at these modes.</p>
@@ -855,30 +856,42 @@ After addition we get 0b0111.</p>
 <li>It adds the base register with the provided offset and stores that result into the base register.</li>
 </ol>
 <p>In the example above, the value contained in memory location x0 is loaded into register w4. In addition x0 is increased by 1.</p>
-<p>Try to write the code for exercise ex_1b.s using post-indexed addressing mode.</p>
+<p><strong>Programming exercise:</strong> Write the code for exercise ex_1b.s using post-indexed addressing mode.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_1b.elf
+RUN_COMMAND: make run
+</code></pre>
 <p><strong>Pre-indexed Addressing Mode</strong></p>
 <p>In this addressing mode the address is the sum of a base register and a specified offset value. The computed address is also stored back in the address register.</p>
 <p>Example:</p>
 <pre><code class="language-armasm">  ldrb w4, [x0, #1]!
 </code></pre>
 <p>In the example, the memory address is computed as the sum of x0 and 1. The byte in that location is loaded into register w4. The computed address is also stored in register x0.</p>
-<p>Try to write the code for exercise ex_1c.s using pre-indexed addressing mode. Hint - you can load (and store) the first character using a different addressing mode.</p>
+<p><strong>Programming exercise:</strong> Write the code for exercise ex_1c.s using pre-indexed addressing mode. Hint - you can load (and store) the first character using a different addressing mode.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_1c.elf
+RUN_COMMAND: make run
+</code></pre>
 <p><strong>Base Plus Register Offset Addressing Mode</strong></p>
 <p>In this mode the address is the sum of the base register and an offset that is contained in another register.</p>
 <p>Example:</p>
 <pre><code class="language-armasm">  ldrb w4, [x0, x2]
 </code></pre>
 <p>The address for this load instruction is computed by adding the base register x0 with the register x2.</p>
-<p>Try to write the code for exercise ex_1d.s using register offset addressing mode. Hint - you can save an immediate value into a register using the <strong>mov</strong> instruction like this</p>
+<p><strong>Programming exercise:</strong> Write the code for exercise ex_1d.s using register offset addressing mode. </p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_1d.elf
+RUN_COMMAND: make run
+</code></pre>
+<p>Hint - you can save an immediate value into a register using the <strong>mov</strong> instruction like this</p>
 <pre><code class="language-armasm">  mov  x2, #0
 </code></pre>
 <p>Note that in all the above addressing modes any register that is used in address computation is a 64-bit X register.</p>
-<div class="quiz-placeholder" data-quiz-name="memory_inst_a"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;This instruction uses post-indexed addressing mode.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;post-indexed&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;pre-indexed&quot;,&quot;base plus register offset&quot;,&quot;immediate offset&quot;],&quot;prompt&quot;:&quot;The instruction ldrb w11, [x5], #6 uses ______ addressing mode. &quot;}},{&quot;context&quot;:&quot;The instruction uses pre-indexed addressing mode. So the address will be updated to x0 + 2 = 0x802.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0x802&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2]! what value will x0 contain?&quot;}},{&quot;context&quot;:&quot;This instruction uses post-indexed addressing mode so the address in x1 will be used for the memory operation. The instruction will also update the x1 register with the value x1 + 4.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;True&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;False&quot;],&quot;prompt&quot;:&quot;The instruction strb w20, [x1], #4 will store the data contained in w20 to the address at x1.&quot;}},{&quot;context&quot;:&quot;The instruction uses immediate offset addressing mode. So the address used will be x0 + 2 = 0x802. But x0 will remain unchanged.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0x800&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2] what value will x0 contain?&quot;}}]}"  data-quiz-fullscreen="" ></div>
 <h2 id="half-word-word-and-double-word-memory-operations"><a class="header" href="#half-word-word-and-double-word-memory-operations">Half-word, Word, and Double-Word Memory Operations</a></h2>
 <p>So far we have looked at load and store instructions that operate on one byte of memory. There are memory instructions that operate on larger chunks of memory, namely - half-word, word, and double-word.</p>
 <p>What are these terms and what sizes do they indicate?</p>
 <p>We already know that data in computers are represented as bits. Bits can take one of two values - 0 and 1. A group of 8-bits is called a byte. Furthermore, every byte of memory has its own identifier - a memory address that distinguishes each byte from other bytes in memory.</p>
-<p>A word is a group of bytes. However, unlike byte which is always 8 bits, the size of a word is not a standard across different architectures. In the ARM architecture the size of a word is 4 bytes (i.e. 32 bits). A half-word is 2 bytes and a double-word is 8 bytes.</p>
+<p>A word is a contiguous group of bytes. However, unlike byte which is always 8 bits, the size of a word is not a standard across different architectures. In the ARM architecture the size of a word is 4 bytes (i.e. 32 bits). A half-word is 2 bytes and a double-word is 8 bytes.</p>
 <p>The architecture has load/store instructions that can load half-word, word, and double-word from/to memory.</p>
 <p>Load/store double-word example:</p>
 <pre><code class="language-armasm">	ldr x4, [x0], #8
@@ -896,8 +909,13 @@ After addition we get 0b0111.</p>
 </code></pre>
 <p>The <strong>ldrh</strong> and <strong>strh</strong> instructions load a half-word from memory (2 bytes). The examples above show post-indexed forms of the load instruction.</p>
 <p><strong>Note:</strong> The ARM Architecture Reference Manual has detailed description of all the instructions discussed in this book. It is a useful reference to have when you attempt to write your own code for the exercises.</p>
+<div class="quiz-placeholder" data-quiz-name="memory_inst_a"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;This instruction uses post-indexed addressing mode.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;post-indexed&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;pre-indexed&quot;,&quot;base plus register offset&quot;,&quot;immediate offset&quot;],&quot;prompt&quot;:&quot;The instruction ldrb w11, [x5], #6 uses ______ addressing mode. &quot;}},{&quot;context&quot;:&quot;The instruction uses pre-indexed addressing mode. So the address will be updated to x0 + 2 = 0x802.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0x802&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2]! what value will x0 contain?&quot;}},{&quot;context&quot;:&quot;This instruction uses post-indexed addressing mode so the address in x1 will be used for the memory operation. The instruction will also update the x1 register with the value x1 + 4.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;True&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;False&quot;],&quot;prompt&quot;:&quot;The instruction strb w20, [x1], #4 will store the data contained in w20 to the address at x1.&quot;}},{&quot;context&quot;:&quot;The instruction uses immediate offset addressing mode. So the address used will be x0 + 2 = 0x802. But x0 will remain unchanged.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0x800&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2] what value will x0 contain?&quot;}},{&quot;context&quot;:&quot;In ARM architecture a word is 32 bits.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;32 bits&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;2 bytes&quot;,&quot;8 bits&quot;,&quot;16 bits&quot;],&quot;prompt&quot;:&quot;The size of a word in ARM Architecture is &quot;}}]}"  data-quiz-fullscreen="" ></div>
 <h2 id="copy-memory-using-operations-of-different-sizes"><a class="header" href="#copy-memory-using-operations-of-different-sizes">Copy memory using operations of different sizes</a></h2>
 <p>Now for a small challenge. In file <em>exercises/memory_instructions/ex_1e.s</em> the text &quot;Welcome To ARM Assembly World&quot; has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location to which you may write. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_1e.elf
+RUN_COMMAND: make run
+</code></pre>
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
 <pre><code class="language-armasm">    // Your code starts here
@@ -920,10 +938,14 @@ After addition we get 0b0111.</p>
 </details>
 <h2 id="copying-data-using-a-loop"><a class="header" href="#copying-data-using-a-loop">Copying data using a loop</a></h2>
 <p>So far we have used multiple load and store instructions to copy data. For instance, in ex_1a.s we used five load and five store instructions to copy the letters &quot;Hello&quot; from one location to another.</p>
-<p>In this section we will see how to do the same using a loop and fewer load and store instructions instructions. The code in this section can be found in the file <em>exercises/memory_instructions/ex_1f_solution.s</em>. After reading the explanation in this section we recommend readers try to replicate this program using the file <em>exercises/memory_instructions/ex_1f.s</em>.</p>
+<p>In this section we will see how to do the same using a <strong>loop</strong> and fewer load and store instructions instructions. The code in this section can be found in the file <em>exercises/memory_instructions/ex_1f_solution.s</em>. After reading the explanation in this section we recommend readers try to replicate this program using the file <em>exercises/memory_instructions/ex_1f.s</em>. This file contains markers indicating where code must be filled in.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_1f.elf
+RUN_COMMAND: make run
+</code></pre>
 <p>Our objective is to copy a string of unknown length from one location to another. In this exercise, that string is &quot;Hello&quot; and it has 5 letters. But we want to write a generic program that will work even if the string were longer or shorter. Strings are stored in memory using a format called ASCII. There are other formats to represent alphabets in computers but this one is one of the simplest and most popular - though it does have limitations.</p>
-<p>The characters comprising a string are stored in contiguous locations in memory. Also, at the end of every string a special character (string termination) - namely 0 - is stored to indicate the end of the string. If the special character were nor present there would be no way to tell when a string has ended.</p>
-<p>The code listing below shows the program. You will notice that there are two labels that are clearly not assembly instructions. Labels such as &quot;find_len_start:&quot; and &quot;copy_loop_start:&quot; act as markers that can be used by assembly instructions to refer to the memory address of instructions or data.</p>
+<p>The characters comprising a string are stored in contiguous locations in memory. Also, at the end of every string a special character (string termination) - namely 0 - is stored to indicate the end of the string. If the special character were not present there would be no way to tell when a string has ended.</p>
+<p>The code listing below shows the program. The start address of the first string (source) is already loaded in <em>x0</em> and the start address of the destination (target) to which it must be copied to is given in <em>x1</em>.</p>
 <pre><code class="language-armasm">1.  mov  x2, #0
 2.  ldrb w5, [x0, x2]
 3.  cbz  w5, skip_to_copy
@@ -941,35 +963,64 @@ copy_loop_start:
 11.  cmp  w2, w3
 12.  b.gt copy_loop_start
 </code></pre>
-<p>The first section of the program, comprising of instructions 1-4, is to find the length of the string. We use x2 to store the count and initialize its value to zero using the <strong>mov</strong> instruction. This mov instruction places an immediate value into a register. There is also a variant that can be used to copy the contents of one register into another.</p>
-<p>This instruction is followed by a label <strong>find_len_start:</strong>. Labels are used to mark points in the code that can be referred to from other places in the code. Following the label, we load the first character into w5 using an ldrb instruction. This should be familiar to you from previous sections.</p>
-<p>The next instruction is a new one that we have not seen so far.</p>
-<pre><code class="language-armasm">   cbz  w5, skip_to_copy
+<p>The first three instructions of the program checks for an <em>empty</em> string. That is a string that has no characters and therefore has only the string terminator 0. If the string that we need to copy (source string) is empty, then we do not need to count the number of characters in it. So, we jump to the <em>skip_to_copy</em> label and copy only the character 0 (string terminator) to the destination. </p>
+<p>We use <em>x2</em> as an index into the array storing the source string. It also serves as a count of the number of characters in the source string. The <strong>mov</strong> instruction initializes <em>x2</em> to zero. Instruction 2 is a load-byte instruction that uses base plus register offset addressing mode. So the address will be the sum of registers <em>x0</em> and <em>x2</em>. Here <em>x2</em> is 0, so instruction 2 will load the first character of the source string into <em>w5</em>.</p>
+<p>The third instruction is a <em>branch</em> instruction. The <em>cbz</em> instruction compares the value in <em>w5</em> with 0. If the register contains zero then <em>cbz</em> instructs the processor to &quot;jump&quot; to the address specified by the label <em>skip_to_copy</em> and start executing code from that memory address. If the register does not contain zero then the processor continues execution from the next instruction (in this case instruction 4). </p>
+<p>In summary, instruction 3 (<em>cbz</em>) checks if the first character read is 0. if true, then that means the string is a blank string with length 0. So we do not need to count the number of characters in that string. We can skip the code that is counting the number of characters and jump to the part that will copy the characters.</p>
+<p>What is a <strong>label</strong>? Labels are special texts that can be used in assembly code to refer to the address of the immediately following instruction. In this example the label <code>skip_to_copy</code> refers to the address of instruction 7 (i.e. <code>mov  x3, #0x0</code>). Similarly, the label <code>find_len_start:</code>  refers to the address of instruction 4 (i.e. <code>add  x2, x2, #0x1</code>). Observe that the labels have to end with a colon symbol. But when used as part of an instruction, the colon is omitted. </p>
+<pre><code class="language-armasm">find_len_start:
+4.  add  x2, x2, #0x1
+5.  ldrb w5, [x0, x2]
+6.  cbnz w5, find_len_start
 </code></pre>
-<p>CBZ is the &quot;compare and branch if zero&quot; instruction. This instruction checks if the value of a specified register is 0. If it is then processor  will jump to the instruction at the specified label. If not the processor continues to the next instruction.</p>
-<p>Instruction 3 compares if the value in w5 is 0. If it is zero then the processor will jump to the label skip_to_copy and will start executing instructions from instruction 4. Why do we use cbz? If the first character read is 0 then that means the string is a blank string with length 0. So we do not need to count the number of characters in that string. We can skip the code that is counting the number of characters and jump to the part that will copy the characters.</p>
-<p>After the cbz instruction we have a label named &quot;find_len_start:&quot;. Observe that the labels have to end with a colon symbol. But when used as part of an instruction, the colon is omitted. Labels in code refer to the address of the instruction immediately below them. The label find_len_start is a marker to the address of instruction 4. Other instructions in the program can refer to instruction 4 using this label. This is also useful if, later in the program, we want the CPU to start executing at instruction 4.</p>
-<p>The code comprising of instructions 4-6 is a loop. The CPU will execute them one after another and when it reaches instruction 6 - cnbz - it will either go on to instruction 7 or back to instruction 4. The cnbz instruction checks if a given register is <strong>not</strong> zero. If the instruction contains a value other than zero then the code jumps to the instruction with the specified label. In this case that is instruction 4.</p>
-<p>This loop (4-6) performs the task of finding the length of the given string. We store the count of the number of characters in register x2. We have previously checked that the first character is not 0 (i.e. end of string). Therefore, the string we have to copy has at least one character. In the loop the count is increased by 1 using an add instruction. The next instruction loads one byte of data from the address contained in [x0, x2]. The base address of the string is in register x0. When we add x2 to x0 we get the address of the second character of the string (because x2 is 1). The cbnz instruction checks if the loaded value is <strong>not</strong> zero. If the loaded value is not zero then the CPU will jump back to instruction 4 and start execution from there.</p>
-<p>The loop to count the number of characters will continue to execute until character 0 is loaded - indicating a end of string. At that instance the cbnz instruction will find the loaded value is 0 and so the CPU will not jump to find_len_start. Instead it will move on to the next instruction.</p>
-<p>After counting the number of characters in the string we copy the string to a location specified by the address in x1. We first initialize register x3 to 0 using a mov instruction. We will use x3 to track the current character being copied. It will also aid in computing the address of that character. Copying the string is also done using a loop comprising of instructions 8-12. The start of the loop is labelled copy_loop_start.</p>
-<p>The first instruction in the loop loads a byte from the string starting at x0 and the next instruction stores that value into a memory location starting at x1. Both instructions use a base plus register addressing with x0/x1 as the base and x3 as the offset  register. The next instruction increments the x3 register. We are using the x3 register as the offset from the base and also to count the number of bytes that have been copied.</p>
-<p>This is followed by a compare instruction to check if the value in x2 is greater than x3.</p>
-<pre><code class="language-armasm">  cmp w2, w3
+<p>The next snippet of the program, comprising of instructions 4-6, counts the length of the source string. These three instructions comprise a loop. The CPU will execute them one after another and when it reaches instruction 6 - <em>cnbz</em> - it will either go on to instruction 7 or back to instruction 4. If the instruction contains a value other than zero then the code jumps to the instruction with the specified label. In this case that is instruction 4. This loop of three instructions will continue to be executed as long as the condition checked by instruction 6 is true.</p>
+<p>The code in the loop counts the number of characters in the source string. For that, we store the count of the number of characters in register <em>x2</em>. Instruction 4 increments <em>x2</em> by 1. 
+Instruction 5 loads the next character of the source string into <em>w5</em>. Instruction 6 -- <code>cnbz</code> - is a branch instruction. This instruction compares the value of <em>w5</em> with 0. If <em>w5</em> does <em>not</em> contain zero then control jumps to the address specified by the label (here <em>find_len_start</em>). Else the next instruction is executed.</p>
+<p>The loop will be executed for as many characters as there are in the source string. The source string in this program is &quot;Hello&quot; and so the loop will execute 6 times (five characters and one string termination character). When the string termination character (0) is reached, the condition tested by <em>cnbz</em> will become false and the CPU will exit the loop and move to the next instruction. At the end of the loop the value stored in <em>x2</em> will be a count of the number of characters in the source string - including the string termination character.</p>
+<p>The final snippet of the program copies the source string to the target memory location.</p>
+<pre><code class="language-armasm">skip_to_copy:
+7.   mov  x3, #0x0
+copy_loop_start:
+8.   ldrb w4, [x0, x3]
+9.   strb w4, [x1, x3]
+10.  add  x3, x3, #0x1
+11.  cmp  w2, w3
+12.  b.gt copy_loop_start
 </code></pre>
-<p>The compare instruction compares the value in x2 with the value in x3 and sets appropriate flags in the flag register. The exact operation is described in the <a href="https://developer.arm.com/documentation/ddi0487/ga">ARM Architecture Reference Manual, ARMv8, for ARMv8-A architecture profile</a>. The manual section C6.2 provides an alphabetical list of AArch64 base instructions. There are two entries for the CMP instruction in that list. The first one, titled &quot;CMP(immediate)&quot; is the CMP instruction when it is used with an immediate operand. The second one, titled &quot;CMP(shifted register)&quot; provides details of the CMP instruction when used with registers. In this program we are using the register version of the instruction.</p>
-<p>Why is the cmp instruction using registers w2 and w3 instead of x2 and x3? Remember that in AArch64 integer registers can be referred to in 64-bit or 32-bit form. The x0-x30 register names refer to 64-bit register names and w0-w30 register names refer to the lower 32 bits of the X registers. So the <strong>cmp</strong> instruction is operating on 32-bit registers. In this program the registers x2 and x3 hold the count of number of characters. It is unlikely we will have strings with lengths in excess of 32-bits. Therefore we can use the corresponding &quot;W&quot; names to <strong>read</strong> these registers.</p>
+<p>After counting the number of characters in the source string we copy it to a location specified by the address in <em>x1</em>. We first initialize register <em>x3</em> to 0 using a <code>mov</code> instruction. We will use x3 to track the current character being copied. It will also aid in computing the address of that character. Copying the string is done using a loop comprising of instructions 8-12. The start of the loop is labelled copy_loop_start.</p>
+<p>In the loop, instruction 8 loads a byte from the source string, which begins at the address in <em>x0</em>. Instruction 9 stores that value into the target string, which begins at the address in <em>x1</em>. Both instructions use a base plus register addressing with x0/x1 as the base and x3 as the offset  register. The next instruction increments the x3 register. We are using the x3 register as the offset from the base and also to count the number of bytes that have been copied. </p>
+<p>The registers <em>w2</em> and <em>w3</em> refer to the lower 32-bits of registers <em>x2</em> and <em>x3</em> respectively. The register <em>x3</em> (and therefore <em>w3</em>) contains a count of the present loop and the register <em>x2</em> (therefore <em>w2</em>) contains the length of the source string.</p>
+<p>The next instruction is a compare instruction (<code>cmp</code>). This instruction compares the values in <em>w2</em> and <em>w3</em>. If the value in <em>w2</em> is greater, then the instruction sets a special condition flag in the processor. We will learn more about condition flags in a later section. For now, you can assume that there is a special flag (1-bit value) that is set to 1 if <em>w2</em> holds the larger value.</p>
+<p>The instruction that follows cmp is a &quot;branch if greater than&quot; instruction. The cmp instruction has set the appropriate PFLAGS. The <code>b.gt</code> instruction uses the information in the flags to determine if the CPU should branch to the specified label or continue to the next instruction. The instruction will branch to copy_loop_start if the compare results show that w2 is greater than w3.</p>
+<p>Thus, the second loop executes instructions 8-12 until the value in register <em>w3</em> becomes equal to the value in register <em>w2</em> (length of the string). The instructions in the loop copy the source string to the target location. </p>
+<p>In this program we are copying string characters one at a time. Each character is 1 byte so we can use either <em>w</em> or <em>x</em> registers to store them. However, memory addresses must be specified as <em>x</em> registers.</p>
 <hr />
-<p><strong>Note:</strong></p>
-<p>If the string length is larger 2^32-1 (4294967295) then we cannot use W registers instead of X registers. Since that number is reasonably large, for this exercise, we can assume we will never encounter longer strings. Whenever a register is used as part of an address we should always use the X form of the register. This is because all memory addresses in AArch64 are 64-bit wide. That is why the load and store instructions use X registers for the address.</p>
+<p><strong>Summary:</strong> </p>
+<ul>
+<li>
+<p><strong>CBZ:</strong> Compare and branch if zero. This instruction checks if the value of a specified register is 0. If true, the processor will jump to the instruction at the specified label. If not the processor continues to the next instruction.</p>
+</li>
+<li>
+<p><strong>CBNZ:</strong> Compare and branch if not zero. This instruction checks if the value of a specified register is <strong>not</strong> 0. If true, the processor will jump to the instruction at the specified label. If not the processor continues to the next instruction.</p>
+</li>
+<li>
+<p><strong>CMP:</strong> Compare two values and set special flags. We will discuss this instruction further in the section on condition codes.</p>
+</li>
+</ul>
 <hr />
-<p>The instruction that follows cmp is a &quot;branch if greater than&quot; instruction. The cmp instruction has set the appropriate PFLAGS. The b.gt instruction uses the information in the flags to determine if the CPU should branch to the specified label or continue to the next instruction. The instruction will branch to copy_loop_start if the compare results show that w2 is greater than w3.</p>
-<pre><code class="language-armasm">  b.gt	copy_loop_start
-</code></pre>
-<p>Thus, the second loop executes instructions 8-12 until the value in register w3 becomes greater than the value in register w2 (length of the string). The characters in the string beginning at address in X0 are copied into the address beginning at the address in X1.</p>
-<h2 id="memory-instructions-challenge-assignments"><a class="header" href="#memory-instructions-challenge-assignments">Memory Instructions Challenge Assignments</a></h2>
+<h2 id="memory-instruction-exercises"><a class="header" href="#memory-instruction-exercises">Memory Instruction Exercises</a></h2>
+<p>Below are a set of exercises to practice what has been described so far:</p>
+<ol>
+<li>Load and store operations</li>
+<li>Branches and loops</li>
+</ol>
+<p>We have provided solutions to for the exercises. But we encourage readers to try writing the programs themselves. Look at the solutions only when completely stuck.</p>
 <h2 id="exercise-ex_2a"><a class="header" href="#exercise-ex_2a">Exercise ex_2a</a></h2>
 <p>The file ex_2a.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to copy a string from one memory location to another but the new string should be a reversed version of the original. So if the original string was &quot;Hello&quot; the new string should be &quot;olleH&quot;.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_2a.elf
+RUN_COMMAND: make run
+</code></pre>
 <p>The address of the string to reverse is provided in the register x0. The memory address where the reversed string should be placed is provided in register x1. Sufficient memory has been provided to hold both strings.</p>
 <p>Below is pseudo code to reverse the string. You can use this as a guide to write the assembly code.</p>
 <ol>
@@ -980,6 +1031,10 @@ copy_loop_start:
 <p>The solution for this exercise is provided in ex_2a.solution.s. We recommend that you try to write the program your self before looking at the solution.</p>
 <h2 id="exercise-ex_2b"><a class="header" href="#exercise-ex_2b">Exercise ex_2b</a></h2>
 <p>The file ex_2b.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to reverse a string in-place. This means the string should not be copied to a new location but can be copied onto itself.</p>
+<p>To compile and run:</p>
+<pre><code>COMPILE_COMMAND: ex_2b.elf
+RUN_COMMAND: make run
+</code></pre>
 <p>The address of the string to be reversed is in register x0. Below is the pseudo code for the program:</p>
 <ol>
 <li>Find the length of the string.</li>
@@ -1014,7 +1069,7 @@ copy_loop_start:
 <p><img src="images/array.png" alt="Array in memory" title="Array in memory" /></p>
 <p>The figure above shows how the elements of an array appear in memory. In this example, each element is 4 bytes large. The start address of the array is in x4. Since the array elements are 4-bytes large, the address of the second element is [x4 + 4] and the one after that [x4 + 8] and so on. This array has N+1 elements and the address of the last element is [x4 + N]. Here N is just an example to show arrays can be of any length.</p>
 <p>Arrays are a convenient way to store a list of the same type of object. When an operation is to be performed on all elements of a array it is typically done in a loop. Programmers can easily read/write to each item in the list by using the register + offset, pre-indexed, or post-indexed modes of addressing.</p>
-<p>One common programming error is to access beyond the end of an array. The dotted region in the figure represents memory that is outside the array. Programmer should be careful to only access memory locations that are part of the program. Accessing memory outside the locations representing the program's data may not cause the program to crash always. But may cause subtle errors and crashes that are difficult to debug.</p>
+<p>One common programming error is to access memory beyond the end of an array. The dotted region in the figure represents memory that is outside the array. Programmer should be careful to only access memory locations that are part of the program. Accessing memory outside the locations representing the program's data may not cause the program to crash always. But it is an error and can cause crashes that are difficult to debug.</p>
 <p>We will now look at a program that has 32-bit integers stored in an array. The program will add all the integers in the array and print their sum. Our program is organized as follows:</p>
 <ul>
 <li>The address of the first element of the array is stored in the register x4</li>
@@ -1055,7 +1110,7 @@ loop:
 
     // Your code ends here
 </code></pre>
-<p>One can add comments in the code by starting the line with the text &quot;//&quot;. Everything following in that line will be ignored when the program is assembled/compiled. In this program the explanation for every instruction is provided as comments. The load instruction in this program uses a slightly different form of memory addressing than the ones we have encountered so far. This addressing mode is the register + offset mode that we learnt in the section on Memory Instructions. The addressing mode allows the programmer to provide an optional operation that is to be performed on the offset register.</p>
+<p>One can add comments in the code by starting the line with the text &quot;//&quot;. Everything following in that line will be ignored when the program is assembled/compiled. In this program the explanation for every instruction is provided as comments. The load instruction uses register + offset mode that we learnt in the section on Memory Instructions. This addressing mode allows the programmer to provide an optional operation that is to be performed on the offset register.</p>
 <blockquote>
 <p>ldr    w3, [x4, x2, lsl 2]</p>
 </blockquote>
@@ -1073,7 +1128,7 @@ loop:
 <li>SXTW</li>
 <li>SXTX</li>
 </ul>
-<p>We will learn about these operators later in the book.</p>
+<p>Refer to the ARM Architecture Manual to learn more about them.</p>
 <hr />
 <h2 id="finding-the-maximum-number-in-an-array"><a class="header" href="#finding-the-maximum-number-in-an-array">Finding the maximum number in an array</a></h2>
 <p>Here is a challenge for you. Write a program to find the maximum number in a given array of numbers. The file <em>exercises/integer_instructions/find_max.s</em> has the data set up and comments indicating where your code should be placed. Here is the information you need to write this program:</p>
@@ -1083,8 +1138,7 @@ loop:
 <li>The size of each element in the array is 1 word (4 bytes)</li>
 <li>Store the number</li>
 </ul>
-<p>Can you write a program to find the maximum number in the array?</p>
-<p>The assembly program can be written in multiple ways. It does not matter if your program is not identical to the solution as long as it finds the correct answer.</p>
+<p>The program can be written in multiple ways. It does not matter if your version is not identical to the solution as long as it finds the correct answer.</p>
 <p><strong>csel</strong> is a new instruction that can be used as part of this exercise. This instruction checks the condition set by the previous instruction (could be a cmp instruction) and if the condition is true it copies the value of Wn to Wd. If the condition is false it copies the value in Wm to Wd.</p>
 <pre><code class="language-armasm"> csel &lt;Wd&gt;, &lt;Wn&gt;, &lt;Wm&gt;, &lt;cond&gt;
 </code></pre>
@@ -1305,13 +1359,13 @@ RUN_COMMAND: make run
 </code></pre>
 <p>We recommend that you try to write the program your self before looking at the solution in matrix_subtract_solution.s.</p>
 <h2 id="printing-the-fibonacci-series"><a class="header" href="#printing-the-fibonacci-series">Printing the Fibonacci series</a></h2>
-<p>Fibonacci series, named after an Italian mathematician, is a sequence of numbers, where every number is sum of the preceding two numbers. The first two numbers of the series are '0' and '1'.</p>
+<p>The Fibonacci series is a sequence of numbers, where every number is sum of the preceding two numbers. The first two numbers of the series are '0' and '1'.</p>
 <p>Fibonacci series is:
 <code>0, 1, 1, 2, 3, 5, 8, 13, 21, 34, . . . </code></p>
-<p>We can notice that every number in this series is the sum of the preceding two numbers. The objective of this exercise, is to write code to store first N numbers of Fibonacci series in an array. The file exercises/integer_instructions/fibonacci.s has to be used for this challenge. Here is the information you need to write this program:</p>
+<p>Notice that every number in this series is the sum of the preceding two numbers. The objective of this exercise, is to write code to store first N numbers of Fibonacci series in an array. The file exercises/integer_instructions/fibonacci.s has to be used for this challenge. Here is the information you need to write this program:</p>
 <ol>
-<li>The number of elements to be stored in the array is available in register x0</li>
-<li>The memory address where fibonacci series will have to be stored is available in register x1</li>
+<li>The number of elements to be stored in the array is available in x0</li>
+<li>The result should be stored as an array starting at the memory address in x1</li>
 </ol>
 <p>Below is a pseudo code to generate the fibonacci series. You can use this as a guide to write the assembly code.</p>
 <ol>
@@ -1368,13 +1422,12 @@ loop:
 </code></pre>
 </details>
 <h1 id="logic-operations"><a class="header" href="#logic-operations">Logic Operations</a></h1>
-<p>In this section we introduce a few more commonly used logic instructions. We will do this through a series of assembly programs.</p>
-<p>Logical instructions are the instructions which perform basic logical operations such as OR, AND, XOR, and so on. The logical operations operate on individual bits of the register.</p>
+<p>Logical instructions are the instructions which perform basic logical operations such as OR, AND, XOR, and so on. The logical operations operate on <strong>individual bits of the register</strong>. The instructions (except NOT) take two registers as input and write the result to an output register.</p>
 <ul>
-<li>The AND operation returns 1, if the matching bits from both the operands are 1, otherwise it returns 0.</li>
-<li>The OR operator returns 1, if the matching bits from either or both operands are one. It returns 0, if both the bits are zero.</li>
-<li>The XOR operation sets the resultant bit to 1, if and only if the bits from the operands are different. If the bits from the operands are same (both 0 or both 1), the resultant bit is cleared to 0.</li>
-<li>The NOT operation reverses the bits in an operand.</li>
+<li><strong>AND</strong>: For every bit in the input registers set the corresponding output bit to 1, if the bits from both inputs are 1, otherwise it sets output to 0.</li>
+<li><strong>OR</strong>: If the corresponding bits from either input is 1 the appropriate output bit is set to 1 else it is set to 0. </li>
+<li><strong>XOR</strong>: Set each output bit to 1, if corresponding bits from the inputs are different. If the bits from the input operands are same (i.e. both 0 or both 1), the corresponding result bit is set to 0.</li>
+<li>The NOT operation reverses the bits in an operand. Every bit that is a 1 in the input is set to 0 in the output and every 0 in the input is set to 1 in the output.</li>
 </ul>
 <h2 id="print-the-xor-truth-table-eor"><a class="header" href="#print-the-xor-truth-table-eor">Print the XOR truth table (EOR)</a></h2>
 <p>A truth table is used to specify the output value for each possible combination of input values. The figure below shows the truth table for NOT, AND, OR and XOR operations.</p>
@@ -1445,7 +1498,7 @@ RUN_COMMAND: make run
 </ul>
 <p>In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the <a href="https://developer.arm.com/documentation/ddi0487/ga">ARM ARM</a> for a comprehensive list.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="condition-flags"><a class="header" href="#condition-flags">Condition Flags</a></h1>
-<p>In <a href="condition_flags.html#ARM-Registers-and-Execution-State">ARM Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like b.gt that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
+<p>In <a href="condition_flags.html#ARM-Registers-and-Execution-State">ARM Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like <strong>b.gt</strong> that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
 <p>Condition flags are a set of bits that store state information about a previous operation. There are four condition flags:</p>
 <table><thead><tr><th>Flag</th><th>Name</th><th>Description</th></tr></thead><tbody>
 <tr><td>N</td><td>Negative flag</td><td>Set to 1 if the result of the last flag-setting instruction was negative</td></tr>
@@ -1456,12 +1509,13 @@ RUN_COMMAND: make run
 <p>Each flag is a 1-bit value, so that there can only be two valid values:  0 (clear) or 1 (set). These flags indicate simple properties such as whether or not the result was negative, and can also be used in various combinations to identify conditions such as &quot;less than or equal to&quot;.</p>
 <p>The N flag represents the sign of the result of the previous operation. If say the operation was an addition (or subtraction, multiplication, division etc) and the result was a negative number then this flag is set. If the result was a positive number then this flag is cleared.</p>
 <p>The Z flag, when set, indicates that the output of the previous instruction was zero. </p>
-<p>The C flag is called the carry flag. This flag is set if an arithmetic operation results in an arithmetic <em>carry</em> or <em>borrow</em>. For example an unsigned overflow on an addition and can be used to perform unsigned arithmetic operations.</p>
-<p>The V flag indicates that the previous operation resulted in an arithmetic <em>overflow</em>. For example a signed overflow on an addition. The C flag is set if the result of an unsigned operation overflows the result register. The V flag operates in the same way as the C flag, but for signed operations. For example, 0x7fffffff is the largest positive two's complement integer that can be represented in 32 bits, so 0x7fffffff + 0x7fffffff triggers a signed overflow, but not an unsigned overflow (or carry): the result, 0xfffffffe, is correct if interpreted as an unsigned quantity, but represents a negative value (-2) if interpreted as a signed quantity.</p>
-<p><strong>Flag setting instructions</strong>:</p>
-<p>The condition flags are set by dedicated comparison instruction like CMP, CMN and TST. These comparison instructions only modify the flags and have no other effect. There are also certain Arithmetic and Logical instructions with S suffix (indicating that the instruction sets flags) that can modify the condition flags. For example: ADDS, SUBS, ADCS, SBCS, ANDS, and BICS.</p>
+<p>The C flag is called the carry flag. This flag is set if an arithmetic operation results in an arithmetic <em>carry</em> or <em>borrow</em>. It is set if the result of an unsigned operation overflows the result register.</p>
+<p>The V flag indicates that the previous operation resulted in an arithmetic <em>overflow</em>. For example a signed overflow on an addition. It operates in the same way as the C flag, but for signed operations. For example, 0x7fffffff is the largest positive two's complement integer that can be represented in 32 bits, so 0x7fffffff + 0x7fffffff triggers a signed overflow, but not an unsigned overflow (or carry). The result, 0xfffffffe, is correct if interpreted as an unsigned quantity, but represents a negative value (-2) if interpreted as a signed quantity.</p>
+<h2 id="flag-setting-instructions"><a class="header" href="#flag-setting-instructions">Flag setting instructions</a></h2>
+<p>The condition flags are set by dedicated comparison instruction like CMP, CMN and TST. These comparison instructions only modify the flags and have no other effect. There are also certain Arithmetic and Logical instructions with &quot;S&quot; suffix that can modify the condition flags. For example: ADDS, SUBS, ADCS, SBCS, ANDS, and BICS.</p>
 <p>Integer instructions like ADDS, SUBS, ADCS, SBCS, CMP, CMN can affect all the four condition flags whereas logical instructions like ANDS, BICS and TST can set only N and Z flags.</p>
-<p>Let us now look in more detail on how the condition flag bits for each operation.</p>
+<p>The section titled <strong>&quot;Alphabetical list of A64 base instructions&quot;</strong> in the <a href="https://developer.arm.com/documentation/ddi0487/ga/?lang=en">ARM Architecture Reference Manual ARMv8, for ARMv8-A architecture profile</a> provides detailed information about each instruction. We provide only a overview of these instructions. Readers are encouraged to consult the manual for details of each instruction.</p>
+<p>Let us now look in more detail on how the condition flag bits are set for each operation.</p>
 <p><strong>Addition operation</strong>:</p>
 <p>For addition operation instructions like ADDS, ADCS:</p>
 <ul>
@@ -1475,8 +1529,12 @@ RUN_COMMAND: make run
 </ul>
 </li>
 </ul>
+<p>ADDS is an add instruction that will add two operands and also set appropriate flags. Like many integer instructions this one also has multiple forms. Two commonly used variants are -</p>
+<p>Immediate (<code>ADDS &lt;Xd&gt;, &lt;Xn|SP&gt;, #&lt;imm&gt;{, &lt;shift&gt;}</code>)  and the 
+Shifted register (<code>ADDS &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;{, &lt;shift&gt; #&lt;amount&gt;}</code>). Both these types of ADDS instructions can operate on <em>X</em> or <em>W</em> registers. Both forms can be used without any shifting to add two operands and store the result, and also set the condition flags. The assembly code syntax for ADDS is identical to the ADD instruction we have used earlier - just replace ADD with ADDS.</p>
+<p>The ADCS instruction has only one form - <code>ADCS &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;</code>. Of course, it can operate on either <em>X</em> or <em>W</em> registers. The instruction adds the contents of its two input operands and the <em>Carry flag</em>, and writes the results to the destination register. It also updates the condition flags based on the result.</p>
 <p><strong>Subtraction operation</strong>:</p>
-<p>For subtraction operation instructions like SUBS, SBCS:</p>
+<p>For subtraction instructions like SUBS, SBCS, and CMP the condition flags are set as follows:</p>
 <ul>
 <li>N bit is set when MSB of result is 1</li>
 <li>Z bit is set when result is 0</li>
@@ -1488,6 +1546,9 @@ RUN_COMMAND: make run
 </ul>
 </li>
 </ul>
+<p>SUBS has forms similar to ADDS. This instruction subtracts its second operand from its first and writes the result, and also sets the condition flags.</p>
+<p>CMP is another instruction that can be used in assembly programs. It is actually an alias to the corresponding form of SUBS instruction. This instruction subtracts the value of its second operand from its first operand and sets condition flags based on the result. The result itself is discarded and not stored in any register.</p>
+<p>SBCS instruction has only one form - <code>SBCS &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;</code>. It subtracts a register value and the value NOT(Carry flag) from another register value and writes the result to the destination register. It also sets the condition flags. The SBC instruction is a non-flag-setting equivalent of SBCS.</p>
 <p><strong>Logical operation</strong>:</p>
 <p>For logical operation instructions like ANDS, BICS:</p>
 <ul>
@@ -1496,96 +1557,153 @@ RUN_COMMAND: make run
 <li>C bit is always cleared to 0 </li>
 <li>V bit is always cleared to 0 </li>
 </ul>
-<p>Let us now go through some examples to determine the NZCV values after a flag setting instruction is executed: </p>
-<p>Example 1:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>ADDS</td><td>0x50000000</td><td>0x50000000</td><td>0xA0000000</td></tr>
-</tbody></table>
-<details>
+<p>Here is a quiz to test your understanding of flags. You may want to review the section on binary arithmetic and the contents above before taking the quiz.</p>
+<div class="quiz-placeholder" data-quiz-name="condition_flags"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 1, Z = 0, C = 0, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 0, V = 0&quot;,&quot; N = 1, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the ADDS instruction to add 0x50000000 and 0x50000000 produces the result 0xA0000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 0, V = 0&quot;,&quot; N = 1, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0x00001678 and operand2=0x00001000 produces the result 0x00000678. The flags are set to:&quot;}},{&quot;context&quot;:&quot;CMP  is an alias to the corresponding form of SUBS instruction. \n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;True&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;False&quot;],&quot;prompt&quot;:&quot;The CMP instruction is identical to SBCS, except that it does not store the result.&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 1, C = 1, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 0, Z = 0, C = 1, V = 0&quot;,&quot; N = 1, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the ADDS instruction to add 0x80000000 and 0x80000000 produces the result 0x00000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 1, Z = 0, C = 0, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 1, C = 0, V = 0&quot;,&quot; N = 1, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 1, V = 0&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0x00000006 and operand2=0x00000007 produces the result 0xFFFFFFFF. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 1, C = 0, V = 0&quot;,&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 1, V = 0&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0xFFFFFFFF and operand2=0xFFFFFFFB produces the result 0x00000004. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;N = 0, Z = 0, C = 0, V = 0&quot;,&quot;N = 0, Z = 0, C = 0, V = 1&quot;,&quot;N = 0, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0xD0000004 and operand2=0xD0000003 produces the result 0x00000001. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 1, Z = 0, C = 0, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;N = 1, Z = 0, C = 0, V = 0&quot;,&quot;N = 0, Z = 0, C = 1, V = 0&quot;,&quot;N = 0, Z = 0, C = 0, V = 1&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0x70000000 and operand2=0xF0000000 produces the result 0x80000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 1, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;N = 1, Z = 1, C = 0, V = 0&quot;,&quot;N = 0, Z = 1, C = 0, V = 1&quot;,&quot;N = 0, Z = 0, C = 0, V = 0&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0xB0000000 and operand2=0xB0000000 produces the result 0x00000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 1, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 1, V = 0&quot;,&quot; N = 0, Z = 0, C = 1, V = 0&quot;],&quot;prompt&quot;:&quot;Using the ADDS instruction to add 0x80000000 and 0x90000000 produces the result 0x10000000. The flags are set to:&quot;}}]}"  data-quiz-fullscreen="" ></div>
+<!--
+
+Let us now go through some examples to determine the NZCV values after a flag setting instruction is executed: 
+
+Example 1:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| ADDS | 0x50000000 | 0x50000000 | 0xA0000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 1, Z = 0, C = 0, V = 1
-</code></pre>
+
+```
+ N = 1, Z = 0, C = 0, V = 1
+```  
 </details>
-<p>Example 2:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Addition</td><td>0x80000000</td><td>0x80000000</td><td>0x00000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 2:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Addition    | 0x80000000 | 0x80000000 |	0x00000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 1, C = 1, V = 1
-</code></pre>
+
+```
+ N = 0, Z = 1, C = 1, V = 1
+```  
 </details>
-<p>Example 3:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Addition</td><td>0x80000000</td><td>0x90000000</td><td>0x10000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 3:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Addition    | 0x80000000 | 0x90000000 |	0x10000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 1
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 1
+```  
 </details>
-<p>Example 4:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0x00001678</td><td>0x00001000</td><td>0x00000678</td></tr>
-</tbody></table>
-<details>
+-->
+<!--
+Example 4:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0x00001678 | 0x00001000 |	0x00000678 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 0
+```  
 </details>
-<p>Example 5:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0x00000006</td><td>0x00000007</td><td>0xFFFFFFFF</td></tr>
-</tbody></table>
-<details>
+
+
+Example 5:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0x00000006 | 0x00000007 |	0xFFFFFFFF |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 1, Z = 0, C = 0, V = 0
-</code></pre>
+
+```
+ N = 1, Z = 0, C = 0, V = 0
+```  
 </details>
-<p>Example 6:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0xFFFFFFFF</td><td>0xFFFFFFFB</td><td>0x00000004</td></tr>
-</tbody></table>
-<details>
+
+
+Example 6:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0xFFFFFFFF | 0xFFFFFFFB |	0x00000004 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 0
+```  
 </details>
-<p>Example 7:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0xD0000004</td><td>0xD0000003</td><td>0x00000001</td></tr>
-</tbody></table>
-<details>
+
+
+Example 7:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0xD0000004 | 0xD0000003 |	0x00000001 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 0
+```  
 </details>
-<p>Example 8:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0x70000000</td><td>0xF0000000</td><td>0x80000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 8:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0x70000000 | 0xF0000000 |	0x80000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 1, Z = 0, C = 0, V = 1
-</code></pre>
+
+```
+ N = 1, Z = 0, C = 0, V = 1
+```  
 </details>
-<p>Example 9:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0xB0000000</td><td>0xB0000000</td><td>0x00000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 9:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0xB0000000 | 0xB0000000 |	0x00000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 1, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 1, C = 1, V = 0
+```  
 </details>
-<p>We have worked out how the condition flags are set. Let us now see how does that enable conditional execution of code by introducing instructions that read the condition flags.</p>
-<p><strong>Program flow control instructions</strong></p>
-<p>Program flow instructions gives the ability to make decisions on what code to execute next. The instruction set enables conditional execution of program flow control branch instructions. The branch instructions can be broadly categorized to two types:</p>
+-->
+<h2 id="program-flow-control-instructions"><a class="header" href="#program-flow-control-instructions">Program flow control instructions</a></h2>
+<p>Branch instructions in the ISA  gives programmers the ability to decide what code to execute next. These instructions can be broadly categorized to two types:</p>
 <ul>
-<li>Unconditional branches: Unconditional branches do not consider the NZCV flags and they can branch backward or forward up to 128MB from the current program counter location.</li>
+<li>Unconditional branches:  They can branch to code backward or forward up to 128MB from the current program counter location. The state of the condition flags has no impact on whether the instruction will branch.</li>
 <li>Conditional branches: Conditional branches use the NZCV condition flags to decide whether branch operation should be performed or not. Most conditional branches have a range of +/-1MB.</li>
 </ul>
-<p>The instruction set provides a number of different kinds of branch instructions. Majority of the branch instructions use relative addressing. That is, they branch to an offset from the current address and are called relative branches. An example is B.cond instruction, where 'cond' is one of the fourteen possible condition suffixes. In effect, attaching one of the condition codes to the B instruction causes it to branch to specified offset if the condition(cond) is true. Otherwise, it does nothing, and is essentially a nop. The following table lists the available condition codes, their meanings, and the flags that are tested:</p>
+<p>Majority of the branch instructions use relative addressing. That is, they branch to an offset from the current address and are called relative branches. An example is the <strong>B.cond</strong> instruction, where 'cond' is one of the fourteen possible condition suffixes. In effect, attaching one of the condition codes to the B instruction causes it to branch to specified offset if the condition (cond) is true. Otherwise, the instruction does nothing, and is essentially a NOP. The following table lists the available condition codes, their meanings, and the flags that are tested:</p>
 <table><thead><tr><th>Mnemonic</th><th>Meaning (integer)</th><th>Condition Flags</th></tr></thead><tbody>
 <tr><td>eq</td><td>Equal</td><td>Z == 1</td></tr>
 <tr><td>ne</td><td>Not Equal</td><td>Z == 0</td></tr>
@@ -1602,20 +1720,19 @@ RUN_COMMAND: make run
 <tr><td>gt</td><td>Signed greater than</td><td>Z == 0 &amp;&amp; N == V</td></tr>
 <tr><td>le</td><td>Signed lessthan or equal</td><td>!(Z == 0 &amp;&amp; N == V)</td></tr>
 </tbody></table>
-<p>The first few  condition codes would be quite obvious as they test individual flags, but the others rely on specific combinations of flags. However, the understanding of exact flags that would be used for each condition code will be rarely required.</p>
-<p>In addition to the above PC-relative instructions, the instruction set includes absolute branches. The BR Xn instruction performs an absolute branch to the address in Xn.</p>
-<p>The instruction set includes some special conditional branches so that explicit comparison instructions are not needed.</p>
+<p>The first few condition codes would be quite obvious as they test individual flags, but the others rely on specific combinations of flags. In addition to the above PC-relative instructions, the instruction set includes absolute branches. The BR Xn instruction performs an absolute branch to the address in Xn.</p>
+<p>Generally <em>conditional</em> branch instructions are used after previous flag-setting instructions. The branch is either taken or not-taken based on previous operations. However, the ISA also includes some special conditional branches that do not rely on the state set by previous instructions.</p>
 <ul>
 <li>CBZ Rt, label  : Compare and branch if zero</li>
-<li>CBNZ Rt, label : Compare and branch if not zero
-These instructions compare the source register, either 32-bit or 64-bit, with zero and then conditionally perform a branch. The branch offset has a range of +/- 1MB. These instructions do not read or write the condition code flags (NZCV).</li>
+<li>CBNZ Rt, label : Compare and branch if not zero</li>
 </ul>
+<p>The above instructions compare the source register, either 32-bit or 64-bit, with zero and then conditionally perform a branch. The branch offset has a range of +/- 1MB. However, they do not affect the condition code flags (NZCV).</p>
 <p>There are two similar test and branch instructions </p>
 <ul>
 <li>TBZ Rt, bit, label  : Test and branch if Rt<bit> zero</li>
-<li>TBNZ Rt, bit, label : Test and branch if Rt<bit> is not zero
-These instructions test the bit in the source register at the bit position specified by the immediate and conditionally branch depending on whether the bit is set or clear. The branch offset has a range of +/- 32kB. As with CBZ/CBNZ, these instructions do not read or write the condition code flags (NZCV).</li>
+<li>TBNZ Rt, bit, label : Test and branch if Rt<bit> is not zero</li>
 </ul>
+<p>These instructions test the bit in the source register at the bit position specified by the immediate and conditionally branch depending on whether the bit is set or clear. The branch offset has a range of +/- 32kB. As with CBZ/CBNZ, these instructions do not affect the condition code flags (NZCV).</p>
 <p>The table below summarizes the supported branch instructions along with brief explanation of the operation:</p>
 <table><thead><tr><th>Instruction</th><th>Description</th></tr></thead><tbody>
 <tr><td>B (offset)</td><td>Program relative branch forward or back 128MB. A conditional version, for example B.EQ, has a 1MB range.</td></tr>
@@ -1625,42 +1742,36 @@ These instructions test the bit in the source register at the bit position speci
 <tr><td>TBNZ Rt, bit, label</td><td>Test and branch if zero. Branch forward or back up to 32kB.</td></tr>
 <tr><td>TBNZ Rt, bit, label</td><td>Test and branch if non-zero. Branch forward or back up to 32kB.</td></tr>
 </tbody></table>
-<p><strong>Conditional select</strong></p>
-<p>The instruction set also provides instructions to perforn conditional select with optional increment, negate, or invert. These can be used to conditionally select between one source register and a second incremented, negated, inverted, or unmodified source register. </p>
-<p>The table below summarizes the conditional select instructions:</p>
+<h2 id="other-conditional-instructions"><a class="header" href="#other-conditional-instructions">Other conditional instructions</a></h2>
+<p>There are four instructions that can conditionally select (between two values), increment, negate or invert values. The table below lists these operations:</p>
 <table><thead><tr><th>Instruction</th><th>Description</th></tr></thead><tbody>
 <tr><td>CSEL</td><td>Select between two registers based on a condition.</td></tr>
 <tr><td>CSINC</td><td>Select between two registers based on a condition. Result would be value of the first source register or the second source register incremented by one.</td></tr>
 <tr><td>CSINV</td><td>Select between two registers based on a condition. Result would be value of the first source register or the inverted second source register.</td></tr>
 <tr><td>CSNEG</td><td>Select between two registers based on a condition. Result would be value of the first source register or the negated second source register.</td></tr>
 </tbody></table>
-<p>One typical use of these instructions is conditional counting. For example:
-CSINC X0, X1, X0, NE 
-The above instruction sets the return register X0 to X1 if Zero flag clear, otherwise it increments X0.</p>
-<p>This class of instructions can also be used to avoid the use of branches. </p>
-<p>NOTE: The following example can be later moved to C programming section</p>
-<p>For example, consider the simple C code:</p>
-<pre><code>if (i == 0) x = x + 5; else x = x - 2;
-
+<p>One typical use of these instructions is conditional counting. For example:</p>
+<pre><code class="language-armasm">CSINC X0, X1, X0, NE 
 </code></pre>
+<p>The above instruction sets the return register X0 to X1 if the Zero flag is clear, otherwise it increments X0. This class of instructions can also be used to avoid the use of branches. For example, consider the code below written in the C programming language:</p>
+<pre><code class="language-c">if (i == 0) { 
+  x = x + 5; 
+} else { 
+  x = x - 2;
+}
+</code></pre>
+<p>We will see C programming in more detail in later sections. The above code is fairly simple. There are two variables named <code>x</code> and <code>i</code>. For this example, we can think of variables as registers. If the value of <code>i</code> is 0 then <code>x</code> is increased by 5. If not, then <code>x</code> is decreased by 2.</p>
 <p>This might be written in assembly using following code:</p>
-<pre><code>CMP w0, #0 // if (i == 0)
+<pre><code class="language-armasm">CMP w0, #0 // if (i == 0)
 SUB w2, w1, #2 // x = x - 2
 ADD w1, w1, #5 // x = x + 5
 CSEL w1, w1, w2, EQ // select between the two results
 </code></pre>
-<p>The instruction set also provides following additional instructions that use condition codes:</p>
+<p>Here are some additional conditional operations from the ISA. Readers can refer to the ARM ARM for more details about them.</p>
 <ul>
 <li>Condition Set (CSET/CSETM) : Conditionally select between 0 and 1 (CSET) or 0 and -1 (CSETM). Used, for example, to set the condition flags as a boolean value or mask in a general register.</li>
 <li>Conditional compare (CCMP/CCMN):  Sets the condition flags to the result of a comparison if the original condition is true. If not true, the conditional flags are set to a specified condition flag state. The conditional compare instruction is very useful for expressing nested or compound comparisons</li>
 </ul>
-<p><strong>Add/Subtract with Carry</strong>
-In addition to conditional instructions described above, the Carry bit of the condition code can also be used to extend add and subtract operations. These instructions are unconditionally executed but use the condition flags as an extra input to the instruction. For example: ADC(add with carry), SBC(Subtract with carry). </p>
-<p>The operations ADC and SBC perform additions and subtractions that also use the carry condition flag as an input as shown below.</p>
-<pre><code>ADC{S}: Rd = Rn + Rm + C
-SBC{S}: Rd = Rn - Rm - 1 + C
-</code></pre>
-<p>These instructions can be used for performing multi-precision arithmetic and checksums.</p>
 <h2 id="what-we-learnt-this-chapter-4"><a class="header" href="#what-we-learnt-this-chapter-4">What we learnt this chapter</a></h2>
 <ul>
 <li>Condition flags and their meaning</li>
@@ -1669,13 +1780,13 @@ SBC{S}: Rd = Rn - Rm - 1 + C
 <li>Instructions that make use of conditional flags </li>
 </ul>
 <hr />
-<div style="break-before: page; page-break-before: always;"></div><h1 id="the-stack"><a class="header" href="#the-stack">The Stack</a></h1>
+<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css"><div style="break-before: page; page-break-before: always;"></div><h1 id="the-stack"><a class="header" href="#the-stack">The Stack</a></h1>
 <p>The stack is a data structure used in computer science. It is analogous to a stack of plates where one can add a plate to the top or remove a plate from the top but not from any arbitrary location. Below is a visual representation of a stack holding data (in this case numbers).</p>
 <p><img src="./images/stack1.png" alt="Example of Stack" /></p>
 <p>The figure above shows the representation of a stack that holds integers. Here the bottom-most element is the number 5. The topmost element is 36. Operations can only be performed on the top of the stack. A <em>push</em> operation adds an element to the top of the stack. After we push 10 onto the stack it looks like the image below. New data can only be added using the push operation and that data will always be added to the top of the stack. Any number of items can be pushed onto the stack and they will all be added, one by one, to the top of the stack.</p>
 <p><img src="./images/stack2.png" alt="Push and Pop Stack" /></p>
 <p>A <em>pop</em> operation removes and returns the topmost item on the stack. Only the top item in the stack may be removed from the stack. To remove the second item on the stack one would have to remove the 1st and 2nd items (i.e. two pops).</p>
-<p>The stack, in the context of computer architecture, is location in memory that is used to store temporary data. For example, local variables, arguments passed into functions, and arguments returned from functions. In some architectures this hardware stack operates exactly like the stack data structure. One can &quot;push data onto the stack&quot; and &quot;pop data off the stack&quot; using special instructions. In ARM AArch64 the stack is a little more flexible. Load and store instructions we saw in the <a href="./memory_inst.html">memory instructions section</a> can be used to access data contained in the stack. The programmer can directly write to or read from any data contained in the stack. A special register called stack register (SP) is used to track the memory address of the top of the stack.</p>
+<p>The stack, in the context of computer architecture, is location in memory that is used to store temporary data. For example, local variables, arguments passed into functions, and arguments returned from functions. In some architectures this hardware stack operates exactly like the stack data structure. One can &quot;push data onto the stack&quot; and &quot;pop data off the stack&quot; using special instructions. In ARM AArch64 the stack is a little more flexible. Load and store instructions we saw in the <a href="./memory_inst.html">memory instructions section</a> can be used to access data contained anywhere in the stack. A special register called stack register (SP) is used to track the memory address of the top of the stack.</p>
 <h2 id="pushing-and-popping-the-stack-in-aarch64"><a class="header" href="#pushing-and-popping-the-stack-in-aarch64">Pushing and popping the stack in AArch64</a></h2>
 <p>By convention SP points to the last data pushed onto the stack. To push data on the stack one we can use store instructions. Here is an example of pushing two registers onto the stack.</p>
 <pre><code>stp x0, x1, [sp, #-16]!
@@ -3903,6 +4014,9 @@ void swap(int *num1_ptr,int *num2_ptr)
 </li>
 <li>
 <p><a href="https://developer.arm.com/architectures/system-architectures/software-standards/abi">Application Binary Interface</a></p>
+</li>
+<li>
+<p><a href="https://developer.arm.com/documentation/dui0473/m">ARM Compiler asmasm User Guide Version 5.06</a></p>
 </li>
 </ol>
 

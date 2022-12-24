@@ -1,0 +1,118 @@
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the ADDS instruction to add 0x50000000 and 0x50000000 produces the result 0xA0000000. The flags are set to:"
+prompt.distractors = [
+    " N = 0, Z = 0, C = 0, V = 1",
+    " N = 1, Z = 0, C = 0, V = 0",
+    " N = 1, Z = 0, C = 1, V = 1"
+]
+answer.answer = "N = 1, Z = 0, C = 0, V = 1"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the SUBS instruction to with operand operand1=0x00001678 and operand2=0x00001000 produces the result 0x00000678. The flags are set to:"
+prompt.distractors = [
+    " N = 0, Z = 0, C = 0, V = 1",
+    " N = 1, Z = 0, C = 0, V = 0",
+    " N = 1, Z = 0, C = 1, V = 1"
+]
+answer.answer = "N = 0, Z = 0, C = 1, V = 0"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "The CMP instruction is identical to SBCS, except that it does not store the result."
+prompt.distractors = [
+    "False"
+]
+answer.answer = "True"
+context = """
+CMP  is an alias to the corresponding form of SUBS instruction. 
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the ADDS instruction to add 0x80000000 and 0x80000000 produces the result 0x00000000. The flags are set to:"
+prompt.distractors = [
+    " N = 0, Z = 0, C = 0, V = 1",
+    " N = 0, Z = 0, C = 1, V = 0",
+    " N = 1, Z = 0, C = 1, V = 1"
+]
+answer.answer = "N = 0, Z = 1, C = 1, V = 1"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the SUBS instruction to with operand operand1=0x00000006 and operand2=0x00000007 produces the result 0xFFFFFFFF. The flags are set to:"
+prompt.distractors = [
+    " N = 0, Z = 1, C = 0, V = 0",
+    " N = 1, Z = 0, C = 0, V = 1",
+    " N = 1, Z = 0, C = 1, V = 0"
+]
+answer.answer = "N = 1, Z = 0, C = 0, V = 0"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the SUBS instruction to with operand operand1=0xFFFFFFFF and operand2=0xFFFFFFFB produces the result 0x00000004. The flags are set to:"
+prompt.distractors = [
+    " N = 0, Z = 1, C = 0, V = 0",
+    " N = 0, Z = 0, C = 0, V = 1",
+    " N = 1, Z = 0, C = 1, V = 0"
+]
+answer.answer = "N = 0, Z = 0, C = 1, V = 0"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the SUBS instruction to with operand operand1=0xD0000004 and operand2=0xD0000003 produces the result 0x00000001. The flags are set to:"
+prompt.distractors = [
+    "N = 0, Z = 0, C = 0, V = 0",
+    "N = 0, Z = 0, C = 0, V = 1",
+    "N = 0, Z = 0, C = 1, V = 1"
+]
+answer.answer = "N = 0, Z = 0, C = 1, V = 0"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the SUBS instruction to with operand operand1=0x70000000 and operand2=0xF0000000 produces the result 0x80000000. The flags are set to:"
+prompt.distractors = [
+    "N = 1, Z = 0, C = 0, V = 0",
+    "N = 0, Z = 0, C = 1, V = 0",
+    "N = 0, Z = 0, C = 0, V = 1"
+]
+answer.answer = "N = 1, Z = 0, C = 0, V = 1"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the SUBS instruction to with operand operand1=0xB0000000 and operand2=0xB0000000 produces the result 0x00000000. The flags are set to:"
+prompt.distractors = [
+    "N = 1, Z = 1, C = 0, V = 0",
+    "N = 0, Z = 1, C = 0, V = 1",
+    "N = 0, Z = 0, C = 0, V = 0"
+]
+answer.answer = "N = 0, Z = 1, C = 1, V = 0"
+context = """
+"""
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "Using the ADDS instruction to add 0x80000000 and 0x90000000 produces the result 0x10000000. The flags are set to:"
+prompt.distractors = [
+    " N = 0, Z = 1, C = 0, V = 1",
+    " N = 1, Z = 0, C = 1, V = 0",
+    " N = 0, Z = 0, C = 1, V = 0"
+]
+answer.answer = "N = 0, Z = 0, C = 1, V = 1"
+context = """
+"""

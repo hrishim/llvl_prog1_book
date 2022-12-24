@@ -135,7 +135,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="condition-flags"><a class="header" href="#condition-flags">Condition Flags</a></h1>
-<p>In <a href="#ARM-Registers-and-Execution-State">ARM Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like b.gt that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
+<p>In <a href="#ARM-Registers-and-Execution-State">ARM Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like <strong>b.gt</strong> that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
 <p>Condition flags are a set of bits that store state information about a previous operation. There are four condition flags:</p>
 <table><thead><tr><th>Flag</th><th>Name</th><th>Description</th></tr></thead><tbody>
 <tr><td>N</td><td>Negative flag</td><td>Set to 1 if the result of the last flag-setting instruction was negative</td></tr>
@@ -146,12 +146,13 @@
 <p>Each flag is a 1-bit value, so that there can only be two valid values:  0 (clear) or 1 (set). These flags indicate simple properties such as whether or not the result was negative, and can also be used in various combinations to identify conditions such as &quot;less than or equal to&quot;.</p>
 <p>The N flag represents the sign of the result of the previous operation. If say the operation was an addition (or subtraction, multiplication, division etc) and the result was a negative number then this flag is set. If the result was a positive number then this flag is cleared.</p>
 <p>The Z flag, when set, indicates that the output of the previous instruction was zero. </p>
-<p>The C flag is called the carry flag. This flag is set if an arithmetic operation results in an arithmetic <em>carry</em> or <em>borrow</em>. For example an unsigned overflow on an addition and can be used to perform unsigned arithmetic operations.</p>
-<p>The V flag indicates that the previous operation resulted in an arithmetic <em>overflow</em>. For example a signed overflow on an addition. The C flag is set if the result of an unsigned operation overflows the result register. The V flag operates in the same way as the C flag, but for signed operations. For example, 0x7fffffff is the largest positive two's complement integer that can be represented in 32 bits, so 0x7fffffff + 0x7fffffff triggers a signed overflow, but not an unsigned overflow (or carry): the result, 0xfffffffe, is correct if interpreted as an unsigned quantity, but represents a negative value (-2) if interpreted as a signed quantity.</p>
-<p><strong>Flag setting instructions</strong>:</p>
-<p>The condition flags are set by dedicated comparison instruction like CMP, CMN and TST. These comparison instructions only modify the flags and have no other effect. There are also certain Arithmetic and Logical instructions with S suffix (indicating that the instruction sets flags) that can modify the condition flags. For example: ADDS, SUBS, ADCS, SBCS, ANDS, and BICS.</p>
+<p>The C flag is called the carry flag. This flag is set if an arithmetic operation results in an arithmetic <em>carry</em> or <em>borrow</em>. It is set if the result of an unsigned operation overflows the result register.</p>
+<p>The V flag indicates that the previous operation resulted in an arithmetic <em>overflow</em>. For example a signed overflow on an addition. It operates in the same way as the C flag, but for signed operations. For example, 0x7fffffff is the largest positive two's complement integer that can be represented in 32 bits, so 0x7fffffff + 0x7fffffff triggers a signed overflow, but not an unsigned overflow (or carry). The result, 0xfffffffe, is correct if interpreted as an unsigned quantity, but represents a negative value (-2) if interpreted as a signed quantity.</p>
+<h2 id="flag-setting-instructions"><a class="header" href="#flag-setting-instructions">Flag setting instructions</a></h2>
+<p>The condition flags are set by dedicated comparison instruction like CMP, CMN and TST. These comparison instructions only modify the flags and have no other effect. There are also certain Arithmetic and Logical instructions with &quot;S&quot; suffix that can modify the condition flags. For example: ADDS, SUBS, ADCS, SBCS, ANDS, and BICS.</p>
 <p>Integer instructions like ADDS, SUBS, ADCS, SBCS, CMP, CMN can affect all the four condition flags whereas logical instructions like ANDS, BICS and TST can set only N and Z flags.</p>
-<p>Let us now look in more detail on how the condition flag bits for each operation.</p>
+<p>The section titled <strong>&quot;Alphabetical list of A64 base instructions&quot;</strong> in the <a href="https://developer.arm.com/documentation/ddi0487/ga/?lang=en">ARM Architecture Reference Manual ARMv8, for ARMv8-A architecture profile</a> provides detailed information about each instruction. We provide only a overview of these instructions. Readers are encouraged to consult the manual for details of each instruction.</p>
+<p>Let us now look in more detail on how the condition flag bits are set for each operation.</p>
 <p><strong>Addition operation</strong>:</p>
 <p>For addition operation instructions like ADDS, ADCS:</p>
 <ul>
@@ -165,8 +166,12 @@
 </ul>
 </li>
 </ul>
+<p>ADDS is an add instruction that will add two operands and also set appropriate flags. Like many integer instructions this one also has multiple forms. Two commonly used variants are -</p>
+<p>Immediate (<code>ADDS &lt;Xd&gt;, &lt;Xn|SP&gt;, #&lt;imm&gt;{, &lt;shift&gt;}</code>)  and the 
+Shifted register (<code>ADDS &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;{, &lt;shift&gt; #&lt;amount&gt;}</code>). Both these types of ADDS instructions can operate on <em>X</em> or <em>W</em> registers. Both forms can be used without any shifting to add two operands and store the result, and also set the condition flags. The assembly code syntax for ADDS is identical to the ADD instruction we have used earlier - just replace ADD with ADDS.</p>
+<p>The ADCS instruction has only one form - <code>ADCS &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;</code>. Of course, it can operate on either <em>X</em> or <em>W</em> registers. The instruction adds the contents of its two input operands and the <em>Carry flag</em>, and writes the results to the destination register. It also updates the condition flags based on the result.</p>
 <p><strong>Subtraction operation</strong>:</p>
-<p>For subtraction operation instructions like SUBS, SBCS:</p>
+<p>For subtraction instructions like SUBS, SBCS, and CMP the condition flags are set as follows:</p>
 <ul>
 <li>N bit is set when MSB of result is 1</li>
 <li>Z bit is set when result is 0</li>
@@ -178,6 +183,9 @@
 </ul>
 </li>
 </ul>
+<p>SUBS has forms similar to ADDS. This instruction subtracts its second operand from its first and writes the result, and also sets the condition flags.</p>
+<p>CMP is another instruction that can be used in assembly programs. It is actually an alias to the corresponding form of SUBS instruction. This instruction subtracts the value of its second operand from its first operand and sets condition flags based on the result. The result itself is discarded and not stored in any register.</p>
+<p>SBCS instruction has only one form - <code>SBCS &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;</code>. It subtracts a register value and the value NOT(Carry flag) from another register value and writes the result to the destination register. It also sets the condition flags. The SBC instruction is a non-flag-setting equivalent of SBCS.</p>
 <p><strong>Logical operation</strong>:</p>
 <p>For logical operation instructions like ANDS, BICS:</p>
 <ul>
@@ -186,96 +194,153 @@
 <li>C bit is always cleared to 0 </li>
 <li>V bit is always cleared to 0 </li>
 </ul>
-<p>Let us now go through some examples to determine the NZCV values after a flag setting instruction is executed: </p>
-<p>Example 1:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>ADDS</td><td>0x50000000</td><td>0x50000000</td><td>0xA0000000</td></tr>
-</tbody></table>
-<details>
+<p>Here is a quiz to test your understanding of flags. You may want to review the section on binary arithmetic and the contents above before taking the quiz.</p>
+<div class="quiz-placeholder" data-quiz-name="condition_flags"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 1, Z = 0, C = 0, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 0, V = 0&quot;,&quot; N = 1, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the ADDS instruction to add 0x50000000 and 0x50000000 produces the result 0xA0000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 0, V = 0&quot;,&quot; N = 1, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0x00001678 and operand2=0x00001000 produces the result 0x00000678. The flags are set to:&quot;}},{&quot;context&quot;:&quot;CMP  is an alias to the corresponding form of SUBS instruction. \n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;True&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;False&quot;],&quot;prompt&quot;:&quot;The CMP instruction is identical to SBCS, except that it does not store the result.&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 1, C = 1, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 0, Z = 0, C = 1, V = 0&quot;,&quot; N = 1, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the ADDS instruction to add 0x80000000 and 0x80000000 produces the result 0x00000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 1, Z = 0, C = 0, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 1, C = 0, V = 0&quot;,&quot; N = 1, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 1, V = 0&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0x00000006 and operand2=0x00000007 produces the result 0xFFFFFFFF. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 1, C = 0, V = 0&quot;,&quot; N = 0, Z = 0, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 1, V = 0&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0xFFFFFFFF and operand2=0xFFFFFFFB produces the result 0x00000004. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;N = 0, Z = 0, C = 0, V = 0&quot;,&quot;N = 0, Z = 0, C = 0, V = 1&quot;,&quot;N = 0, Z = 0, C = 1, V = 1&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0xD0000004 and operand2=0xD0000003 produces the result 0x00000001. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 1, Z = 0, C = 0, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;N = 1, Z = 0, C = 0, V = 0&quot;,&quot;N = 0, Z = 0, C = 1, V = 0&quot;,&quot;N = 0, Z = 0, C = 0, V = 1&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0x70000000 and operand2=0xF0000000 produces the result 0x80000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 1, C = 1, V = 0&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;N = 1, Z = 1, C = 0, V = 0&quot;,&quot;N = 0, Z = 1, C = 0, V = 1&quot;,&quot;N = 0, Z = 0, C = 0, V = 0&quot;],&quot;prompt&quot;:&quot;Using the SUBS instruction to with operand operand1=0xB0000000 and operand2=0xB0000000 produces the result 0x00000000. The flags are set to:&quot;}},{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;N = 0, Z = 0, C = 1, V = 1&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot; N = 0, Z = 1, C = 0, V = 1&quot;,&quot; N = 1, Z = 0, C = 1, V = 0&quot;,&quot; N = 0, Z = 0, C = 1, V = 0&quot;],&quot;prompt&quot;:&quot;Using the ADDS instruction to add 0x80000000 and 0x90000000 produces the result 0x10000000. The flags are set to:&quot;}}]}"  data-quiz-fullscreen="" ></div>
+<!--
+
+Let us now go through some examples to determine the NZCV values after a flag setting instruction is executed: 
+
+Example 1:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| ADDS | 0x50000000 | 0x50000000 | 0xA0000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 1, Z = 0, C = 0, V = 1
-</code></pre>
+
+```
+ N = 1, Z = 0, C = 0, V = 1
+```  
 </details>
-<p>Example 2:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Addition</td><td>0x80000000</td><td>0x80000000</td><td>0x00000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 2:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Addition    | 0x80000000 | 0x80000000 |	0x00000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 1, C = 1, V = 1
-</code></pre>
+
+```
+ N = 0, Z = 1, C = 1, V = 1
+```  
 </details>
-<p>Example 3:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Addition</td><td>0x80000000</td><td>0x90000000</td><td>0x10000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 3:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Addition    | 0x80000000 | 0x90000000 |	0x10000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 1
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 1
+```  
 </details>
-<p>Example 4:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0x00001678</td><td>0x00001000</td><td>0x00000678</td></tr>
-</tbody></table>
-<details>
+-->
+<!--
+Example 4:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0x00001678 | 0x00001000 |	0x00000678 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 0
+```  
 </details>
-<p>Example 5:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0x00000006</td><td>0x00000007</td><td>0xFFFFFFFF</td></tr>
-</tbody></table>
-<details>
+
+
+Example 5:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0x00000006 | 0x00000007 |	0xFFFFFFFF |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 1, Z = 0, C = 0, V = 0
-</code></pre>
+
+```
+ N = 1, Z = 0, C = 0, V = 0
+```  
 </details>
-<p>Example 6:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0xFFFFFFFF</td><td>0xFFFFFFFB</td><td>0x00000004</td></tr>
-</tbody></table>
-<details>
+
+
+Example 6:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0xFFFFFFFF | 0xFFFFFFFB |	0x00000004 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 0
+```  
 </details>
-<p>Example 7:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0xD0000004</td><td>0xD0000003</td><td>0x00000001</td></tr>
-</tbody></table>
-<details>
+
+
+Example 7:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0xD0000004 | 0xD0000003 |	0x00000001 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 0, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 0, C = 1, V = 0
+```  
 </details>
-<p>Example 8:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0x70000000</td><td>0xF0000000</td><td>0x80000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 8:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0x70000000 | 0xF0000000 |	0x80000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 1, Z = 0, C = 0, V = 1
-</code></pre>
+
+```
+ N = 1, Z = 0, C = 0, V = 1
+```  
 </details>
-<p>Example 9:</p>
-<table><thead><tr><th>Operation</th><th>Operand 1</th><th>Operand 2</th><th>Result</th></tr></thead><tbody>
-<tr><td>Subtraction</td><td>0xB0000000</td><td>0xB0000000</td><td>0x00000000</td></tr>
-</tbody></table>
-<details>
+
+
+Example 9:
+
+| Operation | Operand 1 | Operand 2 | Result |	
+|---- | ---- | ---- | ---- |
+| Subtraction | 0xB0000000 | 0xB0000000 |	0x00000000 |
+ 
+ <details>
   <summary>Click to see the solution after you solve the problem</summary>
-<pre><code> N = 0, Z = 1, C = 1, V = 0
-</code></pre>
+
+```
+ N = 0, Z = 1, C = 1, V = 0
+```  
 </details>
-<p>We have worked out how the condition flags are set. Let us now see how does that enable conditional execution of code by introducing instructions that read the condition flags.</p>
-<p><strong>Program flow control instructions</strong></p>
-<p>Program flow instructions gives the ability to make decisions on what code to execute next. The instruction set enables conditional execution of program flow control branch instructions. The branch instructions can be broadly categorized to two types:</p>
+-->
+<h2 id="program-flow-control-instructions"><a class="header" href="#program-flow-control-instructions">Program flow control instructions</a></h2>
+<p>Branch instructions in the ISA  gives programmers the ability to decide what code to execute next. These instructions can be broadly categorized to two types:</p>
 <ul>
-<li>Unconditional branches: Unconditional branches do not consider the NZCV flags and they can branch backward or forward up to 128MB from the current program counter location.</li>
+<li>Unconditional branches:  They can branch to code backward or forward up to 128MB from the current program counter location. The state of the condition flags has no impact on whether the instruction will branch.</li>
 <li>Conditional branches: Conditional branches use the NZCV condition flags to decide whether branch operation should be performed or not. Most conditional branches have a range of +/-1MB.</li>
 </ul>
-<p>The instruction set provides a number of different kinds of branch instructions. Majority of the branch instructions use relative addressing. That is, they branch to an offset from the current address and are called relative branches. An example is B.cond instruction, where 'cond' is one of the fourteen possible condition suffixes. In effect, attaching one of the condition codes to the B instruction causes it to branch to specified offset if the condition(cond) is true. Otherwise, it does nothing, and is essentially a nop. The following table lists the available condition codes, their meanings, and the flags that are tested:</p>
+<p>Majority of the branch instructions use relative addressing. That is, they branch to an offset from the current address and are called relative branches. An example is the <strong>B.cond</strong> instruction, where 'cond' is one of the fourteen possible condition suffixes. In effect, attaching one of the condition codes to the B instruction causes it to branch to specified offset if the condition (cond) is true. Otherwise, the instruction does nothing, and is essentially a NOP. The following table lists the available condition codes, their meanings, and the flags that are tested:</p>
 <table><thead><tr><th>Mnemonic</th><th>Meaning (integer)</th><th>Condition Flags</th></tr></thead><tbody>
 <tr><td>eq</td><td>Equal</td><td>Z == 1</td></tr>
 <tr><td>ne</td><td>Not Equal</td><td>Z == 0</td></tr>
@@ -292,20 +357,19 @@
 <tr><td>gt</td><td>Signed greater than</td><td>Z == 0 &amp;&amp; N == V</td></tr>
 <tr><td>le</td><td>Signed lessthan or equal</td><td>!(Z == 0 &amp;&amp; N == V)</td></tr>
 </tbody></table>
-<p>The first few  condition codes would be quite obvious as they test individual flags, but the others rely on specific combinations of flags. However, the understanding of exact flags that would be used for each condition code will be rarely required.</p>
-<p>In addition to the above PC-relative instructions, the instruction set includes absolute branches. The BR Xn instruction performs an absolute branch to the address in Xn.</p>
-<p>The instruction set includes some special conditional branches so that explicit comparison instructions are not needed.</p>
+<p>The first few condition codes would be quite obvious as they test individual flags, but the others rely on specific combinations of flags. In addition to the above PC-relative instructions, the instruction set includes absolute branches. The BR Xn instruction performs an absolute branch to the address in Xn.</p>
+<p>Generally <em>conditional</em> branch instructions are used after previous flag-setting instructions. The branch is either taken or not-taken based on previous operations. However, the ISA also includes some special conditional branches that do not rely on the state set by previous instructions.</p>
 <ul>
 <li>CBZ Rt, label  : Compare and branch if zero</li>
-<li>CBNZ Rt, label : Compare and branch if not zero
-These instructions compare the source register, either 32-bit or 64-bit, with zero and then conditionally perform a branch. The branch offset has a range of +/- 1MB. These instructions do not read or write the condition code flags (NZCV).</li>
+<li>CBNZ Rt, label : Compare and branch if not zero</li>
 </ul>
+<p>The above instructions compare the source register, either 32-bit or 64-bit, with zero and then conditionally perform a branch. The branch offset has a range of +/- 1MB. However, they do not affect the condition code flags (NZCV).</p>
 <p>There are two similar test and branch instructions </p>
 <ul>
 <li>TBZ Rt, bit, label  : Test and branch if Rt<bit> zero</li>
-<li>TBNZ Rt, bit, label : Test and branch if Rt<bit> is not zero
-These instructions test the bit in the source register at the bit position specified by the immediate and conditionally branch depending on whether the bit is set or clear. The branch offset has a range of +/- 32kB. As with CBZ/CBNZ, these instructions do not read or write the condition code flags (NZCV).</li>
+<li>TBNZ Rt, bit, label : Test and branch if Rt<bit> is not zero</li>
 </ul>
+<p>These instructions test the bit in the source register at the bit position specified by the immediate and conditionally branch depending on whether the bit is set or clear. The branch offset has a range of +/- 32kB. As with CBZ/CBNZ, these instructions do not affect the condition code flags (NZCV).</p>
 <p>The table below summarizes the supported branch instructions along with brief explanation of the operation:</p>
 <table><thead><tr><th>Instruction</th><th>Description</th></tr></thead><tbody>
 <tr><td>B (offset)</td><td>Program relative branch forward or back 128MB. A conditional version, for example B.EQ, has a 1MB range.</td></tr>
@@ -315,42 +379,36 @@ These instructions test the bit in the source register at the bit position speci
 <tr><td>TBNZ Rt, bit, label</td><td>Test and branch if zero. Branch forward or back up to 32kB.</td></tr>
 <tr><td>TBNZ Rt, bit, label</td><td>Test and branch if non-zero. Branch forward or back up to 32kB.</td></tr>
 </tbody></table>
-<p><strong>Conditional select</strong></p>
-<p>The instruction set also provides instructions to perforn conditional select with optional increment, negate, or invert. These can be used to conditionally select between one source register and a second incremented, negated, inverted, or unmodified source register. </p>
-<p>The table below summarizes the conditional select instructions:</p>
+<h2 id="other-conditional-instructions"><a class="header" href="#other-conditional-instructions">Other conditional instructions</a></h2>
+<p>There are four instructions that can conditionally select (between two values), increment, negate or invert values. The table below lists these operations:</p>
 <table><thead><tr><th>Instruction</th><th>Description</th></tr></thead><tbody>
 <tr><td>CSEL</td><td>Select between two registers based on a condition.</td></tr>
 <tr><td>CSINC</td><td>Select between two registers based on a condition. Result would be value of the first source register or the second source register incremented by one.</td></tr>
 <tr><td>CSINV</td><td>Select between two registers based on a condition. Result would be value of the first source register or the inverted second source register.</td></tr>
 <tr><td>CSNEG</td><td>Select between two registers based on a condition. Result would be value of the first source register or the negated second source register.</td></tr>
 </tbody></table>
-<p>One typical use of these instructions is conditional counting. For example:
-CSINC X0, X1, X0, NE 
-The above instruction sets the return register X0 to X1 if Zero flag clear, otherwise it increments X0.</p>
-<p>This class of instructions can also be used to avoid the use of branches. </p>
-<p>NOTE: The following example can be later moved to C programming section</p>
-<p>For example, consider the simple C code:</p>
-<pre><code>if (i == 0) x = x + 5; else x = x - 2;
-
+<p>One typical use of these instructions is conditional counting. For example:</p>
+<pre><code class="language-armasm">CSINC X0, X1, X0, NE 
 </code></pre>
+<p>The above instruction sets the return register X0 to X1 if the Zero flag is clear, otherwise it increments X0. This class of instructions can also be used to avoid the use of branches. For example, consider the code below written in the C programming language:</p>
+<pre><code class="language-c">if (i == 0) { 
+  x = x + 5; 
+} else { 
+  x = x - 2;
+}
+</code></pre>
+<p>We will see C programming in more detail in later sections. The above code is fairly simple. There are two variables named <code>x</code> and <code>i</code>. For this example, we can think of variables as registers. If the value of <code>i</code> is 0 then <code>x</code> is increased by 5. If not, then <code>x</code> is decreased by 2.</p>
 <p>This might be written in assembly using following code:</p>
-<pre><code>CMP w0, #0 // if (i == 0)
+<pre><code class="language-armasm">CMP w0, #0 // if (i == 0)
 SUB w2, w1, #2 // x = x - 2
 ADD w1, w1, #5 // x = x + 5
 CSEL w1, w1, w2, EQ // select between the two results
 </code></pre>
-<p>The instruction set also provides following additional instructions that use condition codes:</p>
+<p>Here are some additional conditional operations from the ISA. Readers can refer to the ARM ARM for more details about them.</p>
 <ul>
 <li>Condition Set (CSET/CSETM) : Conditionally select between 0 and 1 (CSET) or 0 and -1 (CSETM). Used, for example, to set the condition flags as a boolean value or mask in a general register.</li>
 <li>Conditional compare (CCMP/CCMN):  Sets the condition flags to the result of a comparison if the original condition is true. If not true, the conditional flags are set to a specified condition flag state. The conditional compare instruction is very useful for expressing nested or compound comparisons</li>
 </ul>
-<p><strong>Add/Subtract with Carry</strong>
-In addition to conditional instructions described above, the Carry bit of the condition code can also be used to extend add and subtract operations. These instructions are unconditionally executed but use the condition flags as an extra input to the instruction. For example: ADC(add with carry), SBC(Subtract with carry). </p>
-<p>The operations ADC and SBC perform additions and subtractions that also use the carry condition flag as an input as shown below.</p>
-<pre><code>ADC{S}: Rd = Rn + Rm + C
-SBC{S}: Rd = Rn - Rm - 1 + C
-</code></pre>
-<p>These instructions can be used for performing multi-precision arithmetic and checksums.</p>
 <h2 id="what-we-learnt-this-chapter"><a class="header" href="#what-we-learnt-this-chapter">What we learnt this chapter</a></h2>
 <ul>
 <li>Condition flags and their meaning</li>
@@ -359,7 +417,7 @@ SBC{S}: Rd = Rn - Rm - 1 + C
 <li>Instructions that make use of conditional flags </li>
 </ul>
 <hr />
-
+<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css">
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

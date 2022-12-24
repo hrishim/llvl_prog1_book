@@ -33,3 +33,16 @@ type = "ShortAnswer"
 prompt.prompt = "Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2] what value will x0 contain?"
 answer.answer = "0x800"
 context = "The instruction uses immediate offset addressing mode. So the address used will be x0 + 2 = 0x802. But x0 will remain unchanged."
+
+[[questions]]
+type = "MultipleChoice"
+prompt.prompt = "The size of a word in ARM Architecture is "
+prompt.distractors = [
+    "2 bytes",
+    "8 bits",
+    "16 bits"
+]
+answer.answer = "32 bits"
+context = """
+In ARM architecture a word is 32 bits.
+"""

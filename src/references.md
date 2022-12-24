@@ -11,3 +11,5 @@
 6. [ARM Compiler for Embedded User Guide Version 6.17](https://developer.arm.com/documentation/100748/0617/Assembling-Assembly-Code)
 
 4. [Application Binary Interface](https://developer.arm.com/architectures/system-architectures/software-standards/abi)
+
+5. [ARM Compiler asmasm User Guide Version 5.06](https://developer.arm.com/documentation/dui0473/m)
