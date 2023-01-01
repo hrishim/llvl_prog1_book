@@ -4,28 +4,49 @@
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Introduction to ARM AArch64 Architecture and Low-level Programming</title>
+        
         <meta name="robots" content="noindex" />
+        
+        
+
+
         <!-- Custom HTML head -->
+        
+
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
         <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
+
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
         <link rel="stylesheet" href="fonts/fonts.css">
+        
+
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
         <link rel="stylesheet" href="tomorrow-night.css">
         <link rel="stylesheet" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
+        
+
+        
     </head>
     <body>
         <!-- Provide site root to javascript -->
@@ -84,6 +105,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
+                
                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
@@ -100,20 +122,28 @@
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
                         </ul>
+                        
                         <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
                             <i class="fa fa-search"></i>
                         </button>
+                        
                     </div>
 
                     <h1 class="menu-title">Introduction to ARM AArch64 Architecture and Low-level Programming</h1>
 
                     <div class="right-buttons">
+                        
                         <a href="print.html" title="Print this book" aria-label="Print this book">
                             <i id="print-button" class="fa fa-print"></i>
                         </a>
+                        
+                        
+                        
+
                     </div>
                 </div>
 
+                
                 <div id="search-wrapper" class="hidden">
                     <form id="searchbar-outer" class="searchbar-outer">
                         <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
@@ -124,6 +154,8 @@
                         </ul>
                     </div>
                 </div>
+                
+
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
                 <script type="text/javascript">
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
@@ -174,7 +206,7 @@ The contents of this book and associated code hosted in GitHub are provided for 
 <img src="images/email_address.png" alt="drawing" width="180"/></p>
 <hr />
 <p>Copyright © M. S. Hrishikesh and Pradeep Nagarajan</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="installation-of-required-tools"><a class="header" href="#installation-of-required-tools">Installation of Required Tools</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="installation-of-required-tools"><a class="header" href="#installation-of-required-tools">Installation of Required Tools</a></h1>
 <p>You will need the following software tools for following along this book</p>
 <ul>
 <li>GCC for ARM: A compiler to compile your programs into binary.</li>
@@ -322,7 +354,7 @@ cd low_level_prog
 <pre><code>QEMU emulator version 6.0.0 (v6.0.0-11869-g800a25ea45-dirty)
 Copyright (c) 2003-2021 Fabrice Bellard and the QEMU Project developers
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="computer-system-overview"><a class="header" href="#computer-system-overview">Computer System Overview</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="computer-system-overview"><a class="header" href="#computer-system-overview">Computer System Overview</a></h1>
 <p>This section gives an overview of the main components of a computer system. It is not a comprehensive explanation of everything on a computer board. The intention is to provide readers with sufficient context to understand the rest of this book.</p>
 <p>The components in a computer system are mounted on a board and connected to each other by wires embedded in the board. These components include a system on chip (SoC), peripherals and connectors. The SoC is the component that performs computation. Everything else on the board is to enable the SoC to perform its work and for the external world (including human users) to interact with the SoC. This is a general description of a computer system. Every individual system will have some differences. The peripherals on the board may be different. Also, some systems may have high-speed interconnects such as PCI that allows extension cards to be connected to the system.</p>
 <p>In part one of this book we will be working with a <strong>software model</strong> of the popular single board computer -<br />
@@ -369,7 +401,7 @@ Copyright (c) 2003-2021 Fabrice Bellard and the QEMU Project developers
 <p>In Part 1 you will learn how to write programs that run on the ARM Cores. In the process we will learn the ARM A-class processor architecture, ARM assembly, and some C programming.</p>
 <p>Now, a short <em>quiz</em>:</p>
 <div class="quiz-placeholder" data-quiz-name="comp_overview"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;System on Chip&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;What is the expansion of SoC?&quot;}},{&quot;context&quot;:&quot;The CPU is the main computation engine inside an SoC.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;CPU&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;GPU&quot;,&quot;MMU&quot;,&quot;DPU&quot;],&quot;prompt&quot;:&quot;What is the main computation engine in an SoC?&quot;}},{&quot;context&quot;:&quot;Many modern CPUs are multi-processors, meaning they have more than one processing core in the CPU.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;False&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;True&quot;],&quot;prompt&quot;:&quot;CPUs can have only one processing core in them.&quot;}},{&quot;context&quot;:&quot;Note that the fetch stage of the processor works automatically to load instructions from memory into the processor pipeline. No explicit program instruction is needed for this purpose. \n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;No&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;Yes&quot;],&quot;prompt&quot;:&quot;Do programmers have to explicitly load instructions from memory?&quot;}},{&quot;context&quot;:&quot;A byte is 8-bits. A word is 4 bytes. A double-word is 8 bytes and a half-word is 2 bytes.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;8&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;How many bytes in a double-word (enter a number like 3)?&quot;}}]}"  data-quiz-fullscreen="" ></div>
-<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css"><div style="break-before: page; page-break-before: always;"></div><h1 id="arm-registers-and-processor-execution-state"><a class="header" href="#arm-registers-and-processor-execution-state">ARM Registers and Processor Execution State</a></h1>
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css"><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="arm-registers-and-processor-execution-state"><a class="header" href="#arm-registers-and-processor-execution-state">ARM Registers and Processor Execution State</a></h1>
 <p>CPU Cores, also called processors, are programmable hardware that can perform computation. Programmable meaning they can be given a set of instructions - encoded as bits - and they will perform the computation as directed in the instructions.</p>
 <p>What instructions can a programmer give the processor? What resources does the processor have to execute those instructions? These are defined in the processor's architecture. The architecture of ARM processors are specified in the ARM Architecture Reference Manual (see References). The architecture also specifies the instructions that the processor is capable of understanding.</p>
 <p>Programmers use these instructions to write programs in assembly language. In subsequent chapters we will learn how to use ARM assembly language to program the processor. This section provides an overview of the resources that an ARM processor has at its disposal to aid in performing computation.</p>
@@ -426,7 +458,7 @@ Copyright (c) 2003-2021 Fabrice Bellard and the QEMU Project developers
 </ol>
 <p>Now, a short <em>quiz</em>:</p>
 <div class="quiz-placeholder" data-quiz-name="arm_exec_state"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;The architecture provides programmers with 31 general purpose registers.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;31&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;How many general purpose registers does ARM AArch64 provide (enter a number like 3)?&quot;}},{&quot;context&quot;:&quot;The registers named X0-X30 64-bit are 64-bits wide.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;64&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;How many bits can the X0 register hold (enter a number like 3)?&quot;}},{&quot;context&quot;:&quot;The X30 register has a special function. It is used as a link register for procedure calls.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;30&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Which register is the link register (enter a number like 3)?&quot;}},{&quot;context&quot;:&quot;There are four condition flags.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;4&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;6&quot;,&quot;8&quot;,&quot;3&quot;],&quot;prompt&quot;:&quot;How many condition flags does the AArch64 have?&quot;}}]}"  data-quiz-fullscreen="" ></div>
-<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css"><div style="break-before: page; page-break-before: always;"></div><h1 id="binary-representation-of-integers"><a class="header" href="#binary-representation-of-integers">Binary Representation of Integers</a></h1>
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css"><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="binary-representation-of-integers"><a class="header" href="#binary-representation-of-integers">Binary Representation of Integers</a></h1>
 <p>This section we will learn about number representation using the binary system. Representation only governs how numbers are represented for writing, storing in memory etc. It makes no difference to the result of arithmetic operations. Meaning that arithmetic operations like addition, subtraction, multiplication, and division will have the same result regardless of whether the representation is in decimal, binary, hexadecimal, octal etc.</p>
 <p>We are used to counting using the decimal number system. This system has ten symbols (decimal numerals) to represent numbers, namely - 0 1 2 3 4 5 6 7 8 9. Of course, using these symbols we can represent values greater than ten. For example, after counting from 0 till 9 we run out of symbols for ten. To represent ten and higher numbers more than one of those symbols is used - 10, 11, 12...10521... etc. A special symbol is pre-fixed to numbers to represent negative numbers (-1, -2, -3... etc.).</p>
 <p>OK, so all of this number representation is elementary school material. What is the point of all this? The main point is that numbers are represented with symbols. Modern computers use <em>binary</em>  representation for storing and operating on numbers. The decimal number format uses 10 symbols (11 actually if you count the minus sign for negative numbers) the binary number format uses just two symbols.</p>
@@ -736,7 +768,7 @@ After addition we get 0b0111.</p>
 <li>Carry and overflow</li>
 </ol>
 <p>Note that the carry flag is relevant for unsigned operations and the overflow flag is relevant for signed operations.</p>
-<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css"><div style="break-before: page; page-break-before: always;"></div><h1 id="getting-started-with-arm-aarch64-assembly"><a class="header" href="#getting-started-with-arm-aarch64-assembly">Getting Started With ARM AArch64 Assembly</a></h1>
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css"><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="getting-started-with-arm-aarch64-assembly"><a class="header" href="#getting-started-with-arm-aarch64-assembly">Getting Started With ARM AArch64 Assembly</a></h1>
 <p>Now that we have covered how numbers are represented we can start learning some assembly programming.</p>
 <h2 id="assembly-instruction-encoding"><a class="header" href="#assembly-instruction-encoding">Assembly Instruction Encoding</a></h2>
 <p>The ARM Architecture defines both 64- and 32-bit architectures. In this book we will focus on the 64-bit architecture which is called AArch64.</p>
@@ -771,7 +803,7 @@ After addition we get 0b0111.</p>
 <p>Finally there is the program control (PC) register. This register holds the memory address of the <em>current instruction</em>. In AArch64, PC cannot be directly modified by the programmer. It is updated by the processor when a branch/call instruction is executed and on exception return. </p>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
 <p>That was a lot of information and it is OK if you do not understand all of this yet. We will discuss how to use registers in more detail in following sections. The main point to understand in this section is that the processor cannot operate directly on data in memory. Values have to be loaded into <em>storage buffers</em> called registers. Integer instructions such as ADD, SUB etc operate on general purpose registers and can store the result of their operation also in a such a register. Once computation has been completed values can be copied from the registers holding results to memory. All of the copying between registers and memory have to be explicitly done by the programmer.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="memory-instructions"><a class="header" href="#memory-instructions">Memory Instructions</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="memory-instructions"><a class="header" href="#memory-instructions">Memory Instructions</a></h1>
 <p>Finally, let us start with some AArch64 assembly. Memory instructions can be used to transfer data from memory into registers. Memory is byte addressed, meaning that every byte (8 bits) of memory has a unique address that is used to identify the location.</p>
 <p>In most computer/embedded systems memory is located in a chip that is separate from the CPU. It is connected to the CPU via a bus or interconnect. To load a byte of memory into a register we can use a <em>load byte</em> instruction:</p>
 <pre><code class="language-armasm">  LDRB W10, [X1], #0
@@ -816,10 +848,6 @@ After addition we get 0b0111.</p>
 
 
 </code></pre>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_1a.elf
-RUN_COMMAND: make run
-</code></pre>
 <p>In <em>ex_1a.s</em> we have provided set up code code that will store the text &quot;Hello&quot; into one location in memory and &quot;Howdy&quot; in another location in memory. The setup also provides the start address of &quot;Hello&quot; (in X0) and the start address of &quot;Howdy&quot; (in X1). The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.</p>
 <p>So how does this program work? Actually, it is pretty simple. Every character or letter is stored in a format called ASCII. In ASCII encoding, numbers are used to represent English alphabets, numbers, and some symbols. For example the representation for the letter <em>a</em> in ASCII is 0b01000001 (i.e. 65). There are other formats for storing text but in this book we will use ASCII since it is easy to deal with. In ASCII each character is stored in a byte of data. The word Hello has five letters and therefore it takes five bytes of data to store it in memory. </p>
 <p>In <em>ex_1a.s</em> the register X0 has been pre-loaded with the memory address of the first byte of the string. This is the memory address of the character corresponding to the letter &quot;H&quot;. The destination address - location where the string <strong>should be copied to</strong> - is provided in X1. Before the start of the program the address starting at X0 contains the word &quot;Hello&quot; in consecutive memory locations (X0, X0+1...X0+4). The starting address of the word &quot;Howdy&quot; is in X1.</p>
@@ -857,10 +885,6 @@ RUN_COMMAND: make run
 </ol>
 <p>In the example above, the value contained in memory location x0 is loaded into register w4. In addition x0 is increased by 1.</p>
 <p><strong>Programming exercise:</strong> Write the code for exercise ex_1b.s using post-indexed addressing mode.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_1b.elf
-RUN_COMMAND: make run
-</code></pre>
 <p><strong>Pre-indexed Addressing Mode</strong></p>
 <p>In this addressing mode the address is the sum of a base register and a specified offset value. The computed address is also stored back in the address register.</p>
 <p>Example:</p>
@@ -868,22 +892,13 @@ RUN_COMMAND: make run
 </code></pre>
 <p>In the example, the memory address is computed as the sum of x0 and 1. The byte in that location is loaded into register w4. The computed address is also stored in register x0.</p>
 <p><strong>Programming exercise:</strong> Write the code for exercise ex_1c.s using pre-indexed addressing mode. Hint - you can load (and store) the first character using a different addressing mode.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_1c.elf
-RUN_COMMAND: make run
-</code></pre>
 <p><strong>Base Plus Register Offset Addressing Mode</strong></p>
 <p>In this mode the address is the sum of the base register and an offset that is contained in another register.</p>
 <p>Example:</p>
 <pre><code class="language-armasm">  ldrb w4, [x0, x2]
 </code></pre>
 <p>The address for this load instruction is computed by adding the base register x0 with the register x2.</p>
-<p><strong>Programming exercise:</strong> Write the code for exercise ex_1d.s using register offset addressing mode. </p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_1d.elf
-RUN_COMMAND: make run
-</code></pre>
-<p>Hint - you can save an immediate value into a register using the <strong>mov</strong> instruction like this</p>
+<p><strong>Programming exercise:</strong> Write the code for exercise ex_1d.s using register offset addressing mode. Hint - you can save an immediate value into a register using the <strong>mov</strong> instruction like this</p>
 <pre><code class="language-armasm">  mov  x2, #0
 </code></pre>
 <p>Note that in all the above addressing modes any register that is used in address computation is a 64-bit X register.</p>
@@ -912,10 +927,6 @@ RUN_COMMAND: make run
 <div class="quiz-placeholder" data-quiz-name="memory_inst_a"  data-quiz-questions="{&quot;questions&quot;:[{&quot;context&quot;:&quot;This instruction uses post-indexed addressing mode.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;post-indexed&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;pre-indexed&quot;,&quot;base plus register offset&quot;,&quot;immediate offset&quot;],&quot;prompt&quot;:&quot;The instruction ldrb w11, [x5], #6 uses ______ addressing mode. &quot;}},{&quot;context&quot;:&quot;The instruction uses pre-indexed addressing mode. So the address will be updated to x0 + 2 = 0x802.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0x802&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2]! what value will x0 contain?&quot;}},{&quot;context&quot;:&quot;This instruction uses post-indexed addressing mode so the address in x1 will be used for the memory operation. The instruction will also update the x1 register with the value x1 + 4.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;True&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;False&quot;],&quot;prompt&quot;:&quot;The instruction strb w20, [x1], #4 will store the data contained in w20 to the address at x1.&quot;}},{&quot;context&quot;:&quot;The instruction uses immediate offset addressing mode. So the address used will be x0 + 2 = 0x802. But x0 will remain unchanged.&quot;,&quot;type&quot;:&quot;ShortAnswer&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;0x800&quot;},&quot;prompt&quot;:{&quot;prompt&quot;:&quot;Say x0 contains the value 0x800. After executing the instruction ldrb w9, [x0, #2] what value will x0 contain?&quot;}},{&quot;context&quot;:&quot;In ARM architecture a word is 32 bits.\n&quot;,&quot;type&quot;:&quot;MultipleChoice&quot;,&quot;answer&quot;:{&quot;answer&quot;:&quot;32 bits&quot;},&quot;prompt&quot;:{&quot;distractors&quot;:[&quot;2 bytes&quot;,&quot;8 bits&quot;,&quot;16 bits&quot;],&quot;prompt&quot;:&quot;The size of a word in ARM Architecture is &quot;}}]}"  data-quiz-fullscreen="" ></div>
 <h2 id="copy-memory-using-operations-of-different-sizes"><a class="header" href="#copy-memory-using-operations-of-different-sizes">Copy memory using operations of different sizes</a></h2>
 <p>Now for a small challenge. In file <em>exercises/memory_instructions/ex_1e.s</em> the text &quot;Welcome To ARM Assembly World&quot; has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location to which you may write. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_1e.elf
-RUN_COMMAND: make run
-</code></pre>
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
 <pre><code class="language-armasm">    // Your code starts here
@@ -938,11 +949,7 @@ RUN_COMMAND: make run
 </details>
 <h2 id="copying-data-using-a-loop"><a class="header" href="#copying-data-using-a-loop">Copying data using a loop</a></h2>
 <p>So far we have used multiple load and store instructions to copy data. For instance, in ex_1a.s we used five load and five store instructions to copy the letters &quot;Hello&quot; from one location to another.</p>
-<p>In this section we will see how to do the same using a <strong>loop</strong> and fewer load and store instructions instructions. The code in this section can be found in the file <em>exercises/memory_instructions/ex_1f_solution.s</em>. After reading the explanation in this section we recommend readers try to replicate this program using the file <em>exercises/memory_instructions/ex_1f.s</em>. This file contains markers indicating where code must be filled in.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_1f.elf
-RUN_COMMAND: make run
-</code></pre>
+<p>In this section we will see how to do the same using a <strong>loop</strong> and fewer load and store instructions instructions. The code in this section can be found in the file <em>exercises/memory_instructions/ex_1f_solution.s</em>. After reading the explanation in this section we recommend readers try to replicate this program using the file <em>exercises/memory_instructions/ex_1f.s</em>. This file contains markers indicating where code must be filled in. Now on to the program...</p>
 <p>Our objective is to copy a string of unknown length from one location to another. In this exercise, that string is &quot;Hello&quot; and it has 5 letters. But we want to write a generic program that will work even if the string were longer or shorter. Strings are stored in memory using a format called ASCII. There are other formats to represent alphabets in computers but this one is one of the simplest and most popular - though it does have limitations.</p>
 <p>The characters comprising a string are stored in contiguous locations in memory. Also, at the end of every string a special character (string termination) - namely 0 - is stored to indicate the end of the string. If the special character were not present there would be no way to tell when a string has ended.</p>
 <p>The code listing below shows the program. The start address of the first string (source) is already loaded in <em>x0</em> and the start address of the destination (target) to which it must be copied to is given in <em>x1</em>.</p>
@@ -1017,10 +1024,6 @@ copy_loop_start:
 <p>We have provided solutions to for the exercises. But we encourage readers to try writing the programs themselves. Look at the solutions only when completely stuck.</p>
 <h2 id="exercise-ex_2a"><a class="header" href="#exercise-ex_2a">Exercise ex_2a</a></h2>
 <p>The file ex_2a.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to copy a string from one memory location to another but the new string should be a reversed version of the original. So if the original string was &quot;Hello&quot; the new string should be &quot;olleH&quot;.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_2a.elf
-RUN_COMMAND: make run
-</code></pre>
 <p>The address of the string to reverse is provided in the register x0. The memory address where the reversed string should be placed is provided in register x1. Sufficient memory has been provided to hold both strings.</p>
 <p>Below is pseudo code to reverse the string. You can use this as a guide to write the assembly code.</p>
 <ol>
@@ -1031,10 +1034,6 @@ RUN_COMMAND: make run
 <p>The solution for this exercise is provided in ex_2a.solution.s. We recommend that you try to write the program your self before looking at the solution.</p>
 <h2 id="exercise-ex_2b"><a class="header" href="#exercise-ex_2b">Exercise ex_2b</a></h2>
 <p>The file ex_2b.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to reverse a string in-place. This means the string should not be copied to a new location but can be copied onto itself.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: ex_2b.elf
-RUN_COMMAND: make run
-</code></pre>
 <p>The address of the string to be reversed is in register x0. Below is the pseudo code for the program:</p>
 <ol>
 <li>Find the length of the string.</li>
@@ -1061,7 +1060,7 @@ RUN_COMMAND: make run
 </code></pre>
 <p>If this does not makes sense to you right now, that is OK. Just know that both the example instructions above will copy the value stored in x2 to x0.</p>
 <hr />
-<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css"><div style="break-before: page; page-break-before: always;"></div><h1 id="integer-instructions"><a class="header" href="#integer-instructions">Integer Instructions</a></h1>
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css"><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="integer-instructions"><a class="header" href="#integer-instructions">Integer Instructions</a></h1>
 <p>We have already used two arithmetic instructions - <strong>add</strong> and <strong>cmp</strong> - in the previous section. In this section we introduce a few more commonly used integer instructions. Like earlier, we will do this through a series of assembly programs. For some of the programs we have provided the explanation in pseudo code only. This is an opportunity for you to write the assembly program by yourself.</p>
 <h2 id="sum-of-numbers-in-an-array"><a class="header" href="#sum-of-numbers-in-an-array">Sum of numbers in an array</a></h2>
 <p>In this exercise we will add a set of numbers in a loop. We will also learn a new memory addressing method in the bargain.</p>
@@ -1497,7 +1496,7 @@ RUN_COMMAND: make run
 <li>Bit operations - AND, EOR, ORR, ASR, LSL, LSR, ROR</li>
 </ul>
 <p>In this section we learnt a few commonly used AArch64 integer instructions. There are several more integer instructions, and also different forms of the above instructions, defined in the ISA. We leave it to the reader to look up the <a href="https://developer.arm.com/documentation/ddi0487/ga">ARM ARM</a> for a comprehensive list.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="condition-flags"><a class="header" href="#condition-flags">Condition Flags</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="condition-flags"><a class="header" href="#condition-flags">Condition Flags</a></h1>
 <p>In <a href="condition_flags.html#ARM-Registers-and-Execution-State">ARM Registers and Execution State</a> we introduced the condition flags. In the previous section, we have already used arithmetic instructions like <strong>cmp</strong> that set the condition flags and instructions like <strong>b.gt</strong> that makes use of condition flags. In this section we introduce more such instructions and then work through a series of examples. We will also explain how the condition flags are used to implement conditional execution of instructions.</p>
 <p>Condition flags are a set of bits that store state information about a previous operation. There are four condition flags:</p>
 <table><thead><tr><th>Flag</th><th>Name</th><th>Description</th></tr></thead><tbody>
@@ -1780,7 +1779,7 @@ CSEL w1, w1, w2, EQ // select between the two results
 <li>Instructions that make use of conditional flags </li>
 </ul>
 <hr />
-<script type="text/javascript" src="mdbook-quiz/embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz/embed.css"><div style="break-before: page; page-break-before: always;"></div><h1 id="the-stack"><a class="header" href="#the-stack">The Stack</a></h1>
+<script type="text/javascript" src="mdbook-quiz\embed.js"></script><link rel="stylesheet" type="text/css" href="mdbook-quiz\embed.css"><div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="the-stack"><a class="header" href="#the-stack">The Stack</a></h1>
 <p>The stack is a data structure used in computer science. It is analogous to a stack of plates where one can add a plate to the top or remove a plate from the top but not from any arbitrary location. Below is a visual representation of a stack holding data (in this case numbers).</p>
 <p><img src="./images/stack1.png" alt="Example of Stack" /></p>
 <p>The figure above shows the representation of a stack that holds integers. Here the bottom-most element is the number 5. The topmost element is 36. Operations can only be performed on the top of the stack. A <em>push</em> operation adds an element to the top of the stack. After we push 10 onto the stack it looks like the image below. New data can only be added using the push operation and that data will always be added to the top of the stack. Any number of items can be pushed onto the stack and they will all be added, one by one, to the top of the stack.</p>
@@ -1816,7 +1815,7 @@ str x1, [sp, #8]    //store x1 at address sp + 8. Do not change sp.
 <li>How to push and pop data</li>
 <li>Stack pointer relative load and store</li>
 </ol>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="functions"><a class="header" href="#functions">Functions</a></h1>
 <p>When developing large programs it is useful break down the code into smaller more manageable pieces. This an be done by placing frequently occurring instructions into functions. Organising code this way offers these advantages:</p>
 <ul>
 <li>It provides the program structure and enables better understanding of the code.</li>
@@ -1829,9 +1828,9 @@ str x1, [sp, #8]    //store x1 at address sp + 8. Do not change sp.
  mul w1, w0, w1    //Compute n * (n+1)
  lsr w1, w1, #1    //Divide the result by 2
 </code></pre>
-<p>In the assembly code we expect that the value of n (an unsigned integer) should be made available in register w0. The three lines above will then compute the sum of integers from 1-n and place the result in w1. Note that to divide by 2 we use the lsr (right shift) instruction. If you do not understand how the lsr instruction is equivalent to division, review the chapters on binary arithmetic and integer instructions.</p>
+<p>In the assembly code above we expect the value of n (an unsigned integer) to be made available in register w0. The three lines above will then compute the sum of integers from 1-n and place the result in w1. Note that to divide by 2 we use the <code>lsr</code> (right shift) instruction. If you do not understand how the <code>lsr</code> instruction is equivalent to division, review the chapters on binary arithmetic and integer instructions.</p>
 <p>Now back to the complex (hypothetical) program we were developing...</p>
-<p>We want to compute the sum of n integers at different points in our program. At each instance we want to compute the sum up to a different n. Sometimes the sum of numbers from 1-6, sometimes from 1-22 and later in the program 1-n (where n can be a different number). Example of the really large program:</p>
+<p>We want to compute the sum of <em>n</em> integers at different points in our program. The value of <em>n</em> also changes at each instance. Sometimes the sum of numbers from 1-6, sometimes from 1-22 and later in the program 1-n (where n can be a different number). Below is an example of the really large program:</p>
 <pre><code class="language-armasm">//Lots of complicated scientific computations
 .
 .
@@ -1895,14 +1894,13 @@ b sumOfN //Branch to the code that computes sum-of-N
 
 </code></pre>
 <p>However, this does not work (yet). Why so? Well, we can use an unconditional branch instruction to keep jumping to the code to compute sumOfN. <strong>But, after executing the code at sumOfN, how do we get back to the next instruction in the program?</strong> At each instance in the program where we jump to sumOfN the code has to return to the immediate next instruction. So the location to jump back after executing sumOfN changes.</p>
-<p>What we want is to be able to jump to sumOfN when needed, execute it, and jump back to the location from where we &quot;called&quot; the sumOfN &quot;function&quot;. There are a few special instructions in the ARM ISA that can be used to accomplish this objective. The first one is the &quot;branch with link&quot; instruction (BL, BLR). This instruction is used to jump from any location in code to the start of a function. The second instruction is the return (RET) instruction that returns from the function back to the instruction just after BL/BLR.</p>
-<p>The branch with link instruction stores the address of the next instruction (i.e. the instruction following itself) into register X30 and jumps to the memory location specified by the programmer.</p>
-<p>Branch with link variants</p>
+<p>What we want is to be able to jump to sumOfN when needed, execute it, and jump back to the location from where we <strong>called</strong> the sumOfN <strong>function</strong>. There are a few special instructions in the ARM ISA that can be used to accomplish this objective. The first one is the &quot;branch with link&quot; instruction (BL, BLR). This instruction is used to jump from any location in code to the start of a function. The second instruction is the return (RET) instruction that returns from the function back to the instruction just after BL/BLR. The branch with link instruction stores the address of the next instruction (i.e. the instruction following itself) into register X30 and jumps to the memory location specified by the programmer.</p>
+<p>Branch with link variants:</p>
 <ul>
 <li>BL immediate_address  : address to branch is encoded as an immediate</li>
 <li><em>BLR &lt;X<sub>n</sub>&gt;</em>   : address to branch is contained in X register</li>
 </ul>
-<p>The <em>RET {&lt;X<sub>n</sub>&gt;}</em> instruction is the last instruction in a function. It jumps to the address contained in the specified register. If the register name is omitted the contents of X30 are used as the address to jump to.</p>
+<p>The <em>RET {&lt;X<sub>n</sub>&gt;}</em> instruction is generally the last instruction in a function. It jumps to the address contained in the specified register. If the register name is omitted the contents of X30 are used as the address to jump to.</p>
 <p>So here is what our large program looks like with BL and RET instructions added.</p>
 <pre><code class="language-armasm">sumOfN:
   //Compute sum of integers from 1-n where n is given by the caller in w0
@@ -1942,13 +1940,15 @@ bl sumOfN //Branch to the code that computes sum-of-N
 <li>X30 is a special register that is used by <em>BL</em> to store the return address</li>
 </ul>
 <h2 id="exercise-1a-function-to-count-leading-zeros"><a class="header" href="#exercise-1a-function-to-count-leading-zeros">Exercise 1A: Function to count leading zeros</a></h2>
-<p>Write a function to count the number of leading zeros. The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s</p>
+<p>In this exercise you will write a assembly function to count the number of leading zeros in a given number. The number will be specified in register <em>w0</em>. The function should return the count of leading 0s in register <em>w0</em>. What are leading zeros? They are the 0s that occur in a binary number before the first 1. For example, the 32-bit representation of 1 is 0b00000000000000000000000000000001. It has 31 leading 0s.</p>
+<p>The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make count_leading_zeros.elf
+<pre><code>From within the directory exercises/functions/
+COMPILE_COMMAND: make count_leading_zeros.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="nested-function-calls"><a class="header" href="#nested-function-calls">Nested Function Calls</a></h2>
-<p>In a program it is possible for one function to call another. For example, sumOfN function could call addOne to add 1 to the value passed in.</p>
+<p>It is possible for one function to call another. In the example below, the sumOfN function calls a new function named addOne. This function adds 1 to the value passed in.</p>
 <pre><code class="language-armasm">sumOfN:
   //Compute sum of integers from 1-n where n is given by the caller in w0
   mov w1, w0          //Save the value of w0
@@ -1964,13 +1964,14 @@ addOne:
   ret
 
 </code></pre>
+<p><strong>FIXME:</strong> Shouldn't addOne use the value in w0 and return the result also in w0?</p>
 <p>When we use the <em>BL/BLR</em> to call a function the return address is stored in X30. So, from our program when we call sumOfN the return address is stored in X30. From sumOfN, when  we call addOne the X30 register will be overwritten with the address of the instruction to return to after executing addOne. Therefore, we save the contents of X30 in the stack before calling addOne function. After the function call we restore the contents of X30 from the stack and then return from sumOfN.</p>
 <p>Why save and restore X30 from the stack? Why not save it another register?</p>
-<p>In a real program, the other registers may be holding values used in  computation and so may not be available. Plus we do not know if the function being called would overwrite our chosen register. Therefore, the correct practice is to use the stack to save X30.</p>
+<p>This is a simple program so we can store X30 in another register. However, in larger programs other registers may be used to hold values and so may not be available. Also, we do not know if the function being called would overwrite our chosen register. Therefore, the correct practice is to use the stack to save X30.</p>
 <h2 id="passing-parameters-via-registers"><a class="header" href="#passing-parameters-via-registers">Passing parameters via registers</a></h2>
 <p>Some functions may need data to be given to them to operate. For example the sumOfN and the addOne functions we used earlier needed input values. We passed the value N to sumOfN and the value to be incremented to addOne. In both cases the value was placed in register <em>w0</em> before we called the corresponding functions. The values that are passed to functions are called parameters.</p>
 <p>Parameters are passed quite commonly using registers. By convention and as specified in the <a href="https://github.com/ARM-software/abi-aa/releases">ARM Procedure Call Standard</a> registers <em>r0-r7</em> are used to pass parameters. If more than 8 parameters have to be passed to a function the remaining can be passed by pushing them on the stack.</p>
-<p>The <em>r0-r7</em> registers can also be used to return values from the function. In the example above we used the <em>w1</em> register to return values from the function.</p>
+<p>The <em>r0-r7</em> registers can also be used to return values from the function. In the example above we used the <em>w1</em> register to return values from addOne. A function can return values by merely placing/leaving the values in a return register.</p>
 <h2 id="exercise-1b-memcopy-as-a-function"><a class="header" href="#exercise-1b-memcopy-as-a-function">Exercise 1B: Memcopy as a function</a></h2>
 <p>We have implemented memcopy as a function and the code is shown below.
 Comments in the code explain how it is intended to work. However, in the present form the code has a bug (error). Can you spot the error and fix the problem.</p>
@@ -2041,7 +2042,7 @@ RUN_COMMAND: make run
 <h2 id="register-usage-conventions"><a class="header" href="#register-usage-conventions">Register usage conventions</a></h2>
 <p>So far we have been talking about small programs where we use very few of the available ARM registers. However, large programs can have millions of lines of code written in collaboration by programmers. These programs have many functions. It is quite common for programmers to rely on libraries for specific purposes. Those libraries may have been written by other programmers (in a different company/organization).</p>
 <p>A library can be thought of a set of functions the implement specific actions. For example, a math library can implement different mathematical operations. The functions in the library can be used by other programmers in their own programs.</p>
-<p>Even though the architecture permits the programmer to use registers <em>r0-r30</em> as they choose, in practice sharing code makes it necessary to have some conventions. For example, a programmer could write a library with functions that expect input parameters in registers <em>r13-r20</em>. How would others using that code know to pass parameters using those specific registers? One could say - &quot;read the documentation&quot;. But if every programmer were to pick their own favorite registers for different purposes then there would be a lot of documentation to read and adhere to - a total mess.</p>
+<p>Even though the architecture permits the programmer to use registers <em>r0-r30</em> as they choose, in practice, sharing code makes it necessary to have some conventions. For example, a programmer could write a library with functions that expect input parameters in registers <em>r13-r20</em>. How would others using that code know to pass parameters using those specific registers? One could say - &quot;read the documentation&quot;. But if every programmer were to pick their own favorite registers for different purposes then there would be a lot of documentation to read and adhere to - a total mess.</p>
 <p>Also, most programs are written in higher level programming languages like C/C++, Rust, Swift etc. Compilers (in combination with assemblers) convert programs written in these languages to assembly and after that to machine code. Using a common convention will make it easier for code compiled using different compilers to correctly interoperate.</p>
 <p>The <a href="https://github.com/ARM-software/abi-aa/releases">ARM procedure call standard</a> (PCS) prescribes a convention to be followed for using registers. Following this convention ensures that assembly (or higher level language) code written by different programmers will interoperate without any problems.</p>
 <p>The table below is from the ARM PCS. Readers are encouraged to refer to the full documentation for details.</p>
@@ -2056,12 +2057,13 @@ RUN_COMMAND: make run
 <tr><td>r30</td><td>link register</td></tr>
 <tr><td>SP</td><td>stack pointer</td></tr>
 </tbody></table>
-<p><strong>Note:</strong> The stack pointer (SP) should only be used to hold the address of top of stack. Register <em>r30</em> (link register) should be used to hold the address of a return.</p>
+<p><strong>Note:</strong> The stack pointer (SP) should only be used to hold the address of top of stack. Register <em>r30</em> (link register) should be used to hold the address to return return from a function call. Functions should store <em>r30</em> on the stack (and restore it when appropriate) if they call other functions.</p>
 <p>As per the PCS, <em>r0-r7</em> are to be used for parameters and results. A called function may change the contents of these registers. So programmers should not expect these register contents will be preserved after a function call. Registers <em>r9-r15</em> and <em>r9-r15</em> can be used as temporary registers. This means they can be overwritten and these registers may not be preserved after a function call.</p>
 <p>If the programmer wishes, registers that may be clobbered can be saved on the stack before a function call and restored after the call.</p>
 <p>Callee-saved registers <em>r19-r28</em> are guaranteed to be preserved after a function call. Any function that uses these registers must save the values before use and restore the values before the function returns. These registers are called &quot;callee-saved&quot; because the onus is on the called function to preserve the values.</p>
 <h2 id="memcopy-using-variables-on-the-stack"><a class="header" href="#memcopy-using-variables-on-the-stack">Memcopy using variables on the stack</a></h2>
-<p>To illustrate how the stack can be used to store values local to a function we give you yet another version of the memcopy function. In this version we have the stack to hold the value for holding the index as we iterate over the elements and copy them.</p>
+<p>To illustrate how the stack can be used to store values local to a function we give you yet another version of the memcopy function. In this version we use the stack to hold the value of the index as we iterate over the elements and copy them. Note that this example is strictly to illustrate how the stack can be used. Generally, if it is possible to hold values in registers then that is more optimal than using the stack. The stack is used when either there are no free registers or if the data being accessed is too large to store in registers. Now on to the example...</p>
+<p>This version of the memcopy function takes three parameters as inputs in registers x0, x1, and x2. These parameters should contain the memory address of the source, the memory address of the destination and the number of characters in the string. Register x3 is used to count the number of characters copied and also as an index to address each memory location to copy over. Also, the code copies data 1-byte at a time from the source to destination.</p>
 <pre><code class="language-armasm">
 // Function to copy a string
 memcopy_string:
@@ -2175,11 +2177,11 @@ find_len_end:
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="recursion"><a class="header" href="#recursion">Recursion</a></h2>
-<p>Recursion is a simple but important programming concept (actually, more like a trick) that can be used for some kinds of problems. As you are already aware functions can call other functions. A recursive function calls itself! Every recursive function will call itself until a specified condition is satisfied. When the terminating condition is satisfies the function stops calling itself and typically returns. </p>
+<p>Recursion is a simple but important programming concept (actually, more like a trick) that can be used for some kinds of problems. As you are already aware functions can call other functions. A recursive function calls itself! Every recursive function will call itself until a specified condition is satisfied. When the terminating condition is satisfied the function stops calling itself and returns. </p>
 <p>Here is a high level description of how this function (<em>sum_of_n_recursive</em>) works. The function is passed an integer - say N - in the <em>X0</em> register and it computes the sum of numbers from 1 to N by repeatedly calling itself. The result is returned in the <em>X0</em> register. By the way, remember that <em>w0</em> refers to the lower 32 bits of <em>x0</em>. The pseudo code for the function is as follows:</p>
 <ol>
 <li>Compare the passed in value with 1</li>
-<li>If the value is one then return the passed in value (just dont modify <em>w0</em> register)</li>
+<li>If the value is one then return the passed in value (just don't modify the <em>w0</em> register)</li>
 <li>If the value  (<em>w0</em>) is not 1 then... 
 <ol>
 <li>copy the value in <em>w0</em> into <em>w9</em></li>
@@ -2190,7 +2192,7 @@ RUN_COMMAND: make run
 </ol>
 </li>
 </ol>
-<p>The assembly code for <em>sum_of_n_recursive</em> is below. It is also available in the file exercises/functions/sum_of_n.s.</p>
+<p>The assembly code for <em>sum_of_n_recursive</em> is below. It is also available in the file exercises/functions/sum_of_n.s. We recommend readers to understand, compile and run the code. An exercise later in this section will give readers an opportunity to write their own recursive program.</p>
 <pre><code class="language-armasm">    // Recursive function to Find sum of all integers smaller than or equal to given number.
     // For example, if given number is 4, the result would be 4+3+2+1 which is 10.
 sum_of_n_recursive:
@@ -2210,6 +2212,7 @@ done:
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="practice-exercises"><a class="header" href="#practice-exercises">Practice exercises</a></h2>
+<p>We have seen some of the AArchh64 assembly instructions and some concepts in programming like looping, organizing code into functions, recursion etc. Now it is time to put that knowledge to use. This sub-section contains a few code challenges for the reader to attempt. Unlike in previous sections, solutions are not provided for these exercises.</p>
 <h3 id="function-to-add-and-subtract-matrices"><a class="header" href="#function-to-add-and-subtract-matrices">Function to add and subtract matrices</a></h3>
 <p>In the provided template write functions to</p>
 <ul>
@@ -2255,7 +2258,7 @@ RUN_COMMAND: make run
 <li>Function recursion</li>
 <li>A little bit of the ARM procedure call standard</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="programming-in-c"><a class="header" href="#programming-in-c">Programming in C</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="programming-in-c"><a class="header" href="#programming-in-c">Programming in C</a></h1>
 <p>In previous chapters we learnt how to use AArch64 assembly language. Writing large programs in assembly can be tedious and most programs are written in higher-level languages like C/C++, Rust, Java, Kotlin, Swift etc. In this chapter we will learn the fundamentals of the C programming language.</p>
 <p>The C programming language is considered a &quot;system programming language&quot;. It is used extensively in the development of operating systems and embedded systems. For example, most of the Linux kernel is written in C. Similarly, operating systems like OpenBSD, FreeBSD, NetBSD, and DragonFlyBSD all have large amounts of code written in the C language.</p>
 <p>Programs written in high level languages are translated to assembly using special programs called compilers and assemblers. Two popular compilers for the C programming language are <strong>gcc</strong> and <strong>Clang</strong>. We will use a version of <strong>gcc</strong> that compiles C code to AArch64 assembly.</p>
@@ -2282,7 +2285,7 @@ RUN_COMMAND: make run
 <li>All statements - like the function call to <em>uart_puts</em> - are ended with a semicolon</li>
 </ul>
 <p>Usually programs are developed to run on top of operating systems. In that case programmers can rely on standard libraries that will be available on most operating systems. These libraries will contain useful functions to print data on screen, read user input, read/write files etc. However, in this book all code that we write runs &quot;bare-metal&quot; meaning there is no underlying operating system or standard libraries to rely on. The <em>uart_puts</em> function is not part of the code written to support this book. We will learn how it works in later chapters.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="variables-constants-and-data-types"><a class="header" href="#variables-constants-and-data-types">Variables, Constants and Data types</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="variables-constants-and-data-types"><a class="header" href="#variables-constants-and-data-types">Variables, Constants and Data types</a></h1>
 <p>In any program we need to be able to hold data for processing. In  assembly we used registers and memory (stack) to store data. When programming in higher level languages the programmer can use labels called &quot;variables&quot; to hold data. The variable name is a convenient way to refer to the data which may be stored in registers or in memory.</p>
 <p>Variable names are made of letters and digits, but the first character of the name <strong>must</strong> be a letter. For the purpose of variables the underscore character &quot;_&quot; counts as a letter. Here  are examples of valid variable names: <em>employee_name</em>, <em>car_speed</em>, <em>num_of_forks</em>, <em>table9</em> etc. Variable names are case sensitive so a variable named <em>x</em> is different from <em>X</em>. The general C programming convention is to use lower case names and separate words using underscore. However, this is not a requirement.</p>
 <p>Variable names have to be unique within the same scope. So we cannot have more than one variable named <em>score</em> in our function because it would be impossible to say which <em>score</em> we are referring to at different points in the code. Scope will be explained later in this chapter.</p>
@@ -2337,7 +2340,7 @@ x = 11;
 <BR>
 <hr />
 <p><sup>1</sup>ASCII (American Standard Code for Information Interchange) is a character encoding format to represent text data in computers. In this format one byte of data can be used to represent a character.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="c-language-syntax"><a class="header" href="#c-language-syntax">C Language Syntax</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="c-language-syntax"><a class="header" href="#c-language-syntax">C Language Syntax</a></h1>
 <h2 id="functions-1"><a class="header" href="#functions-1">Functions</a></h2>
 <p>In the C programming language large programs can be organized into smaller, reusable blocks of code called functions. The one C function all programs <strong>must</strong> have is the <em>main</em> function. This is where every program starts execution. </p>
 <p>The syntax of a function is <code>return_type function_name( parameters ) { /* Code inside function */ }</code>. The return type must be a standard C data type or a struct or enum (we will cover them later). If the function returns no value then the return type must be specified as <em>void</em>. In the event no return type is specified then the compiler assumes it to be <em>int</em>. The code inside a function is contained within curly braces.</p>
@@ -2775,7 +2778,7 @@ EXPECTED_OUTPUT : X is 25
 <p>Note that almost everything that can be done with <em>switch</em> statement can also be accomplished using <em>if-else</em>. But there may be times when one form is preferable over the other for conciseness or readability.</p>
 <h2 id="summary-1"><a class="header" href="#summary-1">Summary</a></h2>
 <p>We covered a lot of C programming language syntax in this section. While we have not covered all of the language this should be sufficient for the reader to tackle the programming exercises in the next section. We will cover additional bits of the language as and when we need to use them.</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="c-programming-exercises"><a class="header" href="#c-programming-exercises">C Programming Exercises</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="c-programming-exercises"><a class="header" href="#c-programming-exercises">C Programming Exercises</a></h1>
 <p>Here are some programming exercises for you to try. Just like in previous exercises, try to complete it yourself before looking at the solution.</p>
 <h2 id="count-leading-zeros-loops-integer-data-types"><a class="header" href="#count-leading-zeros-loops-integer-data-types">Count leading zeros (Loops, Integer data types)</a></h2>
 <p>The objective of this exercise is to count the number of 1s in the binary representation of an integer.</p>
@@ -2992,7 +2995,7 @@ RUN_COMMAND: make run
 <pre><code>COMPILE_COMMAND: make print_num_days_in_month_solution.elf
 RUN_COMMAND: make run
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="introduction-to-arrays-and-pointers-in-c"><a class="header" href="#introduction-to-arrays-and-pointers-in-c">Introduction to Arrays and Pointers in C</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="introduction-to-arrays-and-pointers-in-c"><a class="header" href="#introduction-to-arrays-and-pointers-in-c">Introduction to Arrays and Pointers in C</a></h1>
 <h2 id="arrays"><a class="header" href="#arrays">Arrays</a></h2>
 <p>Quite often it is useful to group data into contiguous locations in memory. For example, say we are writing a program to compute the average temperature of a city. The data we are given is the daily temperature measured at noon.</p>
 <p>Below is a function that computes the average:</p>
@@ -3292,7 +3295,7 @@ RUN_COMMAND: make run
 <pre><code>COMPILE_COMMAND: make matrix_addition_solution.elf
 RUN_COMMAND: make run
 </code></pre>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="from-c-programs-to-assembly-code"><a class="header" href="#from-c-programs-to-assembly-code">From C Programs to Assembly Code</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="from-c-programs-to-assembly-code"><a class="header" href="#from-c-programs-to-assembly-code">From C Programs to Assembly Code</a></h1>
 <p>In the previous chapter we learnt the syntax of the C programming language and practiced writing a few programs in C. As mentioned earlier the CPU understands instructions that are part of its ISA. Programs may be written in assembly language and a special application called an <em>Assembler</em> converts assembly code into binary format that can be read and executed by the processor.</p>
 <p>So how does code written in C get executed by the processor? The C code is translated into assembly and that resulting assembly is then converted into a binary file which is executed on the processor. This is done by a combination of three applications - compiler, assembler, and linker. </p>
 <p>The <em>compiler</em> translates code from a high-level language, like C, to assembly. The <em>assembler</em> then converts the assembly code to a binary format. In this chapter we will see what assembly code is generated by the compiler for some common code fragments in C. We will also learn how to disassemble binary files back to assembly code. But first, let us start by understanding the tools used for compilation and disassembly.</p>
@@ -3493,7 +3496,7 @@ Disassembly of section .rodata:
 <li>The ELF file is concerted to a binary file that can be used to run bare-metal</li>
 <li>How to disassemble an ELF or object file </li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="disassembly-examples"><a class="header" href="#disassembly-examples">Disassembly examples</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="disassembly-examples"><a class="header" href="#disassembly-examples">Disassembly examples</a></h1>
 <p>In this chapter we will examine the disassembly of some common C language syntax.</p>
 <h2 id="disassembly-of-control-flow-syntax"><a class="header" href="#disassembly-of-control-flow-syntax">Disassembly of control-flow syntax</a></h2>
 <p>Let us now look at disassembly of examples we had introduced in the <strong>Control flow</strong> subsection from <strong>C Language Syntax</strong>.</p>
@@ -3987,13 +3990,13 @@ void swap(int *num1_ptr,int *num2_ptr)
 <li>How to examine the disassembly output of ELF executable files</li>
 <li>Analysis of disassembly output of common C language constructs</li>
 </ul>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h1>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><h1 id="conclusion"><a class="header" href="#conclusion">Conclusion</a></h1>
 <p>This concludes part one of the journey to learning ARM architecture and C programming. So far we have encountered the basics of AArch64 assembly language and the C programming language. We have learnt how C programs can be compiled to assembly code and and how a compiled binary can be disassembled back into assembly. We covered several user level AArch64 assembly instructions and some portion of the C programming syntax. </p>
 <p>However, what we have learnt is only the beginning. In part 2 and beyond we will learn more AArch64 assembly and architecture - including exception levels, virtual memory, multi-processing, coherence etc. - and explore using those features using assembly and C programs.</p>
 <hr />
 <p>Send comments and suggestions to (llpsuggestions):
 <img src="images/email_address.png" alt="drawing" width="180"/></p>
-<div style="break-before: page; page-break-before: always;"></div><ol>
+<div id="chapter_begin" style="break-before: page; page-break-before: always;"></div><ol>
 <li>
 <p><a href="https://developer.arm.com/documentation/ddi0487/ga/?lang=en">ARM Architecture Reference Manual ARMv8, for ARMv8-A architecture profile</a></p>
 </li>
@@ -4024,16 +4027,24 @@ void swap(int *num1_ptr,int *num2_ptr)
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
+                        
+
+                        
+
                         <div style="clear: both"></div>
                     </nav>
                 </div>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+
+                
             </nav>
 
         </div>
 
+        
         <!-- Livereload script (if served using the cli tool) -->
         <script type="text/javascript">
             var socket = new WebSocket("ws://localhost:3000/__livereload");
@@ -4048,21 +4059,42 @@ void swap(int *num1_ptr,int *num2_ptr)
                 socket.close();
             }
         </script>
+        
+
+        
+
+        
+
+        
         <script type="text/javascript">
             window.playground_copyable = true;
         </script>
+        
+
+        
+
+        
         <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
         <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
         <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
         <script src="book.js" type="text/javascript" charset="utf-8"></script>
 
         <!-- Custom JS scripts -->
+        
+
+        
+        
         <script type="text/javascript">
         window.addEventListener('load', function() {
             window.setTimeout(window.print, 100);
         });
         </script>
+        
+        
+
     </body>
 </html>

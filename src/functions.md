@@ -15,11 +15,11 @@ For example, say we are developing software for a scientific application and the
  lsr w1, w1, #1    //Divide the result by 2
 ```
 
-In the assembly code we expect that the value of n (an unsigned integer) should be made available in register w0. The three lines above will then compute the sum of integers from 1-n and place the result in w1. Note that to divide by 2 we use the lsr (right shift) instruction. If you do not understand how the lsr instruction is equivalent to division, review the chapters on binary arithmetic and integer instructions.
+In the assembly code above we expect the value of n (an unsigned integer) to be made available in register w0. The three lines above will then compute the sum of integers from 1-n and place the result in w1. Note that to divide by 2 we use the `lsr` (right shift) instruction. If you do not understand how the `lsr` instruction is equivalent to division, review the chapters on binary arithmetic and integer instructions.
 
 Now back to the complex (hypothetical) program we were developing...
 
-We want to compute the sum of n integers at different points in our program. At each instance we want to compute the sum up to a different n. Sometimes the sum of numbers from 1-6, sometimes from 1-22 and later in the program 1-n (where n can be a different number). Example of the really large program:
+We want to compute the sum of *n* integers at different points in our program. The value of *n* also changes at each instance. Sometimes the sum of numbers from 1-6, sometimes from 1-22 and later in the program 1-n (where n can be a different number). Below is an example of the really large program:
 
 ```armasm
 //Lots of complicated scientific computations
@@ -92,15 +92,13 @@ b sumOfN //Branch to the code that computes sum-of-N
 
 However, this does not work (yet). Why so? Well, we can use an unconditional branch instruction to keep jumping to the code to compute sumOfN. **But, after executing the code at sumOfN, how do we get back to the next instruction in the program?** At each instance in the program where we jump to sumOfN the code has to return to the immediate next instruction. So the location to jump back after executing sumOfN changes.
 
-What we want is to be able to jump to sumOfN when needed, execute it, and jump back to the location from where we "called" the sumOfN "function". There are a few special instructions in the ARM ISA that can be used to accomplish this objective. The first one is the "branch with link" instruction (BL, BLR). This instruction is used to jump from any location in code to the start of a function. The second instruction is the return (RET) instruction that returns from the function back to the instruction just after BL/BLR.
+What we want is to be able to jump to sumOfN when needed, execute it, and jump back to the location from where we **called** the sumOfN **function**. There are a few special instructions in the ARM ISA that can be used to accomplish this objective. The first one is the "branch with link" instruction (BL, BLR). This instruction is used to jump from any location in code to the start of a function. The second instruction is the return (RET) instruction that returns from the function back to the instruction just after BL/BLR. The branch with link instruction stores the address of the next instruction (i.e. the instruction following itself) into register X30 and jumps to the memory location specified by the programmer.
 
-The branch with link instruction stores the address of the next instruction (i.e. the instruction following itself) into register X30 and jumps to the memory location specified by the programmer.
-
-Branch with link variants
+Branch with link variants:
  - BL immediate_address  : address to branch is encoded as an immediate
  - *BLR <X<sub>n</sub>>*   : address to branch is contained in X register
 
-The *RET {<X<sub>n</sub>>}* instruction is the last instruction in a function. It jumps to the address contained in the specified register. If the register name is omitted the contents of X30 are used as the address to jump to.
+The *RET {<X<sub>n</sub>>}* instruction is generally the last instruction in a function. It jumps to the address contained in the specified register. If the register name is omitted the contents of X30 are used as the address to jump to.
 
 So here is what our large program looks like with BL and RET instructions added.
 
@@ -145,17 +143,20 @@ The key points to understand from the above discussion are:
 
 ## Exercise 1A: Function to count leading zeros
 
-Write a function to count the number of leading zeros. The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s
+In this exercise you will write a assembly function to count the number of leading zeros in a given number. The number will be specified in register *w0*. The function should return the count of leading 0s in register *w0*. What are leading zeros? They are the 0s that occur in a binary number before the first 1. For example, the 32-bit representation of 1 is 0b00000000000000000000000000000001. It has 31 leading 0s.
+
+The template for this exercise is provided in exercises/functions/count_leading_zeros.s and the solution is at exercises/functions/count_leading_zeros_solution.s
 
 To compile and run:
 ```
+From within the directory exercises/functions/
 COMPILE_COMMAND: make count_leading_zeros.elf
 RUN_COMMAND: make run
 ```
 
 ## Nested Function Calls
 
-In a program it is possible for one function to call another. For example, sumOfN function could call addOne to add 1 to the value passed in.
+It is possible for one function to call another. In the example below, the sumOfN function calls a new function named addOne. This function adds 1 to the value passed in.
 
 ```armasm
 sumOfN:
@@ -174,12 +175,13 @@ addOne:
 
 ```
 
+**FIXME:** Shouldn't addOne use the value in w0 and return the result also in w0?
 
 When we use the *BL/BLR* to call a function the return address is stored in X30. So, from our program when we call sumOfN the return address is stored in X30. From sumOfN, when  we call addOne the X30 register will be overwritten with the address of the instruction to return to after executing addOne. Therefore, we save the contents of X30 in the stack before calling addOne function. After the function call we restore the contents of X30 from the stack and then return from sumOfN.
 
 Why save and restore X30 from the stack? Why not save it another register?
 
-In a real program, the other registers may be holding values used in  computation and so may not be available. Plus we do not know if the function being called would overwrite our chosen register. Therefore, the correct practice is to use the stack to save X30.
+This is a simple program so we can store X30 in another register. However, in larger programs other registers may be used to hold values and so may not be available. Also, we do not know if the function being called would overwrite our chosen register. Therefore, the correct practice is to use the stack to save X30.
 
 
 ## Passing parameters via registers
@@ -188,7 +190,7 @@ Some functions may need data to be given to them to operate. For example the sum
 
 Parameters are passed quite commonly using registers. By convention and as specified in the [ARM Procedure Call Standard](https://github.com/ARM-software/abi-aa/releases) registers *r0-r7* are used to pass parameters. If more than 8 parameters have to be passed to a function the remaining can be passed by pushing them on the stack.
 
-The *r0-r7* registers can also be used to return values from the function. In the example above we used the *w1* register to return values from the function.
+The *r0-r7* registers can also be used to return values from the function. In the example above we used the *w1* register to return values from addOne. A function can return values by merely placing/leaving the values in a return register.
 
 ## Exercise 1B: Memcopy as a function
 
@@ -270,7 +272,7 @@ So far we have been talking about small programs where we use very few of the av
 
 A library can be thought of a set of functions the implement specific actions. For example, a math library can implement different mathematical operations. The functions in the library can be used by other programmers in their own programs.
 
-Even though the architecture permits the programmer to use registers *r0-r30* as they choose, in practice sharing code makes it necessary to have some conventions. For example, a programmer could write a library with functions that expect input parameters in registers *r13-r20*. How would others using that code know to pass parameters using those specific registers? One could say - "read the documentation". But if every programmer were to pick their own favorite registers for different purposes then there would be a lot of documentation to read and adhere to - a total mess.
+Even though the architecture permits the programmer to use registers *r0-r30* as they choose, in practice, sharing code makes it necessary to have some conventions. For example, a programmer could write a library with functions that expect input parameters in registers *r13-r20*. How would others using that code know to pass parameters using those specific registers? One could say - "read the documentation". But if every programmer were to pick their own favorite registers for different purposes then there would be a lot of documentation to read and adhere to - a total mess.
 
 Also, most programs are written in higher level programming languages like C/C++, Rust, Swift etc. Compilers (in combination with assemblers) convert programs written in these languages to assembly and after that to machine code. Using a common convention will make it easier for code compiled using different compilers to correctly interoperate.
 
@@ -290,7 +292,7 @@ The table below is from the ARM PCS. Readers are encouraged to refer to the full
 | r30 | link register |
 | SP | stack pointer |
 
-**Note:** The stack pointer (SP) should only be used to hold the address of top of stack. Register *r30* (link register) should be used to hold the address of a return.
+**Note:** The stack pointer (SP) should only be used to hold the address of top of stack. Register *r30* (link register) should be used to hold the address to return return from a function call. Functions should store *r30* on the stack (and restore it when appropriate) if they call other functions.
 
 As per the PCS, *r0-r7* are to be used for parameters and results. A called function may change the contents of these registers. So programmers should not expect these register contents will be preserved after a function call. Registers *r9-r15* and *r9-r15* can be used as temporary registers. This means they can be overwritten and these registers may not be preserved after a function call.
 
@@ -301,8 +303,9 @@ Callee-saved registers *r19-r28* are guaranteed to be preserved after a function
 
 ## Memcopy using variables on the stack
 
-To illustrate how the stack can be used to store values local to a function we give you yet another version of the memcopy function. In this version we have the stack to hold the value for holding the index as we iterate over the elements and copy them.
+To illustrate how the stack can be used to store values local to a function we give you yet another version of the memcopy function. In this version we use the stack to hold the value of the index as we iterate over the elements and copy them. Note that this example is strictly to illustrate how the stack can be used. Generally, if it is possible to hold values in registers then that is more optimal than using the stack. The stack is used when either there are no free registers or if the data being accessed is too large to store in registers. Now on to the example...
 
+This version of the memcopy function takes three parameters as inputs in registers x0, x1, and x2. These parameters should contain the memory address of the source, the memory address of the destination and the number of characters in the string. Register x3 is used to count the number of characters copied and also as an index to address each memory location to copy over. Also, the code copies data 1-byte at a time from the source to destination.
 
 ```armasm
 
@@ -429,13 +432,12 @@ RUN_COMMAND: make run
 
 ## Recursion
 
-Recursion is a simple but important programming concept (actually, more like a trick) that can be used for some kinds of problems. As you are already aware functions can call other functions. A recursive function calls itself! Every recursive function will call itself until a specified condition is satisfied. When the terminating condition is satisfies the function stops calling itself and typically returns. 
-
+Recursion is a simple but important programming concept (actually, more like a trick) that can be used for some kinds of problems. As you are already aware functions can call other functions. A recursive function calls itself! Every recursive function will call itself until a specified condition is satisfied. When the terminating condition is satisfied the function stops calling itself and returns. 
 
 Here is a high level description of how this function (*sum_of_n_recursive*) works. The function is passed an integer - say N - in the *X0* register and it computes the sum of numbers from 1 to N by repeatedly calling itself. The result is returned in the *X0* register. By the way, remember that *w0* refers to the lower 32 bits of *x0*. The pseudo code for the function is as follows:
 
 1. Compare the passed in value with 1
-2. If the value is one then return the passed in value (just dont modify *w0* register)
+2. If the value is one then return the passed in value (just don't modify the *w0* register)
 3. If the value  (*w0*) is not 1 then... 
     1. copy the value in *w0* into *w9*
     1. subtract 1 from *w0*
@@ -444,7 +446,7 @@ Here is a high level description of how this function (*sum_of_n_recursive*) wor
     1. return leaving the result in w0
 
 
-The assembly code for *sum_of_n_recursive* is below. It is also available in the file exercises/functions/sum_of_n.s.
+The assembly code for *sum_of_n_recursive* is below. It is also available in the file exercises/functions/sum_of_n.s. We recommend readers to understand, compile and run the code. An exercise later in this section will give readers an opportunity to write their own recursive program.
 
 ```armasm
     // Recursive function to Find sum of all integers smaller than or equal to given number.
@@ -471,6 +473,8 @@ RUN_COMMAND: make run
 
 
 ## Practice exercises
+
+We have seen some of the AArchh64 assembly instructions and some concepts in programming like looping, organizing code into functions, recursion etc. Now it is time to put that knowledge to use. This sub-section contains a few code challenges for the reader to attempt. Unlike in previous sections, solutions are not provided for these exercises.
 
 ### Function to add and subtract matrices
 

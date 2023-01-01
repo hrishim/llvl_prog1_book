@@ -64,11 +64,6 @@ To get you started we will discuss the code for the first exercise in detail. Op
 
 ```
 
-To compile and run:
-```
-COMPILE_COMMAND: ex_1a.elf
-RUN_COMMAND: make run
-```
 
 In *ex_1a.s* we have provided set up code code that will store the text "Hello" into one location in memory and "Howdy" in another location in memory. The setup also provides the start address of "Hello" (in X0) and the start address of "Howdy" (in X1). The objective of this exercise is to copy the contents of memory starting at X0 into memory location starting at X1.
 
@@ -132,11 +127,6 @@ In the example above, the value contained in memory location x0 is loaded into r
 
 **Programming exercise:** Write the code for exercise ex_1b.s using post-indexed addressing mode.
 
-To compile and run:
-```
-COMPILE_COMMAND: ex_1b.elf
-RUN_COMMAND: make run
-```
 
 **Pre-indexed Addressing Mode**
 
@@ -152,12 +142,6 @@ In the example, the memory address is computed as the sum of x0 and 1. The byte 
 
 **Programming exercise:** Write the code for exercise ex_1c.s using pre-indexed addressing mode. Hint - you can load (and store) the first character using a different addressing mode.
 
-To compile and run:
-```
-COMPILE_COMMAND: ex_1c.elf
-RUN_COMMAND: make run
-```
-
 **Base Plus Register Offset Addressing Mode**
 
 In this mode the address is the sum of the base register and an offset that is contained in another register.
@@ -169,15 +153,7 @@ Example:
 
 The address for this load instruction is computed by adding the base register x0 with the register x2.
 
-**Programming exercise:** Write the code for exercise ex_1d.s using register offset addressing mode. 
-
-To compile and run:
-```
-COMPILE_COMMAND: ex_1d.elf
-RUN_COMMAND: make run
-```
-
-Hint - you can save an immediate value into a register using the **mov** instruction like this
+**Programming exercise:** Write the code for exercise ex_1d.s using register offset addressing mode. Hint - you can save an immediate value into a register using the **mov** instruction like this
 
 ```armasm
   mov  x2, #0
@@ -232,12 +208,6 @@ The **ldrh** and **strh** instructions load a half-word from memory (2 bytes). T
 ## Copy memory using operations of different sizes
 Now for a small challenge. In file *exercises/memory_instructions/ex_1e.s* the text "Welcome To ARM Assembly World" has been stored in memory and the address of the first byte of this string is placed in x0. The register x1 is loaded with the address of a memory location to which you may write. Using any combination of word, half-word, double-word and byte operations copy the text pointed to by x0 to the location pointed to by x1.
 
-To compile and run:
-```
-COMPILE_COMMAND: ex_1e.elf
-RUN_COMMAND: make run
-```
-
 <details>
   <summary>The solution to this exercise is below (also in exercises/memory_instructions/ex_1e_solution.s)</summary>
 
@@ -264,13 +234,7 @@ RUN_COMMAND: make run
 ## Copying data using a loop
 So far we have used multiple load and store instructions to copy data. For instance, in ex_1a.s we used five load and five store instructions to copy the letters "Hello" from one location to another.
 
-In this section we will see how to do the same using a **loop** and fewer load and store instructions instructions. The code in this section can be found in the file *exercises/memory_instructions/ex_1f_solution.s*. After reading the explanation in this section we recommend readers try to replicate this program using the file *exercises/memory_instructions/ex_1f.s*. This file contains markers indicating where code must be filled in.
-
-To compile and run:
-```
-COMPILE_COMMAND: ex_1f.elf
-RUN_COMMAND: make run
-```
+In this section we will see how to do the same using a **loop** and fewer load and store instructions instructions. The code in this section can be found in the file *exercises/memory_instructions/ex_1f_solution.s*. After reading the explanation in this section we recommend readers try to replicate this program using the file *exercises/memory_instructions/ex_1f.s*. This file contains markers indicating where code must be filled in. Now on to the program...
 
 Our objective is to copy a string of unknown length from one location to another. In this exercise, that string is "Hello" and it has 5 letters. But we want to write a generic program that will work even if the string were longer or shorter. Strings are stored in memory using a format called ASCII. There are other formats to represent alphabets in computers but this one is one of the simplest and most popular - though it does have limitations.
 
@@ -376,12 +340,6 @@ We have provided solutions to for the exercises. But we encourage readers to try
 
 The file ex_2a.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to copy a string from one memory location to another but the new string should be a reversed version of the original. So if the original string was "Hello" the new string should be "olleH".
 
-To compile and run:
-```
-COMPILE_COMMAND: ex_2a.elf
-RUN_COMMAND: make run
-```
-
 The address of the string to reverse is provided in the register x0. The memory address where the reversed string should be placed is provided in register x1. Sufficient memory has been provided to hold both strings.
 
 Below is pseudo code to reverse the string. You can use this as a guide to write the assembly code.
@@ -395,12 +353,6 @@ The solution for this exercise is provided in ex_2a.solution.s. We recommend tha
 ## Exercise ex_2b
 
 The file ex_2b.s provided in the exercise section is to be used for this challenge. The objective of this exercise is to reverse a string in-place. This means the string should not be copied to a new location but can be copied onto itself.
-
-To compile and run:
-```
-COMPILE_COMMAND: ex_2b.elf
-RUN_COMMAND: make run
-```
 
 The address of the string to be reversed is in register x0. Below is the pseudo code for the program:
 
