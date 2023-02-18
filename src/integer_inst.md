@@ -26,6 +26,7 @@ The address of the first element of the array is stored in the register x4. We w
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make sum.elf
 RUN_COMMAND: make run
 ```
@@ -186,6 +187,7 @@ The code to find the number of leading zeroes is below. Try typing it out into t
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make clz.elf
 RUN_COMMAND: make run
 ```
@@ -271,6 +273,7 @@ Below is pseudo code to compute the factorial. You can use this as a guide to wr
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make factorial.elf
 RUN_COMMAND: make run
 ```
@@ -340,6 +343,7 @@ Below is pseudo code to add two matrices. You can use this as a guide to write t
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make matrix_addition.elf
 RUN_COMMAND: make run
 ```
@@ -378,6 +382,7 @@ For this exercise use the file exercises/integer_instructions/matrix_subtract.s.
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make matrix_subtract.elf
 RUN_COMMAND: make run
 ```
@@ -402,6 +407,7 @@ Below is a pseudo code to generate the fibonacci series. You can use this as a g
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make fibonacci.elf
 RUN_COMMAND: make run
 ```
@@ -474,6 +480,7 @@ The objective of this exercise, is to print the truth table for XOR operation. F
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make xor_truth_table.elf
 RUN_COMMAND: make run
 ```
@@ -500,6 +507,7 @@ For this exercise use the file exercises/integer_instructions/shift_to_multiply_
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make shift_to_multiply_divide.elf
 RUN_COMMAND: make run
 ```
@@ -521,6 +529,7 @@ For this exercise use the file exercises/integer_instructions/count_ones.s.
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make count_ones.elf
 RUN_COMMAND: make run
 ```
@@ -538,6 +547,7 @@ This instruction counts the number of leading zeroes of the number stored in Wn 
 
 To compile and run:
 ```
+DIRECTORY: exercises/integer_instructions/
 COMPILE_COMMAND: make clz_inst.elf
 RUN_COMMAND: make run
 ```

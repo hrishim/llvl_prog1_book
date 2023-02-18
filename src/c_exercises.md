@@ -6,7 +6,7 @@ Here are some programming exercises for you to try. Just like in previous exerci
 
 The objective of this exercise is to count the number of 1s in the binary representation of an integer.
 
-File to be used for this exercise is : exercises/c_functions/count_leading_zeros.c. This file provides following skeleton. You will have to add code to count the number of leading zeros in variable 'integer_value' and place the result in variable 'count'.
+The file to be used for this exercise is : exercises/c_functions/count_leading_zeros.c. It provides the skeleton code shown below. You will have to add code to count the number of leading zeros in variable 'integer_value' and place the result in variable 'count'.
 
 ```c
 
@@ -45,6 +45,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make count_leading_zeros.elf
 RUN_COMMAND: make run
 ```
@@ -53,18 +54,18 @@ RUN_COMMAND: make run
 1. Initialize count to zero
 2. Some kind of loop start. Determine what should be the loop termination condition?
      Hint: Unisgned bit has 32 bits
-3. Keep left shifting the provided integer value by '1'
-4. Check if the leftmost bit is '1' or '0'
-     Hint: Which logical operation can be used for this? You can refer to "Logical operations" section in section 6.2 
+3. Keep left-shifting the integer value by '1'
+4. Check if the leftmost bit is '1' or '0'. Which logical operation can be used for this check? You can refer to "Logical operations" in section 6.2 
 5. Increment the count value if the leftmost bit is '0' and go to start of the loop started in step 2
 6. Exit the loop if the the leftmost bit is '1'
 7. Return the count value
 
 
-A sample implementation of the above pseudo code is available in count_leading_zeros_solution.c file. 
+A sample implementation of the above pseudo code is available in count_leading_zeros_solution.c file. Like always, try to write the program yourself before looking at the solution.
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make count_leading_zeros_solution.elf
 RUN_COMMAND: make run
 ```
@@ -73,9 +74,9 @@ RUN_COMMAND: make run
 ## Factorial (Loops, multiplication)
 
 
-In this exercise we will compute the factorial of a number. Factorial value of a number 'N' is multiplication of all integers smaller than or equal to 'N'. For example 4! (four factorial) = 4 * 3 * 2 * 1.
+In this exercise we will compute the factorial of a number. Factorial value of a number 'N' is the multiplication of all integers smaller than or equal to 'N'. For example 4! (four factorial) = 4 * 3 * 2 * 1.
 
-File to be used for this exercise is : exercises/c_functions/factorial.c. This file provides following skeleton. You will have to add code to compute factorial and place the result in variable 'factorial_val'.
+The file to be used for this exercise is : exercises/c_functions/factorial.c. It provides the skeleton code below. You will have to add code to compute the factorial of a given number and place the result in the variable 'factorial_val'.
 
 ```c
 unsigned int factorial(unsigned int n)
@@ -112,6 +113,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make factorial.elf
 RUN_COMMAND: make run
 ```
@@ -127,6 +129,7 @@ A sample implementation of the above pseudo code is available in factorial_solut
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make factorial_solution.elf
 RUN_COMMAND: make run
 ```
@@ -135,7 +138,7 @@ RUN_COMMAND: make run
 
 In this exercise we will compute the factorial of a number using recursion. Factorial value of a number 'N' is multiplication of all integers smaller than or equal to 'N'.
 
-File to be used for this exercise is : exercises/c_functions/factorial_recursive.c. This file provides following skeleton. You will have to add code to compute factorial using recursion.
+The file to be used for this exercise is: exercises/c_functions/factorial_recursive.c. It provides the skeleton code below.. You will have to add code to compute factorial using recursion.
 
 ```c
 unsigned int factorial_recursive(unsigned int n)
@@ -162,6 +165,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make factorial_recursive.elf
 RUN_COMMAND: make run
 ```
@@ -176,6 +180,7 @@ A sample implementation of the above pseudo code is available in factorial_recur
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make factorial_recursive_solution.elf
 RUN_COMMAND: make run
 ```
@@ -185,7 +190,7 @@ RUN_COMMAND: make run
 
 The objective of this exercise is to reverse the digits of a decimal number.
 
-File to be used for this exercise is : exercises/c_functions/reverse_num.c. This file provides following skeleton. You will have to add function to reverse the digits of provided number.
+File to be used for this exercise is : exercises/c_functions/reverse_num.c. It provides the skeleton code below. You will have to add function to reverse the digits of provided number.
 
 ```c
 void main()
@@ -205,6 +210,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make reverse_num.elf
 RUN_COMMAND: make run
 ```
@@ -220,15 +226,16 @@ A sample implementation of the above pseudo code is available in reverse_num_sol
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make reverse_num_solution.elf
 RUN_COMMAND: make run
 ```
 
 ## Print number of days in a month (Switch/Case)
 
-The objective of this exercise is to find number of days in given month number using switch statement. For example, if the value is 2, it means February and 12 means December
+The objective of this exercise is to return the number of days in given month using switch statement. The month is passed as an integer parameter to the function and the number passed maps to the appropriate month. For example, if the input value is 2, it refers to February and 12 means December
 
-File to be used for this exercise is : exercises/c_functions/print_num_days_in_month.c. This file provides following skeleton. You will have to add a function to find the number of days in given month.
+The file to be used for this exercise is : exercises/c_functions/print_num_days_in_month.c. It provides the skeleton code below. You will have to add a function named `find_num_days_in_month` to find the number of days in given month. Your function should take one integer parameter and return an integer.
 
 ```c
 void main()
@@ -248,12 +255,13 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make print_num_days_in_month.elf
 RUN_COMMAND: make run
 ```
 
 **Pseudo code**:
-1. Make use a switch statement ( introduced in section 10.2 C language syntax) to test the value passed as argument (say month_num)
+1. Make use a switch statement (introduced in section 10.2 C language syntax) to test the value passed as argument (say month_num)
 2. If the value of month number (month_num) is greater than 12, print an error message that an invalid month number has been passed
 3. If the month number (month_num) is one out of 1, 3, 5, 7, 10 or 12, return result as 31 Days
 4. If the month number(month_num) is one out of 4, 6, 9 or 11 return result as 30 Days
@@ -263,7 +271,7 @@ A sample implementation of the above pseudo code is available in print_num_days_
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/ 
 COMPILE_COMMAND: make print_num_days_in_month_solution.elf
 RUN_COMMAND: make run
 ```
-

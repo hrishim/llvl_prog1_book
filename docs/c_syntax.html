@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html" class="active"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html" class="active"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li><li class="chapter-item expanded "><a href="c_structs.html"><strong aria-hidden="true">10.5.</strong> Structs</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples: Control-flow statements</a></li><li class="chapter-item expanded "><a href="disassembly2.html"><strong aria-hidden="true">11.2.</strong> Disassembly examples: Functions</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -167,13 +167,14 @@
                     <main>
                         <h1 id="c-language-syntax"><a class="header" href="#c-language-syntax">C Language Syntax</a></h1>
 <h2 id="functions"><a class="header" href="#functions">Functions</a></h2>
-<p>In the C programming language large programs can be organized into smaller, reusable blocks of code called functions. The one C function all programs <strong>must</strong> have is the <em>main</em> function. This is where every program starts execution. </p>
-<p>The syntax of a function is <code>return_type function_name( parameters ) { /* Code inside function */ }</code>. The return type must be a standard C data type or a struct or enum (we will cover them later). If the function returns no value then the return type must be specified as <em>void</em>. In the event no return type is specified then the compiler assumes it to be <em>int</em>. The code inside a function is contained within curly braces.</p>
+<p>As you already know large programs can be organized into smaller, reusable blocks of code called functions. We have used functions in the assembly exercises earlier. In the C programming language all programs <strong>must</strong> have a function named <em>main</em>. This function is where every program starts execution. </p>
+<p>The syntax of a function is <code>return_type function_name( parameters ) { /* Code inside function */ }</code>. The return type must be a standard C data type or a struct or enum. Structs and enums are additional data types in C that we will cover later. If the function returns no value then the return type must be specified as <em>void</em>. In the event no return type is specified then the compiler assumes it to be <em>int</em>. The code inside a function is contained within curly braces.</p>
 <p>Examples of functions:</p>
 <pre><code class="language-c">// These are examples of functions not a full working program. 
 // That is why there is no main().
 
 void function1() {
+  /* This function takes no parameters and returns no value */
   int x = 2;
   char y = 'i';
   uart_puts(&quot;Value of x is: &quot;);
@@ -189,6 +190,7 @@ int addOneToThis(int x) {
   return x + 1;
 }
 
+// Here we call the function addOneToThis(int) from within another function
 void example_fn() {
   int d = 2;
   int f = addOneToThis(d);
@@ -196,10 +198,12 @@ void example_fn() {
   uart_print_num(f);
 }
 </code></pre>
-<p>All functions have a name that is used to call the function. Functions can optionally take parameters. In the example above <em>function1</em> does not take parameters. The return type of the function is <em>void</em> meaning that it does not return any value.  This is a simple function that takes no value and returns no value. It merely prints an integer and a character by making calls to appropriate print functions. Note that we use <strong>two different functions</strong> to print strings and integers. </p>
-<p>The function <em>addOneToThis</em> takes one integer parameter (also called <em>argument</em>) and returns an integer value. This function can be called from any other function by passing an integer value as the argument. The third function <em>example_fn</em> also takes no parameters and does not return any value. It calls <code>addOneTothis(int)</code>.</p>
-<p>The variables that are defined inside a function are local to that function and available only inside the function. This includes any parameters that are passed to the function. In the code above the <em>integer</em> variable <em>x</em> in <em>function1</em> is local to the function and cannot be accessed by any other function including <em>main</em>. When <em>uart_print_num</em> is called a <strong>copy</strong> of the contents of <em>x</em> are passed to it as a parameter.</p>
-<p>Similarly, in the case of <em>example_fn</em> the variable <em>d</em> and <em>f</em> are visible only inside the function. They are not accessible from any other function including <em>addOneToThis</em>. We pass a copy of <em>d</em> to <em>addOneToThis</em> through its parameter named <em>x</em>. When <em>x</em> is changed inside <em>addOneToThis</em> it does not alter the value of <em>d</em> in <em>example_fn</em>. The local copy of <em>d</em>, passed as a parameter, is the one that is modified. The modified value of <em>x</em> is returned by <em>addOneToThis</em>. A copy of the returned value is saved in <em>f</em> in <em>example_fn</em>. Furthermore, any variable that is defined inside <code>{ }</code> is local to the code within the braces.</p>
+<p>All functions have a name that is used to call the function. Functions can optionally take parameters. In the example above <em>function1</em> does not take parameters. The return type of the function is <em>void</em> meaning that it does not return any value.  This is a simple function that takes no value and returns no value. It merely prints an integer and a character by making calls to appropriate print functions. The functions <code>uart_puts(...)</code> and <code>uart_print_num(...)</code> are provided as part of this book. Whenever you compile the code for any exercise in this book those functions are automatically added to your program. <code>uart_puts(...)</code> is used to print text and <code>uart_print_num(...)</code> is used to print integers.</p>
+<p>The function <code>addOneToThis(int)</code> takes one integer parameter (also called <em>argument</em>) and returns an integer value. This function can be called from any other function by passing an integer value as the argument. Note that parameters are also variables and they are defined the same way. This function takes an integer parameter named <code>x</code>. To return a value from a function we use the <code>return</code> keyword followed by the value or expression. In <code>addOneToThis(int)</code> we return the expression <code>x + 1</code>. This statement will add 1 to the variable <code>x</code> and return the result to the caller.</p>
+<p>The third function - <code>example_fn()</code> - also takes no parameters and does not return any value. It calls <code>addOneTothis(int)</code> and stores the return value into a variable named <code>f</code>. Note that the type of <code>f</code> matches the return type of <code>addOneTothis(int)</code>.</p>
+<p>Variables defined inside a function are local to that function and available only inside the function. This includes any parameters that are passed to the function. In the code above, the variable <code>x</code> in <code>function1()</code> is local to the function and cannot be accessed by any other function including <code>main()</code>. In <code>function1()</code>, when <code>uart_print_num(...)</code> is called, a <strong>copy</strong> of the contents of <code>x</code> are passed to it as a parameter. This means that the content of the memory location <code>x</code> is copied to a new memory location. That new memory location is passed to  <code>uart_print_num(...)</code>.</p>
+<p>Similarly, in the case of <code>example_fn()</code> the variables <code>d</code> and <code>f</code> are visible only inside the function. They are not accessible from any other function. We pass a copy of <code>d</code> to <code>addOneToThis(int)</code> through its parameter named <code>x</code>. When <code>x</code> is changed inside <code>addOneToThis(int)</code> it does not alter the value of <code>d</code> in <code>example_fn()</code>. The local copy of <code>d</code>, passed as a parameter, is the one that is modified. Inside <code>addOneToThis(int)</code> the modified value of <code>x</code> is returned. A copy of the returned value is saved in a new memory location (different from <code>d</code>) called <code>f</code>. </p>
+<p>In summary, for the example above the variables <code>d</code> and <code>f</code> in <code>example_fn()</code> and the parameter <code>x</code> of <code>addOneToThis(int)</code> are distinct locations in memory. Furthermore, <code>x</code> is visible only to code inside the function <code>addOneToThis(int)</code> just as <code>d</code> and <code>f</code> are visible only inside <code>example_fn()</code>. In general, variables that are defined inside a pair of curly braces (i.e. { }) are accessible only within the braces. This is called the scope of the variable.</p>
 <h2 id="operators"><a class="header" href="#operators">Operators</a></h2>
 <p>The C programming language has the following operators:</p>
 <table><thead><tr><th>Arithmetic</th><th></th><th>Relational and Logical</th><th></th></tr></thead><tbody>
@@ -212,8 +216,7 @@ void example_fn() {
 <tr><td>++</td><td>increment</td><td>!=</td><td>is not equal to</td></tr>
 <tr><td>--</td><td>decrement</td><td></td><td></td></tr>
 </tbody></table>
-<p>We have already used the <em>add</em> operator in the example above. That operator takes two <em>integers</em> (or <em>floats</em>) and the expression returns a value of the same type. All arithmetic operators other than <em>increment</em> and <em>decrement</em> work the same way as <em>add</em>.</p>
-<p>The <em>increment</em> and <em>decrement</em> operators need only one input. They increase or decrease the value of that variable by 1.</p>
+<p>We have already used the <em>add</em> operator in the example above. That operator takes two <em>integers</em> (or <em>floats</em>) and the expression returns a value of the same type. All arithmetic operators other than <em>increment</em> and <em>decrement</em> work the same way as <em>add</em>. The <em>increment</em> and <em>decrement</em> operators need only one input. They increase or decrease the value of that variable by 1.</p>
 <pre><code class="language-c">// A version with increment operator
 int addOneToThis(int x) {
   return x++;
@@ -240,9 +243,9 @@ void preFixPostFixExample() {
   uart_print_num(x); // x = 2
 }
 </code></pre>
-<p>This code is available in file exercises/c_functions/prefix_postfix_example.s.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make prefix_postfix_example.elf
+<p>This code is available in file exercises/c_functions/prefix_postfix_example.s. To compile and run (from within exercises/c_functions):</p>
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make prefix_postfix_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT : 
 Value of y is:
@@ -254,11 +257,14 @@ Value of y is:
 Value of x is:
 2
 </code></pre>
-<h2 id="expressions-and-statements"><a class="header" href="#expressions-and-statements">Expressions and statements</a></h2>
-<p>In the C programming language an <em>expression</em> is a combination of operands and operators. Expressions typically return a value. Here are examples of expressions:</p>
-<pre><code class="language-c">x + 1
+<!-- ## Expressions and statements
 
-y &lt; 5
+In the C programming language an *expression* is a combination of operands and operators. Expressions typically return a value. Here are examples of expressions:
+
+```c
+x + 1
+
+y < 5
 
 a == b
 
@@ -266,25 +272,38 @@ a == b
 
 g = 0  //This is an assignment expression and it returns the value assigned to g
 
-</code></pre>
-<p>An <em>expression</em> becomes a <em>statement</em> when it is terminated by a semi-colon. Examples:</p>
-<pre><code class="language-c">x + 1;
+```
 
-y &lt; 5;
+Expressions are usually used in conjunction with control-flow statements. We will see control-flow syntax shortly. 
+
+
+An *expression* becomes a *statement* when it is terminated by a semi-colon. Examples:
+
+```c
+x + 1;
+
+y < 5;
 
 a == b;
 
 3 + f * 2;
 
 g = 0;
-</code></pre>
-<p>Of course variables have to be declared before use in <em>expressions</em> or <em>statements</em>. For example:</p>
-<pre><code class="language-c">int x;
+```
+
+Statements are usually 
+
+
+Of course variables have to be declared before use in *expressions* or *statements*. For example:
+
+```c
+int x;
 int j;
-</code></pre>
-<p>Curly braces (i.e. { }) are used to group declarations (i.e. int x;) and statements together into a <em>block</em>. Blocks do not have to be terminated by a semi-colon. Variables can be declared inside any block and their <em>scope</em> will be limited to the corresponding block. We will discuss scope of variables later in this section.</p>
+```
+
+Curly braces (i.e. { }) are used to group declarations (i.e. int x;) and statements together into a *block*. Blocks do not have to be terminated by a semi-colon. Variables can be declared inside any block and their *scope* will be limited to the corresponding block. We will discuss scope of variables later in this section. -->
 <h2 id="control-flow"><a class="header" href="#control-flow">Control flow</a></h2>
-<p>Control flow syntax can be used to selectively execute code or execute a certain section of code multiple times.</p>
+<p>Control flow syntax can be used to selectively execute code or execute a certain section of code multiple times. These are the C equivalent of branches, jumps, and loops that we encountered in the assembly programming section.</p>
 <h2 id="if-else"><a class="header" href="#if-else">If-else</a></h2>
 <p><em>if-else</em> expressions are used to selectively execute code if specific conditions are met. In an <em>if-else</em> pair only the <em>if-block</em> or the <em>else-block</em> will be executed. For example:</p>
 <pre><code class="language-c">// function returns the lower of two integers
@@ -307,13 +326,24 @@ int main()
 }
 
 </code></pre>
-<p>This code is available in file exercises/c_functions/if_else_example.s.</p>
-<p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make if_else_example.elf
+<p>This code is available in file exercises/c_functions/if_else_example.s. To compile and run:</p>
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make if_else_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT : 2
 </code></pre>
-<p>The condition being evaluated by the if block can be a variable or a expression. The <em>if-block</em> is executed if the variable is non-zero (of the expression evaluates to a non-zero value). Note that the <em>else-block</em> is completely optional. If the block is not present nothing is executed if the expression is 0. The program just moves on to the next line of code.</p>
+<p>The condition being evaluated by the if block can be a variable or a expression. The <em>if-block</em> is executed if the variable is non-zero (or the expression evaluates to a non-zero value). In the example above we have used the expression <code>x &lt;= y</code> as the condition for the if block. This expression will evaluate to 0 if the condition is not true and 1 if the condition is true. The <em>else-block</em> is completely optional. When it is not present, nothing is executed if the expression is 0. The program just moves on to the next line of code.</p>
+<p>In the example, curly braces (i.e. { }) are used to group declarations and statements together into a <em>block</em>. Blocks do not have to be terminated by a semi-colon. Variables can be declared inside any block and their <em>scope</em> will be limited to the corresponding block. </p>
+<p>In the event we have only one line of code for the <em>if</em> and <em>else</em> side we can use just a statement instead of a block. For example, the above function can be re-written this way:</p>
+<pre><code class="language-c">// function returns the lower of two integers
+int find_lower_int(int x, int y) {
+  if (x &lt;= y) 
+    return x;
+  else 
+    return y;
+}
+</code></pre>
+<p>The curly braces used to denote the if-block and else-block are each replaced by single statements. Blocks do not need to be terminated with a semi-colon. However, statements have to be ended with semi-colon. </p>
 <h3 id="loops"><a class="header" href="#loops">Loops</a></h3>
 <p>There are three types of loops in the C language:</p>
 <ul>
@@ -340,7 +370,8 @@ EXPECTED_OUTPUT : 2
 </code></pre>
 <p>This code is available in file exercises/c_functions/for_loop_example.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make for_loop_example.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make for_loop_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT : 
 Value of i:
@@ -356,9 +387,9 @@ Value of i:
 After the loop i is:
 5
 </code></pre>
-<p>In this loop the loop control variable <em>i</em> is first set to 0 - this is the first expression in the <em>for</em> statement. The value of this variable determines when the loop will end. The second expression in the statement is <em>i &lt; 5</em>. As long as this expression evaluates to a non-zero value (true) the loop will execute another iteration. The third expression - <em>i++</em> - is code that will be executed as part of the loop.</p>
-<p>At the start of the loop <em>i = 0</em> is executed <strong>once</strong> and the value of the loop control variable (<em>i</em>) is set to 0. This expression is not executed after the first time (i.e. in any iteration of the loop).</p>
-<p>The second expression - <em>i &lt; 5</em> - is executed at the beginning of every iteration of the loop. If the expression evaluates to <em>true</em> then the loop contents are executed. If not, control flow jumps to the code after the loop. The last expression - <em>i++</em> - increments the control variable and is executed as though it is part of the loop code. The <em>for</em> loop code will print:</p>
+<p>In this loop the loop control variable <code>i</code> is first set to 0 - this is the first expression in the <em>for</em> statement. The value of this variable determines when the loop will end. The second expression in the statement is <code>i &lt; 5</code>. As long as this expression evaluates to a non-zero value (true) the loop will execute another iteration. The third expression - <code>i++</code> - is code that will be executed as part of the loop.</p>
+<p>At the start of the loop <code>i = 0</code> is executed <strong>once</strong> and the value of the loop control variable <code>i</code> is set to 0. This expression is not executed after the first time (i.e. in any iteration of the loop).</p>
+<p>The second expression  <code>i &lt; 5</code> is executed at the beginning of every iteration of the loop. If the expression evaluates to <em>true</em> then the loop contents are executed. If not, control flow jumps to the code after the loop. The last expression <code>i++</code> increments the control variable and is executed as though it is part of the loop code. The <em>for</em> loop code will print:</p>
 <pre><code>Value of i:
 0
 Value of i:
@@ -372,13 +403,13 @@ Value of i:
 After the loop i is:
 5
 </code></pre>
-<p>In the first 5 iterations the value of <em>i</em> will be incremented by 1 during every iteration. So it will go from 0 till 4. As part of the code executing in the 5th iteration the value of <em>i</em> will be incremented to 5. At the beginning of the 6th iteration the comparison <em>i &lt; 5</em> will evaluate to 0 (false). So the loop contents are skipped and the remaining statements of code are executed.</p>
+<p>In the first 5 iterations the value of <code>i</code> will be incremented by 1 during every iteration. So it will go from 0 till 4. As part of the code executing in the 5th iteration the value of <code>i</code> will be incremented to 5. At the beginning of the 6th iteration the comparison <code>i &lt; 5</code> will evaluate to 0 (false). At the start of the next iteration the check <code>i&lt;5</code> will fail and so the loop contents are skipped and the remaining statements of code are executed.</p>
 <p>Another type of loop is the <em>while</em> loop. The general form of the while loop is:</p>
 <pre><code class="language-c">while (expr1) {
   /*loop code*/
 }
 </code></pre>
-<p>This loop is executed as long as the expression expr1 evaluates to a non-zero value (i.e. true). The expression can be any legal expression in the C programming language. Usually it will involve a relational/logical operator. This while-loop example gives the same result as the for-loop example above:</p>
+<p>This loop is executed as long as the expression expr1 evaluates to a non-zero value (i.e. true). The expression can be any legal expression in the C programming language. Usually it will involve a relational/logical operator. The while-loop example below gives the same result as the for-loop example above:</p>
 <pre><code class="language-c">void main() {
   int i= 0;
 
@@ -394,7 +425,8 @@ After the loop i is:
 </code></pre>
 <p>This code is available in file exercises/c_functions/while_loop_example.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make while_loop_example.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make while_loop_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT:
 Value of i:
@@ -410,7 +442,7 @@ Value of i:
 After the loop i is:
 5
 </code></pre>
-<p>In both the above loop constructs the loop termination condition is checked at the start of the loop. This means if the condition is not satisfied when the first iteration of the loop is encountered then the loop may be skipped. For example, in the while-loop code above if we initialize the value of <em>i</em> to be 5 or greater then the loop contents will not get executed.</p>
+<p>In both the above loop constructs the loop termination condition is checked at the start of the loop. This means if the condition is not satisfied when the first iteration of the loop is encountered then the loop may be skipped. For example, in the while-loop code above if we initialize the value of <em>i</em> to be 5 or greater then the loop contents will not get executed. Give it a try by changing the initialization to  <code>i = 5;</code> and re-running the example. </p>
 <p>In the do-while loop the termination condition is checked at the end of the loop. Here is an example:</p>
 <pre><code class="language-c">void main() {
   int i= 0;
@@ -427,7 +459,8 @@ After the loop i is:
 </code></pre>
 <p>This code is available in file exercises/c_functions/do_while_loop_example.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make do_while_loop_example.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make do_while_loop_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT :
 Value of i:
@@ -443,7 +476,7 @@ Value of i:
 After the loop i is:
 5
 </code></pre>
-<p>The above code also prints the same output as the previous loops. However, this loop will get executed at least once. So even if we set the initial value of <em>i</em> to something greater than 5 the loop will still be executed once - because the condition is checked at the end of the loop.</p>
+<p>The above code also prints the same output as the previous loops. However, this loop will get executed at least once. So even if we set the initial value of <code>i</code> to a value greater than 5, the loop will still be executed once - because the condition is checked at the end of the loop.</p>
 <h3 id="break-and-continue"><a class="header" href="#break-and-continue">break and continue</a></h3>
 <p>Sometimes we may want to end a loop earlier than the control expression allows us to. This can be done using the <strong>break</strong> statement. Here is a modified version of the <em>do-while</em> example:</p>
 <pre><code class="language-c">void main() {
@@ -464,7 +497,8 @@ After the loop i is:
 </code></pre>
 <p>This code is available in file exercises/c_functions/break_example.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make break_example.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make break_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT :
 Value of i:
@@ -480,10 +514,10 @@ Value of i:
 After the loop i is:
 5
 </code></pre>
-<p>The above code gives the same output at the previous loops. However, unlike in the previous <em>do-while</em> loop, if the initial value of <em>i</em> is set greater than 4 it will enter the loop and exit it at the <em>break</em> statement without executing the remaining iterations. Couple of things to note in the code above -</p>
+<p>The above code gives the same output at the previous loops. However, unlike in the previous <em>do-while</em> loop, if the initial value of <code>i</code> is set greater than 4 it will enter the loop and exit it at the <em>break</em> statement without executing the remaining iterations. Couple of things to note in the code above -</p>
 <ol>
 <li>We can use an if-statement without an else. If the condition is satisfied the contents of the if-block are executed. If the condition is not satisfied those contents are skipped over.</li>
-<li>There are no curly braces enclosing the contents of the if-statement. In the event we have only one statement to put inside an if-statement we can skip the braces. Same holds for for- and while-statements.</li>
+<li>There are no curly braces enclosing the contents of the if-statement. In the event we have only one statement to put inside an if-statement we can skip the braces. Same holds for <code>for</code> and <code>while</code> statements.</li>
 </ol>
 <p>Sometimes we may want to skip an iteration of the loop based on a condition and not exit the loop completely. In the example below we print only even numbers:</p>
 <pre><code class="language-c">void main() {
@@ -502,7 +536,8 @@ After the loop i is:
 </code></pre>
 <p>This code is available in file exercises/c_functions/continue_example.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make continue_example.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make continue_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT:
 Value of i:
@@ -518,8 +553,8 @@ Value of i:
 After the loop i is:
 10
 </code></pre>
-<p>The first code statement inside the loop checks to see if <em>i</em> is perfectly divisible by 2. All even numbers, as you know, can be divided by 2 leaving no remainder. The mod operator (%) divides the first number by the second and returns the remainder. We check if that value <strong>does not equal 0</strong>. If the condition is true that means <em>i</em> is a odd number and we use <em>continue</em> to go back to the start of the loop and execute the next iteration.</p>
-<p>While using loops programmers should be careful to ensure that the loop termination condition will be met eventually. If that condition is not met then the loop will never exit and the program will run for ever. It is pretty easy to get into trouble like that when copy-pasting code :-). For example, here is the code to print even numbers. But it has a bug that makes the loop an infinite loop. Can you find the error and how to fix it?</p>
+<p>The statement inside the loop checks to see if <code>i</code> is perfectly divisible by 2. All even numbers, as you know, can be divided by 2 leaving no remainder. The mod operator (%) divides the first number by the second and returns the remainder. We check if that value <strong>does not equal 0</strong>. If the condition is true that means <code>i</code> is a odd number and we use <code>continue;</code> to go back to the start of the loop and execute the next iteration.</p>
+<p>While using loops programmers should be careful to ensure that the loop termination condition will be satisfied eventually. If not, the loop will never exit and the program will run for ever. It is pretty easy to get into trouble like that when copy-pasting code :-). For example, here is the code to print even numbers. But it has a bug that makes the loop an infinite loop. Can you find the error and how to fix it?</p>
 <pre><code class="language-c">void main() {
   int i= 0;
 
@@ -590,7 +625,8 @@ After the loop i is:
 </code></pre>
 <p>This code is available in file exercises/c_functions/switch_example.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make switch_example.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make switch_example.elf
 RUN_COMMAND: make run
 EXPECTED_OUTPUT : X is 25
 </code></pre>
@@ -602,7 +638,7 @@ EXPECTED_OUTPUT : X is 25
 </ul>
 <p>Note that almost everything that can be done with <em>switch</em> statement can also be accomplished using <em>if-else</em>. But there may be times when one form is preferable over the other for conciseness or readability.</p>
 <h2 id="summary"><a class="header" href="#summary">Summary</a></h2>
-<p>We covered a lot of C programming language syntax in this section. While we have not covered all of the language this should be sufficient for the reader to tackle the programming exercises in the next section. We will cover additional bits of the language as and when we need to use them.</p>
+<p>We covered a lot of C programming language syntax in this section. While we have not covered all of the syntax, this should be sufficient for the reader to tackle the programming exercises in the next section. We will cover additional bits of the language as and when we need to use them.</p>
 
                     </main>
 

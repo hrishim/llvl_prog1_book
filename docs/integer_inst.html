@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html" class="active"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html" class="active"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li><li class="chapter-item expanded "><a href="c_structs.html"><strong aria-hidden="true">10.5.</strong> Structs</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples: Control-flow statements</a></li><li class="chapter-item expanded "><a href="disassembly2.html"><strong aria-hidden="true">11.2.</strong> Disassembly examples: Functions</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -182,7 +182,8 @@
 </ul>
 <p>The address of the first element of the array is stored in the register x4. We will use the register x2 as the index for different values of the array. The relevant portion of the program is given below. The reader can try it out by typing this code in the file integer_instructions/sum.s</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make sum.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make sum.elf
 RUN_COMMAND: make run
 </code></pre>
 <p>The program code:</p>
@@ -313,7 +314,8 @@ done:
 <p>For this exercise use the file <em>exercises/integer_instructions/clz.s</em>. We also introduce two new instructions - tbz and tbnz. In clz.s we have placed the number -  for which leading zeroes have to be found - in register w0. We will count the number of leading 0s in the given number and place the result in w0. The print function that is called later (already included in clz.s, you do not need to add it) will print the value stored in w0.</p>
 <p>The code to find the number of leading zeroes is below. Try typing it out into the file and getting it working.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make clz.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make clz.elf
 RUN_COMMAND: make run
 </code></pre>
 <pre><code class="language-armasm">    // Your code starts here
@@ -373,7 +375,8 @@ SMULL &lt;Xd&gt;, &lt;Wn&gt;, &lt;Wm&gt;  // Signed multiply long
 <li>Multiply current number in w1 with the product in w0 in each iteration of the loop</li>
 </ol>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make factorial.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make factorial.elf
 RUN_COMMAND: make run
 </code></pre>
 <details>
@@ -427,7 +430,8 @@ loop:
 <li>Place the result of this addition into result matrix C in the same position.</li>
 </ol>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make matrix_addition.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make matrix_addition.elf
 RUN_COMMAND: make run
 </code></pre>
 <p>The solution for this exercise is provided in matrix_addition_solution.s. We recommend that you try to write the program your self before looking at the solution.</p>
@@ -458,7 +462,8 @@ SUB &lt;Xd&gt;, &lt;Xn&gt;, &lt;Xm&gt;{, &lt;shift&gt; #&lt;amount&gt;}
 </code></pre>
 <p>For this exercise use the file exercises/integer_instructions/matrix_subtract.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make matrix_subtract.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make matrix_subtract.elf
 RUN_COMMAND: make run
 </code></pre>
 <p>We recommend that you try to write the program your self before looking at the solution in matrix_subtract_solution.s.</p>
@@ -477,7 +482,8 @@ RUN_COMMAND: make run
 <li>Use a loop to store elements 2 to N of array so that each element is sum of previous two elements</li>
 </ol>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make fibonacci.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make fibonacci.elf
 RUN_COMMAND: make run
 </code></pre>
 <details>
@@ -538,7 +544,8 @@ loop:
 <p><img src="images/truth_table.png" alt="Truth Table" title="Truth Table" /></p>
 <p>The objective of this exercise, is to print the truth table for XOR operation. For this exercise use the file exercises/integer_instructions/xor_truth_table.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make xor_truth_table.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make xor_truth_table.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="multiply-and-divide-by-a-power-of-2-using-logical-left-shiftlsl-and-logical-right-shiftlsr-instructions"><a class="header" href="#multiply-and-divide-by-a-power-of-2-using-logical-left-shiftlsl-and-logical-right-shiftlsr-instructions">Multiply and divide by a power of 2 using Logical Left Shift(LSL) and Logical Right Shift(LSR) instructions</a></h2>
@@ -562,7 +569,8 @@ RUN_COMMAND: make run
 </ol>
 <p>For this exercise use the file exercises/integer_instructions/shift_to_multiply_divide.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make shift_to_multiply_divide.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make shift_to_multiply_divide.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="count-the-number-of-1s-in-a-register"><a class="header" href="#count-the-number-of-1s-in-a-register">Count the number of 1's in a register</a></h2>
@@ -577,7 +585,8 @@ RUN_COMMAND: make run
 </ol>
 <p>For this exercise use the file exercises/integer_instructions/count_ones.s.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make count_ones.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make count_ones.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="count-leading-zeros-using-clz-instruction"><a class="header" href="#count-leading-zeros-using-clz-instruction">Count leading zeros using CLZ instruction</a></h2>
@@ -590,7 +599,8 @@ RUN_COMMAND: make run
 </blockquote>
 <p>This instruction counts the number of leading zeroes of the number stored in Wn and places the result in Wd!! The result value is 32 if no bits are set in the source register, and zero if bit 31 is set. In this exercise let us redo the exercise using this instruction.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make clz_inst.elf
+<pre><code>DIRECTORY: exercises/integer_instructions/
+COMPILE_COMMAND: make clz_inst.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="what-we-learnt-this-chapter"><a class="header" href="#what-we-learnt-this-chapter">What we learnt this chapter</a></h2>

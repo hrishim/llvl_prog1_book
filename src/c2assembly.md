@@ -1,6 +1,6 @@
 # From C Programs to Assembly Code
 
-In the previous chapter we learnt the syntax of the C programming language and practiced writing a few programs in C. As mentioned earlier the CPU understands instructions that are part of its ISA. Programs may be written in assembly language and a special application called an *Assembler* converts assembly code into binary format that can be read and executed by the processor.
+In the previous chapter we learnt the syntax of the C programming language and practiced writing a few programs in C. As mentioned earlier the CPU understands instructions that are part of its ISA. Programs may be written in assembly language and a special application called an *Assembler* is used to convert assembly code into binary format that can be read and executed by the processor.
 
 So how does code written in C get executed by the processor? The C code is translated into assembly and that resulting assembly is then converted into a binary file which is executed on the processor. This is done by a combination of three applications - compiler, assembler, and linker. 
 
@@ -8,14 +8,14 @@ The *compiler* translates code from a high-level language, like C, to assembly. 
 
 ## Tools to compile and disassemble
 
-In the previous chapters, we were using an utility called **make** to compile our programs. In all the exercises, running *make* in the directory with the code would automatically call the compiler or assembler as required. This was useful because *make* is a short command and it saves us the trouble of repeatedly typing the longer command to invoke the compiler/assembler.
+In the previous chapters, we used a utility called **make** to compile our programs. In all the exercises, running *make* in the directory with the code would automatically call the compiler or assembler as required. This was useful because *make* is a short command and it saves us the trouble of repeatedly typing the longer command to invoke the compiler/assembler.
 
-What is actually executed when we *make* is specified in a file named **Makefile**. When the *make* command is executed, it uses the contents in this file to determine which files to compile/assemble. There is also an additional advantage in using this utility. It uses the timestamp of files to determine when they were last updated and selectively compiles only those files that have changed since the last invocation of *make*. At every invocation of the *make*, only the files that were changed after previous compilation would be compiled. 
+What is actually executed when we *make* is specified in a file named **Makefile**. When the *make* command is executed, it uses the contents in this file to determine which files to compile/assemble. There is also an additional advantage in using this utility. It uses the timestamp of files to determine when they were last updated and selectively compiles only those files that have changed since the last invocation of *make*. At every invocation of *make*, only the files that were changed after previous compilation would be compiled. 
 
 
-### Overview
+### Overview of compilation
 
-Let us first take a step back and see what is involved in compiling a C source code into an executable file. The figure below shows the process of converting a C program file to a binary file that can be executed by the QEMU simulator.
+The figure below shows the process of converting a C program file to a binary file that can be executed by the QEMU simulator.
 
 ![Compilation process](images/compilation.png "Compilation process")
 
@@ -35,20 +35,17 @@ However, in this book we are running our code "bare metal", meaning there is no 
 
 ### Compiling Hello World
 
-We use **ARM GNU Toolchain**  which contains the GNU C/C++ Compiler (GCC), Assembler, Linker and various utilities (referred to as binutils). The compiler that we use to compile our C files is: **aarch64-none-elf-gcc**.
-Let us now start with the Hello World  example that we used in the **Programming in C** section and understand how the above steps are performed. Here is the code:
+We use the **ARM GNU Toolchain**  which contains the GNU C/C++ Compiler (GCC), Assembler, Linker and various utilities (referred to as binutils). The compiler that we use to compile our C files is: **aarch64-none-elf-gcc**.
 
+To understand the compilation process described above we will now compile the Hello World example from the **Programming in C** section. Instead of using *make* we will compile the file using the compiler. Readers can follow along by executing the commands specified in this section. First, in a new terminal, switch to the directory `exercises/c_functions/`
+
+Here is the code we are going to compile:
 ```c
+//From file exercises/c_functions/hello_world_example.c
 #include "uart.h"
 void main() {
   uart_puts("Hello World");
 }
-```
-
-Readers can follow along by executing the commands specified in this section. The directory to work in is at:
-
-```
-exercises/c_functions/hello_world_example.c
 ```
 
 The first line of the above code starts with "#include" directive.  This directive tells the preprocessor (which is the first pass of the compiler) to insert the contents of another file into the source code at the point where the #include directive is found. Include directives are typically used to include the C header files for C functions that are held outside of the current source file. We use it in our program to make use of the `uart_puts()` function declared within **uart.h** file. The **uart.h** file is located at the *exercises/include/* directory. 
@@ -64,7 +61,7 @@ To compile our code we use the compiler **aarch64-none-elf-gcc** followed by a s
 
 ```aarch64-none-elf-gcc <list of options> <list of files>``` 
 
-Options are used to control the behaviour of the compiler and all of them start with a hyphen followed by one or more alphanumeric characters. While aarch64-none-elf-gcc supports many of them, only few options will be needed by us. If you are curious to learn about all of the options you can run the command below to list them all: 
+Options are used to control the behaviour of the compiler and all of them start with a hyphen followed by one or more alphanumeric characters. We will use only a few of the options provided by aarch64-none-elf-gcc. If you are curious to learn about all of the options you can run the command below to list them: 
 
 ```aarch64-none-elf-gcc -v --help```
 
@@ -107,6 +104,9 @@ The above command will produce a binary image named kernel.img.
 **Step 4: Use this command to run kernel.img file using QEMU:**
 
 ```qemu-system-aarch64 -M raspi3 -kernel kernel8.img -serial null -serial stdio -nographic```
+
+
+When we use *make* to compile hello_world_example.c all of the above steps except the last one (to run the program) are automatically done for us.
 
 ### Disassembly
 

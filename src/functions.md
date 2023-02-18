@@ -170,12 +170,10 @@ sumOfN:
   ret               //Return to the address in X30
 
 addOne:
-  add w1, w0, #1    //Compute n+1
+  add w0, w1, #1    //Compute n+1
   ret
 
 ```
-
-**FIXME:** Shouldn't addOne use the value in w0 and return the result also in w0?
 
 When we use the *BL/BLR* to call a function the return address is stored in X30. So, from our program when we call sumOfN the return address is stored in X30. From sumOfN, when  we call addOne the X30 register will be overwritten with the address of the instruction to return to after executing addOne. Therefore, we save the contents of X30 in the stack before calling addOne function. After the function call we restore the contents of X30 from the stack and then return from sumOfN.
 
@@ -262,6 +260,7 @@ find_len_end:
 
 To compile and run:
 ```
+DIRECTORY: exercises/functions/
 COMPILE_COMMAND: make memcopy_register.elf
 RUN_COMMAND: make run
 ```
@@ -372,6 +371,7 @@ find_len_end:
 
 To compile and run:
 ```
+DIRECTORY: exercises/functions/
 COMPILE_COMMAND: make memcopy_stack.elf
 RUN_COMMAND: make run
 ```
@@ -425,6 +425,7 @@ find_len_end:
 
 To compile and run:
 ```
+DIRECTORY: exercises/functions/
 COMPILE_COMMAND: make memcopy_optimized.elf
 RUN_COMMAND: make run
 ```
@@ -467,6 +468,7 @@ done:
 
 To compile and run:
 ```
+DIRECTORY: exercises/functions/
 COMPILE_COMMAND: make sum_of_n.elf
 RUN_COMMAND: make run
 ```
@@ -490,6 +492,7 @@ The files to be used for this exercise and the compile and run commands are give
 
 ```
     File to be used: exercises/functions/matrix_addition.s
+    DIRECTORY: exercises/functions/
     COMPILE_COMMAND: make matrix_addition.elf
     RUN_COMMAND: make run
 ```
@@ -498,6 +501,7 @@ The files to be used for this exercise and the compile and run commands are give
 
 ```
     File to be used: exercises/functions/matrix_subtract.s
+    DIRECTORY: exercises/functions/
     COMPILE_COMMAND: make matrix_subtract.elf
     RUN_COMMAND: make run
 ```
@@ -513,6 +517,7 @@ For this exercise use the file exercises/functions/caesar_cipher.s.
 
 To compile and run:
 ```
+DIRECTORY: exercises/functions/
 COMPILE_COMMAND: make caesar_cipher.elf
 RUN_COMMAND: make run
 ```
@@ -523,6 +528,7 @@ For this exercise use the file *exercises/functions/facorial.s*. In factorial.s,
 
 To compile and run:
 ```
+DIRECTORY: exercises/functions/
 COMPILE_COMMAND: make factorial.elf
 RUN_COMMAND: make run
 ```

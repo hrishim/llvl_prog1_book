@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html" class="active"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded "><a href="chapter_1.html"><strong aria-hidden="true">1.</strong> Introduction</a></li><li class="chapter-item expanded "><a href="tool_installation.html"><strong aria-hidden="true">2.</strong> Tool Installation</a></li><li class="chapter-item expanded "><a href="comp_overview.html"><strong aria-hidden="true">3.</strong> Computer System Overview</a></li><li class="chapter-item expanded "><a href="arm_exec_state.html"><strong aria-hidden="true">4.</strong> ARM Registers and Execution State</a></li><li class="chapter-item expanded "><a href="binary_representation.html"><strong aria-hidden="true">5.</strong> Binary Representation of Integers</a></li><li class="chapter-item expanded "><a href="starting_assembly.html"><strong aria-hidden="true">6.</strong> ARM AArch64 Assembly Basics</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="memory_inst.html"><strong aria-hidden="true">6.1.</strong> Memory Instructions</a></li><li class="chapter-item expanded "><a href="integer_inst.html"><strong aria-hidden="true">6.2.</strong> Integer Instructions</a></li></ol></li><li class="chapter-item expanded "><a href="condition_flags.html"><strong aria-hidden="true">7.</strong> Condition Flags</a></li><li class="chapter-item expanded "><a href="stack.html"><strong aria-hidden="true">8.</strong> The Stack</a></li><li class="chapter-item expanded "><a href="functions.html"><strong aria-hidden="true">9.</strong> Functions</a></li><li class="chapter-item expanded "><a href="c_programming.html"><strong aria-hidden="true">10.</strong> Programming in C</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="c_variables.html"><strong aria-hidden="true">10.1.</strong> Variables and Data types</a></li><li class="chapter-item expanded "><a href="c_syntax.html"><strong aria-hidden="true">10.2.</strong> C Language Syntax</a></li><li class="chapter-item expanded "><a href="c_exercises.html"><strong aria-hidden="true">10.3.</strong> C Programming Exercises</a></li><li class="chapter-item expanded "><a href="c_pointers.html" class="active"><strong aria-hidden="true">10.4.</strong> Introduction to Arrays and Pointers in C</a></li><li class="chapter-item expanded "><a href="c_structs.html"><strong aria-hidden="true">10.5.</strong> Structs</a></li></ol></li><li class="chapter-item expanded "><a href="c2assembly.html"><strong aria-hidden="true">11.</strong> From C Programs to Assembly Code</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="disassembly.html"><strong aria-hidden="true">11.1.</strong> Disassembly examples: Control-flow statements</a></li><li class="chapter-item expanded "><a href="disassembly2.html"><strong aria-hidden="true">11.2.</strong> Disassembly examples: Functions</a></li></ol></li><li class="chapter-item expanded "><a href="conclusion_part1.html"><strong aria-hidden="true">12.</strong> Conclusion</a></li><li class="chapter-item expanded "><a href="references.html"><strong aria-hidden="true">13.</strong> References</a></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -173,8 +173,9 @@
   return (temp1 + temp2 + temp3)/3;
 }
 </code></pre>
-<p>But as you can see the function takes only three inputs. If we want to add another day to the average we have to re-write the function to take an additional parameter. A fifth data again requires change to the code.</p>
-<p>One way to solve this problem (of having to keep changing code) is to group the temperature data into an <strong>array</strong> of integers. Here is how a int array is defined. We can optionally also specify the number of elements in the array. In the first example below the compiler figures out that the array has 5 integer elements. In the second example we explicitly tell the compiler we want an array of 4 elements and also specify the data.</p>
+<p>But as you can see the function takes only three inputs. If we want to add another day to the average we have to re-write the function to take an additional parameter. Adding data for a fifth day again requires change to the code.</p>
+<p>One way to solve this problem is to group the temperature data into an <strong>array</strong> of integers. First, lets take a look at how arrays are defined.</p>
+<p>Below are two ways to define an int array. We can optionally also specify the number of elements in the array. In the first example below the compiler figures out that the array has 5 integer elements. In the second example we explicitly tell the compiler we want an array of 4 elements and also specify the data.</p>
 <pre><code class="language-c">//Temp in centigrade. We ignore fractions and hold only whole numbers in this example.
 //Pretending we are in a nice place.
 int temps[] = {25, 23, 27, 22, 26};
@@ -195,7 +196,8 @@ uart_print_num(temps[2]); // print the third element
   return sum/size;
 }
 </code></pre>
-<p>In the function above we used the syntax -  <code>avg_temp(int temps[], int size)</code> - this means that the function takes two parameters, an integer array and an integer. The actual number of elements in the array does not have to be specified as part of the array parameter. It is possible to access array elements beyond the last element in the array. However, one should not do that by design because we could be accessing memory of another variable. So the programmer has to keep track of the array length and ensure array access are within bounds. Accessing beyond the array bounds can lead to bugs (including serious security bugs) and crashes.</p>
+<p>In the function above we used the syntax -  <code>avg_temp(int temps[], int size)</code> - this means that the function takes two parameters, an integer array and an integer. The actual number of elements in the array does not have to be specified as part of the array parameter. We specify the size of the array by passing an additional parameter <code>size</code>.</p>
+<p>It is possible to access array elements beyond the last element in the array. However, one should not do that by design, because we could be accessing memory of another variable. So the programmer has to keep track of the array length and ensure array accesses are within bounds. Accessing beyond the array bounds can lead to bugs (including serious security bugs) and crashes.</p>
 <pre><code class="language-c">int scores[4] = {5, 9, 7, 2}
 </code></pre>
 <p>When an array is defined like <em>scores</em> above, the compiler sets aside memory to hold the specified amount of memory. In this case we are asking for memory to hold <strong>four</strong> <strong>integers</strong>. Integers are 32-bits (8 bytes), so the compiler sets aside 32 bytes of memory to hold the array. These integers are can be referred to as - scores[0], scores[1], scores[2], and scores[3]. Note that if the array has N elements, the index of the last element is N-1. The allocated memory is contiguous, meaning scores[0] is immediately followed by scores[1], which is immediately followed by scores[2] and so on.</p>
@@ -207,6 +209,12 @@ uart_print_num(temps[2]); // print the third element
 //The above statement allocates 6 bytes in memory to hold the characters.
 </code></pre>
 <p>When we define a character array like above the C compiler interprets that as a request for a <strong>string</strong>. So it automatically allocates one byte more than the total length of characters we have defined. The additional space is used to store the string termination character. So in reality the characters stored are - 'S', 'u', 'r', 'a', 'j', and '\0'.</p>
+<p>Character arrays can be initialized like above. However, one cannot assign a value to a character array. For example, the code below will result in a compiler error:</p>
+<pre><code class="language-c">char name[40];
+
+name = &quot;What a great day!&quot;;
+
+</code></pre>
 <h3 id="2d-arrays"><a class="header" href="#2d-arrays">2D arrays</a></h3>
 <p>The arrays that considered up to this point are one-dimensional(1D) arrays (a single dimension of elements). Certain data come naturally in the form of a table(as a table of rows and columns). Such data cannot be represented using 1D array, and would instead require a two-dimensional(2D) array. Two-dimensional array can be defined as an array of arrays. The 2D arrays are also known as matrix.</p>
 <p>The syntax to declare the 2D array is given below.</p>
@@ -306,7 +314,8 @@ void main()
 
 </code></pre>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make find_max.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make find_max.elf
 RUN_COMMAND: make run
 </code></pre>
 <p><strong>Pseudo code</strong>:</p>
@@ -319,13 +328,15 @@ RUN_COMMAND: make run
 </ol>
 <p>A sample implementation of the above pseudo code is available in find_max_solution.c file. </p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make find_max_solution.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make find_max_solution.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="memcopy-pointersstring"><a class="header" href="#memcopy-pointersstring">Memcopy (Pointers/String)</a></h2>
 <p>We have already done multiple exercises to copy data from one location to another in the assembly programming section. In this exercise the objective is to write a <em>memcopy</em> function in C that will copy the specified amount of data from one memory location to another.</p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make memcopy.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make memcopy.elf
 RUN_COMMAND: make run
 </code></pre>
 <p>You should write your code in the designated location in the file memcopy.c</p>
@@ -361,7 +372,8 @@ void main()
 </ol>
 <p>A sample implementation of the above pseudo code is available in memcopy_solution.c file. </p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make memcopy_solution.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make memcopy_solution.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="find-substring-in-a-string-nested-loops-break-statement"><a class="header" href="#find-substring-in-a-string-nested-loops-break-statement">Find substring in a string (Nested loops, break statement)</a></h2>
@@ -393,7 +405,8 @@ void main()
 
 </code></pre>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make find_substring.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make find_substring.elf
 RUN_COMMAND: make run
 </code></pre>
 <p><strong>Pseudo code</strong>:</p>
@@ -409,7 +422,8 @@ RUN_COMMAND: make run
 </ol>
 <p>A sample implementation of the above pseudo code is available in find_substring_solution.c file. </p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make find_substring_solution.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make find_substring_solution.elf
 RUN_COMMAND: make run
 </code></pre>
 <h2 id="matrix-addition-2-d-array"><a class="header" href="#matrix-addition-2-d-array">Matrix addition (2-D array)</a></h2>
@@ -450,7 +464,8 @@ void main()
 
 </code></pre>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make matrix_addition.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make matrix_addition.elf
 RUN_COMMAND: make run
 </code></pre>
 <p><strong>Pseudo code</strong>:</p>
@@ -462,7 +477,8 @@ RUN_COMMAND: make run
 </ol>
 <p>A sample implementation of the above pseudo code is available in matrix_addition_solution.c file. </p>
 <p>To compile and run:</p>
-<pre><code>COMPILE_COMMAND: make matrix_addition_solution.elf
+<pre><code>DIRECTORY: exercises/c_functions/
+COMPILE_COMMAND: make matrix_addition_solution.elf
 RUN_COMMAND: make run
 </code></pre>
 
@@ -477,7 +493,7 @@ RUN_COMMAND: make run
                         
 
                         
-                            <a rel="next" href="c2assembly.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="c_structs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -495,7 +511,7 @@ RUN_COMMAND: make run
                 
 
                 
-                    <a rel="next" href="c2assembly.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="c_structs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 

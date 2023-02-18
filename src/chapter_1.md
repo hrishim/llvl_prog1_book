@@ -1,6 +1,6 @@
 # Introduction
 
-This is **Part 1** of a series of online books which will give readers an introduction to the ARM AArch64 architecture using ARM assembly language and the C programming language. It gives an introduction to the ARM Cortex-A AArch64 architecture and programming in the C language. It covers a subset of the instruction set architecture (ISA) and provides an introduction to the venerable C programming language. It strives to explain the relationship between code written in C and its equivalent in ARM assembly. The objective is to give readers a glimpse into what high-level code translates to in assembly language. Readers will understand what happens on a function call, how values are passed into functions and returned from them etc. They will understand how control flow works, what pointers are under the hood, and the real difference between passing by value or reference.
+This is **Part 1** of an online book which will give readers an introduction to the ARM AArch64 architecture using ARM assembly language and the C programming language. It gives an introduction to the ARM Cortex-A AArch64 architecture and programming in the C language. It covers a subset of the instruction set architecture (ISA) and provides an introduction to the venerable C programming language. It strives to explain the relationship between code written in C and its equivalent in ARM assembly. The objective is to give readers a glimpse into what high-level code translates to in assembly language. Readers will understand what happens on a function call, how values are passed into functions and returned from them etc. They will understand how control flow works, what pointers are under the hood, and the real difference between passing by value or reference.
 
 The book takes a hands-on approach to teaching programming and provides explanations along with exercises. Readers will benefit if they follow along by doing the exercises themselves. Ideally, after the first exercise, readers should try to write the programs on their own. They will initially learn to write programs in assembly language and then in the C programming language.  We strongly encourage readers to try solving each exercise in this book by themselves. Refer to the provided solution only when stuck and/or to learn alternative solutions to exercises.
 
@@ -32,7 +32,7 @@ This book will be useful to those interested in learning how processors work at 
 
 This material teaches how microprocessors work under the hood. Readers will learn how actual computation is performed using the basic instructions that a processor can execute. They will learn how system software works with the underlying hardware.
 
-Part 1 (i.e. this book) covers:
+Part 1 covers:
 - ARM AArch64 architecture for application programmers
 - Writing code in ARM assembly language
 - An introduction to programming in C

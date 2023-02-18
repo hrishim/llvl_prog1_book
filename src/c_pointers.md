@@ -11,9 +11,11 @@ int avg_temp(int temp1, int temp2, int temp3) {
 }
 ```
 
-But as you can see the function takes only three inputs. If we want to add another day to the average we have to re-write the function to take an additional parameter. A fifth data again requires change to the code.  
+But as you can see the function takes only three inputs. If we want to add another day to the average we have to re-write the function to take an additional parameter. Adding data for a fifth day again requires change to the code.  
 
-One way to solve this problem (of having to keep changing code) is to group the temperature data into an **array** of integers. Here is how a int array is defined. We can optionally also specify the number of elements in the array. In the first example below the compiler figures out that the array has 5 integer elements. In the second example we explicitly tell the compiler we want an array of 4 elements and also specify the data.
+One way to solve this problem is to group the temperature data into an **array** of integers. First, lets take a look at how arrays are defined.
+
+Below are two ways to define an int array. We can optionally also specify the number of elements in the array. In the first example below the compiler figures out that the array has 5 integer elements. In the second example we explicitly tell the compiler we want an array of 4 elements and also specify the data.
 
 ```c
 //Temp in centigrade. We ignore fractions and hold only whole numbers in this example.
@@ -42,7 +44,9 @@ int avg_temp(int temps[], int size) {
 }
 ```
 
-In the function above we used the syntax -  `avg_temp(int temps[], int size)` - this means that the function takes two parameters, an integer array and an integer. The actual number of elements in the array does not have to be specified as part of the array parameter. It is possible to access array elements beyond the last element in the array. However, one should not do that by design because we could be accessing memory of another variable. So the programmer has to keep track of the array length and ensure array access are within bounds. Accessing beyond the array bounds can lead to bugs (including serious security bugs) and crashes.
+In the function above we used the syntax -  `avg_temp(int temps[], int size)` - this means that the function takes two parameters, an integer array and an integer. The actual number of elements in the array does not have to be specified as part of the array parameter. We specify the size of the array by passing an additional parameter `size`.
+
+It is possible to access array elements beyond the last element in the array. However, one should not do that by design, because we could be accessing memory of another variable. So the programmer has to keep track of the array length and ensure array accesses are within bounds. Accessing beyond the array bounds can lead to bugs (including serious security bugs) and crashes.
 
 ```c
 int scores[4] = {5, 9, 7, 2}
@@ -63,6 +67,15 @@ char name[] = "Suraj";
 ```
 
 When we define a character array like above the C compiler interprets that as a request for a **string**. So it automatically allocates one byte more than the total length of characters we have defined. The additional space is used to store the string termination character. So in reality the characters stored are - 'S', 'u', 'r', 'a', 'j', and '\0'.
+
+Character arrays can be initialized like above. However, one cannot assign a value to a character array. For example, the code below will result in a compiler error:
+
+```c
+char name[40];
+
+name = "What a great day!";
+
+```
 
 
 ### 2D arrays
@@ -203,6 +216,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make find_max.elf
 RUN_COMMAND: make run
 ```
@@ -218,6 +232,7 @@ A sample implementation of the above pseudo code is available in find_max_soluti
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make find_max_solution.elf
 RUN_COMMAND: make run
 ```
@@ -228,6 +243,7 @@ We have already done multiple exercises to copy data from one location to anothe
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make memcopy.elf
 RUN_COMMAND: make run
 ```
@@ -270,6 +286,7 @@ A sample implementation of the above pseudo code is available in memcopy_solutio
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make memcopy_solution.elf
 RUN_COMMAND: make run
 ```
@@ -309,6 +326,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make find_substring.elf
 RUN_COMMAND: make run
 ```
@@ -327,6 +345,7 @@ A sample implementation of the above pseudo code is available in find_substring_
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make find_substring_solution.elf
 RUN_COMMAND: make run
 ```
@@ -375,6 +394,7 @@ void main()
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make matrix_addition.elf
 RUN_COMMAND: make run
 ```
@@ -390,6 +410,7 @@ A sample implementation of the above pseudo code is available in matrix_addition
 
 To compile and run:
 ```
+DIRECTORY: exercises/c_functions/
 COMPILE_COMMAND: make matrix_addition_solution.elf
 RUN_COMMAND: make run
 ```
